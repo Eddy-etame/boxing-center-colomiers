@@ -181,7 +181,7 @@ const erreur = Astro.url.searchParams.get('erreur') === '1';
     font-variant-numeric: tabular-nums;
     transition: color var(--d-rapide) var(--e-mecanique);
   }
-  .direct__tel:hover { color: var(--signal); }
+  .direct__tel:hover { color: var(--signal-texte); }
   .direct__horaires {
     margin-block: var(--e-3) var(--e-4);
     padding-top: var(--e-3);
@@ -208,7 +208,7 @@ const erreur = Astro.url.searchParams.get('erreur') === '1';
 
   .champ { display: grid; gap: var(--e-2); margin-bottom: var(--e-4); }
   .champ label { font-size: var(--t-petit); font-weight: 600; }
-  .champ abbr { color: var(--signal-profond); text-decoration: none; }
+  .champ abbr { color: var(--signal-texte); text-decoration: none; }
 
   /* Champ à ligne, pas à boîte : le trait s'épaissit et rougit au focus.
      Même grammaire que la route. */
@@ -232,7 +232,7 @@ const erreur = Astro.url.searchParams.get('erreur') === '1';
   .champ select:focus,
   .champ textarea:focus {
     outline: none;
-    border-bottom-color: var(--signal);
+    border-bottom-color: var(--signal-texte);
     box-shadow: 0 1px 0 0 var(--signal);
   }
   /* Le focus visible reste garanti au clavier même sans la règle globale. */
@@ -272,7 +272,7 @@ const erreur = Astro.url.searchParams.get('erreur') === '1';
     border-left: 3px solid var(--signal);
     background: color-mix(in srgb, var(--signal) 7%, transparent);
   }
-  .alerte .mono { color: var(--signal-profond); margin-bottom: var(--e-2); }
+  .alerte .mono { color: var(--signal-texte); margin-bottom: var(--e-2); }
   .alerte p:last-child { margin: 0; font-size: var(--t-petit); }
 
   .a-cote { display: grid; gap: var(--e-5); }
@@ -291,7 +291,7 @@ const erreur = Astro.url.searchParams.get('erreur') === '1';
       padding-left var(--d-normal) var(--e-sortie);
   }
   .a-cote__club:last-child { border-bottom: 1px solid var(--trait); }
-  .a-cote__club:hover { color: var(--signal-profond); padding-left: var(--e-2); }
+  .a-cote__club:hover { color: var(--signal-texte); padding-left: var(--e-2); }
 </style>
 
 <script>

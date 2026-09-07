@@ -150,10 +150,9 @@ html:has(.entete[data-compact]) { --haut-parcours: 3.75rem; }
 }
 .lien:hover {
   background-size: 100% 2px;
-  color: var(--signal);
+  color: var(--signal-texte);
 }
-.clair .lien:hover,
-.papier .lien:hover { color: var(--signal-profond); }
+
 
 /* ── Boutons ──────────────────────────────────────────────────────────── */
 .bouton {

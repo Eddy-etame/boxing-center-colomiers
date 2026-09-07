@@ -166,7 +166,7 @@ const CRENEAUX = [
   .tete__inner { max-width: 58rem; }
   .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
   .fil a { color: var(--acier-sombre); text-decoration: none; }
-  .fil a:hover { color: var(--signal); }
+  .fil a:hover { color: var(--signal-texte); }
   .fil span[aria-current] { color: var(--acier); }
   .tete h1 { max-width: 16ch; margin-bottom: var(--e-5); }
   .tete__chapeau {
@@ -193,7 +193,7 @@ const CRENEAUX = [
     font-variant-numeric: tabular-nums;
     margin: 0;
   }
-  .amplitude__jours { margin-top: var(--e-3); color: var(--signal); letter-spacing: 0.18em; }
+  .amplitude__jours { margin-top: var(--e-3); color: var(--signal-texte); letter-spacing: 0.18em; }
   .amplitude__texte h2 { max-width: 16ch; margin-bottom: var(--e-4); }
   .amplitude__args { list-style: none; display: grid; gap: var(--e-3); margin-top: var(--e-5); }
   .amplitude__args li {
@@ -237,10 +237,10 @@ const CRENEAUX = [
     transition: border-color var(--d-rapide) var(--e-mecanique),
       transform var(--d-normal) var(--e-sortie);
   }
-  .creneau:hover { border-color: var(--signal); transform: translateY(-2px); }
+  .creneau:hover { border-color: var(--signal-texte); transform: translateY(-2px); }
   .creneau__haut { display: flex; align-items: baseline; justify-content: space-between; gap: var(--e-3); }
   .creneau__nom { font-family: var(--police-titre); font-size: var(--t-h3); letter-spacing: -0.02em; }
-  .creneau__plage { color: var(--signal-profond); }
+  .creneau__plage { color: var(--signal-texte); }
   .creneau__pour { font-weight: 600; font-size: var(--t-petit); }
   .creneau__note { font-size: var(--t-petit); color: var(--texte-faible); }
   .creneau__choisir {
@@ -250,7 +250,7 @@ const CRENEAUX = [
     color: var(--acier-sombre);
     transition: color var(--d-rapide) var(--e-mecanique);
   }
-  .creneau:hover .creneau__choisir { color: var(--signal-profond); }
+  .creneau:hover .creneau__choisir { color: var(--signal-texte); }
 
   .grilles__titre { max-width: 20ch; margin-bottom: var(--e-4); }
   .grilles__intro { max-width: 58ch; }
@@ -287,10 +287,10 @@ const CRENEAUX = [
     transform-origin: bottom;
     transition: transform var(--d-normal) var(--e-sortie);
   }
-  .grille:hover { border-color: var(--signal); color: var(--blanc); }
+  .grille:hover { border-color: var(--signal-texte); color: var(--blanc); }
   .grille:hover::before { transform: scaleY(1); }
   .grille__nom { font-family: var(--police-titre); font-size: var(--t-h3); letter-spacing: -0.02em; }
-  .grille__cta { color: var(--signal); text-transform: none; letter-spacing: 0.05em; font-size: var(--t-petit); }
+  .grille__cta { color: var(--signal-texte); text-transform: none; letter-spacing: 0.05em; font-size: var(--t-petit); }
   .grille:hover .grille__cta { color: var(--blanc); }
   .grille__hote { color: var(--acier-sombre); }
   .grille:hover .grille__hote { color: color-mix(in srgb, var(--blanc) 80%, transparent); }

@@ -165,8 +165,8 @@ const { actuelle } = Astro.props;
     transition: border-color var(--d-rapide) var(--e-mecanique),
       color var(--d-rapide) var(--e-mecanique);
   }
-  .tel:hover { border-color: var(--signal); color: var(--signal); }
-  .tel__icone { display: grid; place-items: center; color: var(--signal); }
+  .tel:hover { border-color: var(--signal-texte); color: var(--signal-texte); }
+  .tel__icone { display: grid; place-items: center; color: var(--signal-texte); }
 
   .burger {
     display: none;
@@ -247,7 +247,7 @@ const { actuelle } = Astro.props;
     letter-spacing: 0.02em;
     margin-top: 0.35rem;
   }
-  .menu-mobile a.est-actuelle .menu-mobile__nom { color: var(--signal); }
+  .menu-mobile a.est-actuelle .menu-mobile__nom { color: var(--signal-texte); }
   .menu-mobile .bouton { margin-top: var(--e-6); margin-bottom: var(--e-8); }
 
   @media (prefers-reduced-motion: reduce) {

@@ -166,7 +166,7 @@
   }
 
   /* Un point acquis passe au rouge — et seulement à ce moment-là. */
-  .est-acquis .parcours__valeur { color: var(--signal); }
+  .est-acquis .parcours__valeur { color: var(--signal-texte); }
   .parcours__etape--terminus.est-acquis .parcours__valeur {
     color: var(--blanc);
     background: var(--signal);
@@ -189,8 +189,8 @@
       border-color var(--d-rapide) var(--e-mecanique);
   }
   .parcours__effacer:hover {
-    color: var(--signal);
-    border-color: var(--signal);
+    color: var(--signal-texte);
+    border-color: var(--signal-texte);
   }
 
   /* Sur écran étroit les quatre étapes ne tiennent pas : plutôt que d'en

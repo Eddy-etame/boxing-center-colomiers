@@ -181,7 +181,7 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
 
   .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
   .fil a { color: var(--acier-sombre); text-decoration: none; }
-  .fil a:hover { color: var(--signal); }
+  .fil a:hover { color: var(--signal-texte); }
   .fil span[aria-current] { color: var(--acier); }
 
   .tete h1 { max-width: 18ch; margin-bottom: var(--e-5); }
@@ -208,7 +208,7 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
   }
   @media (max-width: 60rem) { .corps__grille { grid-template-columns: 1fr; gap: var(--e-7); } }
 
-  .bloc__num { color: var(--signal-profond); margin-bottom: var(--e-3); }
+  .bloc__num { color: var(--signal-texte); margin-bottom: var(--e-3); }
   .bloc__titre { font-size: var(--t-h3); margin-bottom: var(--e-3); max-width: 24ch; }
   .bloc__texte { max-width: 58ch; color: var(--texte-faible); }
 
@@ -236,7 +236,7 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
     align-items: baseline;
   }
   .seance__liste li:last-child { border-bottom: 1px solid var(--trait); }
-  .seance__liste .mono { color: var(--signal); }
+  .seance__liste .mono { color: var(--signal-texte); }
   .seance__duree {
     margin-top: var(--e-5);
     color: var(--acier-sombre);
@@ -267,7 +267,7 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
     transition: border-color var(--d-rapide) var(--e-mecanique),
       transform var(--d-normal) var(--e-sortie);
   }
-  .tclub:hover { border-color: var(--signal); transform: translateY(-2px); }
+  .tclub:hover { border-color: var(--signal-texte); transform: translateY(-2px); }
   .tclub__nom { font-size: var(--t-h3); }
   .tclub__angle { margin: 0; color: var(--texte-faible); font-size: var(--t-petit); }
   .tclub__depuis {
@@ -277,7 +277,7 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
     text-transform: none;
     color: var(--texte-faible);
   }
-  .tclub__aller { color: var(--signal-profond); margin-top: var(--e-2); }
+  .tclub__aller { color: var(--signal-texte); margin-top: var(--e-2); }
 
   .trouver__aide { margin-top: var(--e-6); font-size: var(--t-petit); color: var(--texte-faible); }
 
@@ -304,7 +304,7 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
   }
   .qr summary::-webkit-details-marker { display: none; }
   .qr__q { font-weight: 600; font-size: var(--t-base); }
-  .qr summary:hover .qr__q { color: var(--signal); }
+  .qr summary:hover .qr__q { color: var(--signal-texte); }
 
   /* Un plus qui devient un moins : la rotation dit l'état sans icône. */
   .qr__signe {
@@ -356,7 +356,7 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
     font-size: var(--t-h3);
     letter-spacing: -0.02em;
   }
-  .suite__liste a:hover .suite__nom { color: var(--signal-profond); }
+  .suite__liste a:hover .suite__nom { color: var(--signal-texte); }
   .suite__q { grid-column: 1; color: var(--texte-faible); text-transform: none; }
   .suite__fleche {
     grid-row: span 2;

@@ -334,7 +334,7 @@ const QUESTIONS = [
 
   /* Sans largeur imposée, « côté. » tombe seul sur une troisième ligne. */
   .verite__grille h2 { max-width: 13ch; }
-  .verite__nuance { color: var(--signal); }
+  .verite__nuance { color: var(--signal-texte); }
   .verite__texte { max-width: 54ch; }
   .verite__texte strong { color: var(--os); font-weight: 600; }
   .verite__texte .lead { margin-bottom: var(--e-4); }
@@ -350,7 +350,7 @@ const QUESTIONS = [
     border-top: 1px solid var(--trait);
   }
   @media (max-width: 52rem) { .verite__points { grid-template-columns: 1fr; gap: var(--e-4); } }
-  .verite__points span { display: block; margin-bottom: var(--e-2); color: var(--signal); }
+  .verite__points span { display: block; margin-bottom: var(--e-2); color: var(--signal-texte); }
   .verite__points p { margin: 0; font-size: var(--t-petit); color: var(--texte-faible); }
 
   /* ── H04 Disciplines ────────────────────────────────────────────────── */
@@ -392,7 +392,7 @@ const QUESTIONS = [
   }
 
   .dcarte__num { color: var(--acier-sombre); }
-  .dcarte:hover .dcarte__num { color: var(--signal); }
+  .dcarte:hover .dcarte__num { color: var(--signal-texte); }
   .dcarte__nom { font-size: var(--t-h3); }
   .dcarte__question {
     color: var(--acier);
@@ -406,7 +406,7 @@ const QUESTIONS = [
     color: var(--acier-sombre);
     transition: color var(--d-rapide) var(--e-mecanique);
   }
-  .dcarte:hover .dcarte__aller { color: var(--signal); }
+  .dcarte:hover .dcarte__aller { color: var(--signal-texte); }
   .dcarte .fleche {
     display: inline-block;
     transition: transform var(--d-normal) var(--e-sortie);
@@ -483,7 +483,7 @@ const QUESTIONS = [
   }
   .horaires__jours {
     font-size: var(--t-base);
-    color: var(--signal);
+    color: var(--signal-texte);
     letter-spacing: 0.18em;
   }
 
@@ -528,7 +528,7 @@ const QUESTIONS = [
     border-top: 1px solid var(--trait-faible);
   }
   .premiere__etapes li:last-child { border-bottom: 1px solid var(--trait-faible); }
-  .premiere__etapes span { color: var(--signal-profond); padding-top: 0.25em; }
+  .premiere__etapes span { color: var(--signal-texte); padding-top: 0.25em; }
   .premiere__etapes p { margin: 0; font-size: var(--t-petit); color: var(--texte-faible); }
   .premiere__etapes strong { color: var(--texte); font-weight: 600; }
 
@@ -564,7 +564,7 @@ const QUESTIONS = [
   }
   .qr summary::-webkit-details-marker { display: none; }
   .qr__q { font-weight: 600; font-size: var(--t-base); max-width: 46ch; }
-  .qr summary:hover .qr__q { color: var(--signal-profond); }
+  .qr summary:hover .qr__q { color: var(--signal-texte); }
   .qr__signe { flex: none; position: relative; width: 14px; height: 14px; }
   .qr__signe::before,
   .qr__signe::after {
@@ -593,7 +593,7 @@ const QUESTIONS = [
   .convergence__inner { display: grid; justify-items: center; }
   .convergence .numero-section { width: min(100%, 28rem); }
   .convergence__titre { font-size: var(--t-h1); margin-bottom: var(--e-5); }
-  .convergence__accent { color: var(--signal); }
+  .convergence__accent { color: var(--signal-texte); }
   .convergence__texte { max-width: 48ch; color: var(--texte-faible); }
   .convergence__actions {
     display: flex;

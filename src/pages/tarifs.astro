@@ -162,7 +162,7 @@ const COMPRIS = [
   .tete__inner { max-width: 58rem; }
   .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
   .fil a { color: var(--acier-sombre); text-decoration: none; }
-  .fil a:hover { color: var(--signal); }
+  .fil a:hover { color: var(--signal-texte); }
   .fil span[aria-current] { color: var(--acier); }
   .tete h1 { max-width: 17ch; margin-bottom: var(--e-5); }
   .tete__chapeau {
@@ -192,7 +192,7 @@ const COMPRIS = [
     gap: var(--e-7) var(--e-8);
   }
   @media (max-width: 52rem) { .compris__grille { grid-template-columns: 1fr; gap: var(--e-6); } }
-  .compris__num { color: var(--signal-profond); margin-bottom: var(--e-3); }
+  .compris__num { color: var(--signal-texte); margin-bottom: var(--e-3); }
   .compris__nom { font-size: var(--t-h3); margin-bottom: var(--e-3); }
   .compris__texte { max-width: 52ch; color: var(--texte-faible); }
 
@@ -211,7 +211,7 @@ const COMPRIS = [
   .comparer__liste { list-style: none; display: grid; margin-top: var(--e-5); }
   .comparer__liste li { padding: var(--e-4) 0; border-top: 1px solid var(--trait); }
   .comparer__liste li:last-child { border-bottom: 1px solid var(--trait); }
-  .comparer__liste .mono { display: block; color: var(--signal); margin-bottom: var(--e-2); }
+  .comparer__liste .mono { display: block; color: var(--signal-texte); margin-bottom: var(--e-2); }
   .comparer__liste p { margin: 0; font-size: var(--t-petit); color: var(--texte-faible); max-width: 56ch; }
   .comparer__note {
     margin-top: var(--e-5);
@@ -247,10 +247,10 @@ const COMPRIS = [
     transform-origin: bottom;
     transition: transform var(--d-normal) var(--e-sortie);
   }
-  .grille:hover { border-color: var(--signal); color: var(--blanc); }
+  .grille:hover { border-color: var(--signal-texte); color: var(--blanc); }
   .grille:hover::before { transform: scaleY(1); }
   .grille__nom { font-family: var(--police-titre); font-size: var(--t-h3); letter-spacing: -0.02em; }
-  .grille__cta { color: var(--signal-profond); text-transform: none; letter-spacing: 0.05em; font-size: var(--t-petit); }
+  .grille__cta { color: var(--signal-texte); text-transform: none; letter-spacing: 0.05em; font-size: var(--t-petit); }
   .grille:hover .grille__cta { color: var(--blanc); }
   .grille__hote { color: var(--acier-sombre); }
   .grille:hover .grille__hote { color: color-mix(in srgb, var(--blanc) 80%, transparent); }

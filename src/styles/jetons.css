@@ -77,10 +77,18 @@
   --acier-sombre: #6c7d94;
   --sourdine: #a7adba;
 
-  /* Le rouge. Sur fond clair on utilise --signal-profond pour le texte. */
+  /* Le rouge.
+     --signal est une couleur GRAPHIQUE : remplissages, traits, états choisis.
+     Elle n'est pas lisible en petit texte : mesurée, elle donne 4,22:1 sur
+     l'encre, sous le seuil AA de 4,5:1.
+     --signal-texte est la variante à utiliser dès qu'un mot est écrit en
+     rouge. Elle change avec la polarité de la section — c'est pour ça qu'elle
+     est redéfinie dans .clair et .papier plus bas. */
   --signal: #e21d2f;
   --signal-profond: #b20f20;
   --signal-vif: #ff2f42;
+  --signal-clair: #f5323f;
+  --signal-texte: var(--signal-clair);
 
   --trait-sombre: rgba(255, 255, 255, 0.16);
   --trait-clair: rgba(7, 9, 13, 0.16);
@@ -163,12 +171,17 @@
 
 /* Polarité claire — appliquée par section, jamais par préférence système :
    le parcours de couleur est narratif, il n'appartient pas au visiteur. */
+/* Sur fond clair, deux jetons doivent changer sous peine de passer sous le
+   seuil de contraste : le rouge de texte, et l'acier des petites étiquettes.
+   L'acier clair est fait pour se poser sur de l'encre, pas sur du papier. */
 .clair {
   --fond: var(--os);
   --texte: var(--encre);
   --texte-faible: #4c5566;
   --trait: var(--trait-clair);
   --trait-faible: var(--trait-clair-faible);
+  --signal-texte: var(--signal-profond);
+  --acier-sombre: #59637a;
 }
 .papier {
   --fond: var(--papier);
@@ -176,6 +189,8 @@
   --texte-faible: #4c5566;
   --trait: var(--trait-clair);
   --trait-faible: var(--trait-clair-faible);
+  --signal-texte: var(--signal-profond);
+  --acier-sombre: #59637a;
 }
 .marine {
   --fond: var(--marine);
