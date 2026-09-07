@@ -134,13 +134,13 @@ const CRENEAUX = [
 
       <div class="grilles__clubs">
         {CLUBS.map((c) => (
-          <a class="grille" href={c.site} rel="noopener">
+          <a class="grille" href={c.plannings} rel="noopener">
             <span class="grille__nom">{c.nomCourt}</span>
             <span class="grille__cta mono">
               Voir les plannings Boxing Center {c.nomCourt}
               <span aria-hidden="true">↗</span>
             </span>
-            <span class="grille__hote mono">{new URL(c.site).hostname}</span>
+            <span class="grille__hote mono">{new URL(c.plannings).hostname}{new URL(c.plannings).pathname}</span>
           </a>
         ))}
       </div>

@@ -26,15 +26,36 @@ const ECHEC = '/contact/?erreur=1#formulaire';
 type Defi = { challenge: string; difficulty?: number; timestamp?: number | string };
 
 /**
- * Résout le défi : on cherche un nonce dont le SHA-256 commence par N zéros.
- * Borné à 5 millions d'essais pour ne jamais bloquer une requête ; en
- * pratique une difficulté de 4 se résout en quelques milliers d'itérations.
+ * Résout le défi : on cherche un nonce dont le SHA-256 de « défi:nonce »
+ * commence par N zéros hexadécimaux.
+ *
+ * Le deux-points n'est pas cosmétique — sans lui Inlet répond
+ * POW_SOLUTION_INVALID.
+ *
+ * On passe par node:crypto quand il est disponible : `crypto.subtle` est
+ * asynchrone, et enchaîner 65 000 `await` prend plusieurs secondes là où le
+ * hachage synchrone prend quelques dizaines de millisecondes. La version
+ * WebCrypto reste en repli pour rester portable d'un hébergeur à l'autre.
  */
 async function resoudre(defi: string, difficulte: number): Promise<string | null> {
   const prefixe = '0'.repeat(Math.max(0, difficulte));
+  const PLAFOND = 5_000_000; // borne dure : une requête ne doit jamais partir en boucle
+
+  try {
+    const { createHash } = await import('node:crypto');
+    for (let nonce = 0; nonce < PLAFOND; nonce++) {
+      if (createHash('sha256').update(`${defi}:${nonce}`).digest('hex').startsWith(prefixe)) {
+        return String(nonce);
+      }
+    }
+    return null;
+  } catch {
+    /* pas de node:crypto — on continue en WebCrypto */
+  }
+
   const encodeur = new TextEncoder();
-  for (let nonce = 0; nonce < 5_000_000; nonce++) {
-    const empreinte = await crypto.subtle.digest('SHA-256', encodeur.encode(defi + nonce));
+  for (let nonce = 0; nonce < PLAFOND; nonce++) {
+    const empreinte = await crypto.subtle.digest('SHA-256', encodeur.encode(`${defi}:${nonce}`));
     const hex = [...new Uint8Array(empreinte)].map((b) => b.toString(16).padStart(2, '0')).join('');
     if (hex.startsWith(prefixe)) return String(nonce);
   }

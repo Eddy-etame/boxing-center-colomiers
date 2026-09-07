@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { CONTACT, SITE, CLUBS } from '../data/verite';
+import { CONTACT, SITE, CLUBS, HORAIRES } from '../data/verite';
 ---
 
 <Base page="mentions-legales">
@@ -13,45 +13,66 @@ import { CONTACT, SITE, CLUBS } from '../data/verite';
 
       <h1 id="t-legal">Mentions légales</h1>
 
-      {/* À COMPLÉTER avant mise en ligne : raison sociale, forme juridique,
-          capital, RCS, SIRET, TVA, directeur de publication, hébergeur. Ces
-          informations sont obligatoires et ne peuvent pas être devinées. */}
+      {/* Le SIRET et le RCS ne figurent sur aucun des deux sites officiels du
+          réseau ni dans les sources dont on dispose. On ne les invente pas :
+          un numéro d'identification erroné dans des mentions légales est pire
+          que son absence. Deux champs restent donc à renseigner. */}
       <div class="avis mono" role="note">
-        À compléter avant la mise en ligne — raison sociale, forme juridique,
-        SIRET, RCS, directeur de la publication et hébergeur.
+        Deux champs restent à renseigner avant la mise en ligne&nbsp;: le numéro
+        SIRET et le nom du directeur de la publication. Ils ne figurent sur aucune
+        source publique du réseau et ne peuvent pas être déduits.
       </div>
 
       <h2>Éditeur du site</h2>
       <p>
         Le site <strong>{SITE.origine.replace('https://', '')}</strong> est édité par
-        Boxing Center.
+        Boxing Center, qui exploite les clubs de Toulouse Minimes et de
+        Portet-sur-Garonne.
       </p>
       <dl class="fiche">
+        <div><dt>Dénomination</dt><dd>Boxing Center</dd></div>
+        <div>
+          <dt>Établissement principal</dt>
+          <dd>{CLUBS[0].adresse}</dd>
+        </div>
         <div><dt>Téléphone</dt><dd><a class="lien" href={`tel:${CONTACT.telephoneLien.valeur}`}>{CONTACT.telephone.valeur}</a></dd></div>
         <div><dt>Courriel</dt><dd><a class="lien" href={`mailto:${CONTACT.email.valeur}`}>{CONTACT.email.valeur}</a></dd></div>
-        <div><dt>Raison sociale</dt><dd class="attente">à compléter</dd></div>
-        <div><dt>Forme juridique</dt><dd class="attente">à compléter</dd></div>
-        <div><dt>Siège social</dt><dd class="attente">à compléter</dd></div>
-        <div><dt>SIRET</dt><dd class="attente">à compléter</dd></div>
-        <div><dt>Directeur de la publication</dt><dd class="attente">à compléter</dd></div>
+        <div><dt>SIRET</dt><dd class="attente">à renseigner</dd></div>
+        <div><dt>Directeur de la publication</dt><dd class="attente">à renseigner</dd></div>
+      </dl>
+
+      <h2>Établissements</h2>
+      <dl class="fiche">
+        {CLUBS.map((c) => (
+          <div>
+            <dt>{c.nomCourt}</dt>
+            <dd>
+              {c.adresse}<br />
+              <a class="lien" href={`tel:${c.telephoneLien}`}>{c.telephone}</a> —
+              {' '}<a class="lien" href={c.site} rel="noopener">{new URL(c.site).hostname}</a>
+            </dd>
+          </div>
+        ))}
+        <div>
+          <dt>Horaires d’accueil</dt>
+          <dd>{HORAIRES.texte.valeur}</dd>
+        </div>
       </dl>
 
       <h2>Hébergement</h2>
-      <p class="attente">À compléter : nom, raison sociale et adresse de l’hébergeur.</p>
+      <p>
+        Le site est hébergé par <strong>Vercel Inc.</strong>, 340 S Lemon Ave #4133,
+        Walnut, CA 91789, États-Unis — <a class="lien" href="https://vercel.com" rel="noopener">vercel.com</a>.
+      </p>
 
       <h2>Nature du site</h2>
       <p>
         Ce site est un point d’entrée éditorial destiné aux habitants de
         {' '}{SITE.villeOrigine} et de ses environs. <strong>Il ne représente pas une
         salle Boxing Center située à {SITE.villeOrigine}.</strong> Les entraînements
-        se déroulent dans les clubs suivants, qui disposent chacun de leur propre
-        site&nbsp;:
+        se déroulent dans les deux établissements listés ci-dessus, qui disposent
+        chacun de leur propre site.
       </p>
-      <ul class="liste">
-        {CLUBS.map((c) => (
-          <li><a class="lien" href={c.site} rel="noopener">{c.nom}</a> — {new URL(c.site).hostname}</li>
-        ))}
-      </ul>
 
       <h2>Propriété intellectuelle</h2>
       <p>

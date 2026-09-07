@@ -8,9 +8,49 @@ import { CLUBS, DISCIPLINES, HORAIRES, CONTACT } from '../data/verite';
 
 const minimes = CLUBS[0];
 const portet = CLUBS[1];
+
+/**
+ * Les questions que les gens tapent réellement, avec la réponse honnête.
+ *
+ * Ce bloc porte les requêtes locales du cahier des charges §4 — mais parce
+ * qu'il y répond vraiment, pas pour les placer. La première question est la
+ * plus recherchée du secteur ET celle dont la réponse est « non » : la traiter
+ * franchement vaut mieux que l'esquiver, pour le visiteur comme pour Google.
+ */
+const QUESTIONS = [
+  {
+    titre: 'Y a-t-il un club de boxe à Colomiers, chez Boxing Center ?',
+    texte:
+      "Non, et autant le dire clairement : Boxing Center n'a pas de salle dans Colomiers. Le réseau accueille les Columérins dans deux clubs de l'agglomération toulousaine, Toulouse Minimes et Portet-sur-Garonne. Si tu cherches un club de boxe près de Colomiers, ce sont ces deux adresses-là, et ce site sert à déterminer laquelle te convient.",
+  },
+  {
+    titre: 'Où faire du MMA près de Colomiers ?',
+    texte:
+      "Le MMA se pratique dans les deux clubs Boxing Center accessibles depuis Colomiers. Si tu cherches un club de MMA près de Colomiers, commence par regarder ton créneau : c'est l'accès, pas la discipline, qui départage Toulouse Minimes et Portet-sur-Garonne pour quelqu'un qui part de Colomiers.",
+  },
+  {
+    titre: 'Peut-on faire des sports de combat à proximité de Colomiers sans expérience ?',
+    texte:
+      "Oui. Boxe anglaise, MMA, boxing fitness et boxe enfants sont ouverts aux débutants complets. Aucun test d'entrée, aucune condition physique préalable. Les cours de boxe accessibles depuis Colomiers accueillent des gens qui n'ont jamais fait de sport de leur vie, et c'est la situation la plus banale d'un club.",
+  },
+  {
+    titre: 'À quelle distance sont les clubs, depuis Colomiers ?',
+    texte:
+      "Toulouse Minimes se trouve 12 rue de Fenouillet, dans Toulouse, en direction nord-est. Portet-sur-Garonne se trouve 61 route d'Espagne, au sud de l'agglomération. On ne t'annonce pas un temps de trajet : il dépend entièrement de l'heure à laquelle tu pars. Regarde plutôt quel axe correspond à tes déplacements habituels.",
+  },
+  {
+    titre: 'Quels horaires pour un cours de boxe quand on travaille ?',
+    texte: `Les clubs accueillent ${HORAIRES.texte.valeur.toLowerCase()}. C'est onze heures d'ouverture par jour, ce qui veut dire que tu n'as pas à caler ta vie sur un créneau unique — le midi, l'après-midi, le soir ou le samedi, selon ce qui tient dans ta semaine.`,
+  },
+  {
+    titre: 'Y a-t-il des cours de boxe enfant accessibles depuis Colomiers ?',
+    texte:
+      "Oui, sous forme de boxe éducative : le geste, le cadre et le respect de l'autre, sans mise en danger. Les tranches d'âge exactes dépendent du club et de la saison — écris-nous avec l'âge de ton enfant, ou consulte directement le site du club visé.",
+  },
+];
 ---
 
-<Base page="accueil">
+<Base page="accueil" faq={QUESTIONS}>
   <Hero />
 
   {/* ─────────── H02 — LA VÉRITÉ GÉOGRAPHIQUE ─────────── */}
@@ -139,7 +179,20 @@ const portet = CLUBS[1];
               <p class="mono club__index">Club {String(i + 1).padStart(2, '0')}</p>
               <h3 class="club__nom">{c.nomCourt}</h3>
               <p class="club__angle">{c.angle}</p>
-              <p class="club__depuis mono">{c.depuisColomiers}</p>
+              <dl class="club__faits">
+                <div>
+                  <dt class="mono">Adresse</dt>
+                  <dd>{c.adresse}</dd>
+                </div>
+                <div>
+                  <dt class="mono">Téléphone</dt>
+                  <dd><a class="lien" href={`tel:${c.telephoneLien}`}>{c.telephone}</a></dd>
+                </div>
+                <div>
+                  <dt class="mono">Depuis Colomiers</dt>
+                  <dd>{c.depuisColomiers}</dd>
+                </div>
+              </dl>
               <a class="bouton club__lien" href={c.site} rel="noopener">
                 <span>Ouvrir le site du club</span>
                 <span class="fleche" aria-hidden="true">↗</span>
@@ -211,6 +264,33 @@ const portet = CLUBS[1];
           Pour le matériel, les gants et les conditions exactes d’un premier cours,
           demande directement au club — c’est lui qui a l’information à jour.
         </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ─────────── H09b — LES QUESTIONS LOCALES ─────────── */}
+  <section class="section clair questions" aria-labelledby="t-questions">
+    <div class="enveloppe questions__inner">
+      <div class="questions__tete">
+        <p class="numero-section mono"><span>09</span><span>Ce qu’on nous demande</span></p>
+        <h2 id="t-questions">Les questions qu’on se pose<br />quand on habite Colomiers.</h2>
+        <p class="lead faible">
+          Y compris celle dont la réponse est «&nbsp;non&nbsp;». On préfère la
+          traiter en face plutôt que de laisser quelqu’un la découvrir devant une
+          porte.
+        </p>
+      </div>
+
+      <div class="questions__liste">
+        {QUESTIONS.map((q, i) => (
+          <details class="qr" open={i === 0}>
+            <summary>
+              <span class="qr__q">{q.titre}</span>
+              <span class="qr__signe" aria-hidden="true"></span>
+            </summary>
+            <p class="qr__r">{q.texte}</p>
+          </details>
+        ))}
       </div>
     </div>
   </section>
@@ -365,14 +445,24 @@ const portet = CLUBS[1];
   .club__index { color: var(--acier-sombre); margin-bottom: var(--e-2); }
   .club__nom { font-size: var(--t-h2); margin-bottom: var(--e-3); }
   .club__angle { max-width: 40ch; color: var(--texte-faible); }
-  .club__depuis {
-    padding-top: var(--e-3);
-    margin-bottom: var(--e-5);
+
+  /* Les faits d'un club se lisent comme une fiche, pas comme un paragraphe :
+     une adresse et un numéro doivent se repérer d'un coup d'œil. */
+  .club__faits { margin: var(--e-5) 0; }
+  .club__faits > div {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--e-3);
+    padding: var(--e-3) 0;
     border-top: 1px solid var(--trait-faible);
-    text-transform: none;
-    letter-spacing: 0.04em;
-    color: var(--texte-faible);
+    font-size: var(--t-petit);
   }
+  .club__faits > div:last-child { border-bottom: 1px solid var(--trait-faible); }
+  @media (max-width: 30rem) {
+    .club__faits > div { grid-template-columns: 1fr; gap: 0.2rem; }
+  }
+  .club__faits dt { color: var(--acier-sombre); padding-top: 0.15em; }
+  .club__faits dd { margin: 0; }
 
   /* ── H08 Horaires ───────────────────────────────────────────────────── */
   .horaires__inner {
@@ -448,6 +538,54 @@ const portet = CLUBS[1];
     border-left: 2px solid var(--signal);
     font-size: var(--t-petit);
     color: var(--texte-faible);
+  }
+
+  /* ── H09b Questions ─────────────────────────────────────────────────── */
+  .questions__inner {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: var(--e-8);
+    align-items: start;
+  }
+  @media (max-width: 60rem) { .questions__inner { grid-template-columns: 1fr; gap: var(--e-6); } }
+  .questions__tete h2 { max-width: 16ch; margin-bottom: var(--e-4); }
+  .questions__tete .lead { max-width: 40ch; }
+
+  .qr { border-top: 1px solid var(--trait); }
+  .qr:last-child { border-bottom: 1px solid var(--trait); }
+  .qr summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-4);
+    padding: var(--e-4) 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .qr summary::-webkit-details-marker { display: none; }
+  .qr__q { font-weight: 600; font-size: var(--t-base); max-width: 46ch; }
+  .qr summary:hover .qr__q { color: var(--signal-profond); }
+  .qr__signe { flex: none; position: relative; width: 14px; height: 14px; }
+  .qr__signe::before,
+  .qr__signe::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    background: var(--signal);
+  }
+  .qr__signe::before { width: 14px; height: 1.5px; }
+  .qr__signe::after {
+    width: 1.5px;
+    height: 14px;
+    transition: transform var(--d-normal) var(--e-mecanique);
+  }
+  .qr[open] .qr__signe::after { transform: scaleY(0); }
+  .qr__r {
+    max-width: 62ch;
+    padding-bottom: var(--e-5);
+    color: var(--texte-faible);
+    font-size: var(--t-petit);
   }
 
   /* ── H10 Convergence ────────────────────────────────────────────────── */

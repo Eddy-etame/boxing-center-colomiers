@@ -47,6 +47,19 @@ export const CONTACT = {
 
 /* ─────────────────────────────  HORAIRES  ───────────────────────────── */
 
+/**
+ * ⚠ CONFLIT FACTUEL OUVERT — à trancher avant mise en ligne.
+ *
+ * Le cahier des charges (§8 et §10) impose « 6 jours sur 7, de 10h à 21h15 ».
+ * Les deux sites officiels des clubs affichent aujourd'hui « lundi au samedi,
+ * 10h–21h30 » (relevé le 07/09/2026 sur boxe-toulouse.com et
+ * boxing-center-portet.fr).
+ *
+ * On publie la valeur du cahier des charges, parce que c'est l'instruction
+ * écrite du client. Mais quinze minutes d'écart sur une fermeture, c'est un
+ * adhérent qui arrive à 21h20 en croyant que c'est fermé — ou l'inverse.
+ * À confirmer, puis à corriger ici et nulle part ailleurs.
+ */
 export const HORAIRES = {
   /** Cahier des charges §8 et §10. */
   texte: CDC('6 jours sur 7, de 10h à 21h15'),
@@ -69,8 +82,22 @@ export type Club = {
   nom: string;
   nomCourt: string;
   ville: string;
+  codePostal: string;
+  /** adresse relevée sur le site officiel du club */
+  adresse: string;
+  /** téléphone propre au club, relevé sur son site officiel */
+  telephone: string;
+  telephoneLien: string;
   /** site officiel du club — cahier des charges §9 */
   site: string;
+  /**
+   * Liens profonds vers les pages qui comptent. Envoyer quelqu'un sur une
+   * page d'accueil quand il cherche un tarif, c'est lui faire refaire la
+   * navigation qu'on vient de lui épargner.
+   */
+  tarifs: string;
+  plannings: string;
+  activites: string;
   /** ce que le club apporte à quelqu'un qui part de Colomiers */
   angle: string;
   /** direction depuis Colomiers, en langage humain, sans distance inventée */
@@ -83,17 +110,31 @@ export const CLUBS: readonly Club[] = [
     nom: 'Boxing Center Toulouse Minimes',
     nomCourt: 'Toulouse Minimes',
     ville: 'Toulouse',
+    codePostal: '31200',
+    adresse: '12 rue de Fenouillet, 31200 Toulouse',
+    telephone: '05 62 24 46 82',
+    telephoneLien: '+33562244682',
     site: 'https://boxe-toulouse.com/',
-    angle: "Le club urbain, dans Toulouse, sur l'axe nord — le plus direct quand tu rentres du travail.",
-    depuisColomiers: "En allant vers Toulouse, direction nord-est.",
+    tarifs: 'https://boxe-toulouse.com/tarifs/',
+    plannings: 'https://boxe-toulouse.com/plannings/',
+    activites: 'https://boxe-toulouse.com/activites/',
+    angle: "Le club urbain, dans Toulouse même, quartier Minimes — le plus direct quand tu rentres du travail.",
+    depuisColomiers: 'En allant vers Toulouse, direction nord-est.',
   },
   {
     id: 'portet',
     nom: 'Boxing Center Portet-sur-Garonne',
     nomCourt: 'Portet-sur-Garonne',
     ville: 'Portet-sur-Garonne',
+    codePostal: '31120',
+    adresse: "61 route d'Espagne, 31120 Portet-sur-Garonne",
+    telephone: '06 87 90 02 16',
+    telephoneLien: '+33687900216',
     site: 'https://boxing-center-portet.fr/',
-    angle: "Le club au sud de l'agglomération, facile d'accès en voiture et à se garer.",
+    tarifs: 'https://boxing-center-portet.fr/tarifs/',
+    plannings: 'https://boxing-center-portet.fr/plannings/',
+    activites: 'https://boxing-center-portet.fr/activites/',
+    angle: "Le club au sud de l'agglomération, sur la route d'Espagne — facile d'accès en voiture et à se garer.",
     depuisColomiers: "En descendant vers le sud de l'agglomération toulousaine.",
   },
 ] as const;

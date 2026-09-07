@@ -138,13 +138,13 @@ const COMPRIS = [
       <h2 id="t-ou" class="ou__titre">Va les voir directement chez le club.</h2>
       <div class="ou__clubs">
         {CLUBS.map((c) => (
-          <a class="grille" href={c.site} rel="noopener">
+          <a class="grille" href={c.tarifs} rel="noopener">
             <span class="grille__nom">{c.nomCourt}</span>
             <span class="grille__cta mono">
               Consulter les tarifs Boxing Center {c.nomCourt}
               <span aria-hidden="true">↗</span>
             </span>
-            <span class="grille__hote mono">{new URL(c.site).hostname}</span>
+            <span class="grille__hote mono">{new URL(c.tarifs).hostname}{new URL(c.tarifs).pathname}</span>
           </a>
         ))}
       </div>

@@ -13,9 +13,15 @@ interface Props {
   discipline?: 'boxe-anglaise' | 'mma' | 'boxing-fitness' | 'boxe-enfants';
   /** image de partage social, dans /public/photos */
   ogPhoto?: string;
+  /**
+   * Questions/réponses RÉELLEMENT visibles sur la page. On n'émet du FAQPage
+   * que pour du contenu que le visiteur voit : baliser une FAQ invisible est
+   * exactement ce que Google sanctionne.
+   */
+  faq?: readonly { titre: string; texte: string }[];
 }
 
-const { page, discipline, ogPhoto = 'club-boxe-colomiers-boxing-center' } = Astro.props;
+const { page, discipline, ogPhoto = 'club-boxe-colomiers-boxing-center', faq } = Astro.props;
 const r = route(page);
 const canonique = new URL(r.chemin, SITE.origine).href;
 const og = new URL(`/photos/${ogPhoto}-1440.jpg`, SITE.origine).href;
@@ -46,10 +52,25 @@ const donnees = {
       /* Les vraies salles sont des entités distinctes, sur leurs vrais sites. */
       subOrganization: CLUBS.map((c) => ({
         '@type': 'SportsActivityLocation',
+        '@id': `${c.site}#club`,
         name: c.nom,
         url: c.site,
-        addressLocality: c.ville,
-        openingHours: `Mo-Sa ${HORAIRES.ouverture.valeur}-${HORAIRES.fermeture.valeur}`,
+        telephone: c.telephone,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: c.adresse.split(',')[0],
+          postalCode: c.codePostal,
+          addressLocality: c.ville,
+          addressRegion: SITE.departement,
+          addressCountry: 'FR',
+        },
+        openingHoursSpecification: {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          opens: HORAIRES.ouverture.valeur,
+          closes: HORAIRES.fermeture.valeur,
+        },
+        sport: ['Boxe anglaise', 'MMA', 'Boxing fitness', 'Boxe éducative'],
       })),
       areaServed: {
         '@type': 'City',
@@ -66,7 +87,35 @@ const donnees = {
       isPartOf: { '@id': `${SITE.origine}/#site` },
       inLanguage: SITE.langue,
       about: { '@id': `${SITE.origine}/#organisation` },
+      primaryImageOfPage: og,
     },
+    /* Fil d'Ariane : sur l'accueil il n'a pas lieu d'être. */
+    ...(page === 'accueil'
+      ? []
+      : [
+          {
+            '@type': 'BreadcrumbList',
+            '@id': `${canonique}#fil`,
+            itemListElement: [
+              { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.origine}/` },
+              { '@type': 'ListItem', position: 2, name: r.nav, item: canonique },
+            ],
+          },
+        ]),
+    /* FAQPage — uniquement si les questions sont visibles sur la page. */
+    ...(faq?.length
+      ? [
+          {
+            '@type': 'FAQPage',
+            '@id': `${canonique}#faq`,
+            mainEntity: faq.map((q) => ({
+              '@type': 'Question',
+              name: q.titre,
+              acceptedAnswer: { '@type': 'Answer', text: q.texte },
+            })),
+          },
+        ]
+      : []),
   ],
 };
 ---
