@@ -27,6 +27,7 @@ const DIST = existsSync(join(RACINE, '.vercel/output/static'))
   ? join(RACINE, '.vercel/output/static')
   : join(RACINE, 'dist');
 
+/** Laisser croire qu'une salle est DANS Colomiers — cahier des charges §2. */
 const INTERDIT = [
   'salle de Colomiers',
   'notre salle à Colomiers',
@@ -35,6 +36,28 @@ const INTERDIT = [
   'située à Colomiers',
   'basé à Colomiers',
   'Boxing Center Colomiers vous accueille',
+];
+
+/**
+ * VENDRE L'ABSENCE — la faute inverse, et la plus coûteuse des deux.
+ *
+ * Quelqu'un qui cherche « club de boxe Colomiers » ne doit jamais lire, en
+ * arrivant, qu'il s'est trompé d'endroit. On dit ce qui existe — deux clubs
+ * à proximité qui l'accueillent — jamais ce qui manque.
+ *
+ * Ces tournures restent légitimes dans un commentaire de code ou une phrase
+ * qui ne parle pas des clubs (« n'a pas de sens ») : le contrôle ne les
+ * cherche que dans le texte visible, et uniquement quand Colomiers ou une
+ * salle sont dans la même phrase.
+ */
+const VENTE_NEGATIVE = [
+  'pas de salle',
+  'pas de club',
+  'aucune salle',
+  'aucun club',
+  'n’existe pas de salle',
+  "n'existe pas de salle",
+  'ne se trouve dans cette commune',
 ];
 
 /** Liens sortants que le cahier des charges impose, et où. */
@@ -76,10 +99,25 @@ for (const [route, fichier] of toutes) {
   const txt = texteVisible(html);
   const ou = (m) => `${route.padEnd(22)} ${m}`;
 
-  // 1 — formulations interdites
+  // 1 — formulations interdites : ne pas laisser croire à une salle à Colomiers
+  const bas = txt.toLowerCase();
   for (const f of INTERDIT) {
-    if (txt.toLowerCase().includes(f.toLowerCase())) {
+    if (bas.includes(f.toLowerCase())) {
       erreurs.push(ou(`formulation interdite : « ${f} »`));
+    }
+  }
+
+  // 1 bis — vente négative : ne jamais mettre en avant ce qui n'existe pas
+  for (const f of VENTE_NEGATIVE) {
+    let i = bas.indexOf(f.toLowerCase());
+    while (i !== -1) {
+      // On ne s'alarme que si la phrase parle bien des clubs ou de la ville.
+      const phrase = bas.slice(Math.max(0, i - 140), i + 140);
+      if (/colomiers|boxing center|salle|club/.test(phrase)) {
+        erreurs.push(ou(`vente négative : « ${f} » — dire ce qui existe, pas ce qui manque`));
+        break;
+      }
+      i = bas.indexOf(f.toLowerCase(), i + 1);
     }
   }
 

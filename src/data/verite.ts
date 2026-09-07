@@ -223,6 +223,32 @@ export const INTERDIT: readonly string[] = [
 ];
 
 /**
+ * VENTE NÉGATIVE — interdite.
+ *
+ * Le cahier des charges §2 demande de ne pas laisser croire qu'une salle se
+ * trouve DANS Colomiers. Il ne demande nulle part d'annoncer qu'il n'y en a
+ * pas. La nuance a coûté cher une fois : la page d'accueil ouvrait sur
+ * « Pas de salle à Colomiers », c'est-à-dire qu'elle détruisait la raison
+ * même pour laquelle le visiteur avait cliqué.
+ *
+ * On dit toujours ce qui existe — deux clubs à proximité qui accueillent —
+ * jamais ce qui manque. Un test de build refuse ces tournures.
+ */
+export const VENTE_NEGATIVE: readonly string[] = [
+  'pas de salle',
+  'pas de club',
+  'aucune salle',
+  'aucun club',
+  'il n’y a pas',
+  "il n'y a pas",
+  'n’existe pas de salle',
+  "n'existe pas de salle",
+  'n’a pas de salle',
+  "n'a pas de salle",
+  'ne se trouve dans cette commune',
+];
+
+/**
  * Formulations à privilégier — cahier des charges §2, mot pour mot.
  */
 export const FORMULATIONS = [

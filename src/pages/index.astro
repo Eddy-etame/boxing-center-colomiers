@@ -19,9 +19,9 @@ const portet = CLUBS[1];
  */
 const QUESTIONS = [
   {
-    titre: 'Y a-t-il un club de boxe à Colomiers, chez Boxing Center ?',
+    titre: 'Où s’entraîner en boxe ou en MMA quand on habite Colomiers ?',
     texte:
-      "Non, et autant le dire clairement : Boxing Center n'a pas de salle dans Colomiers. Le réseau accueille les Columérins dans deux clubs de l'agglomération toulousaine, Toulouse Minimes et Portet-sur-Garonne. Si tu cherches un club de boxe près de Colomiers, ce sont ces deux adresses-là, et ce site sert à déterminer laquelle te convient.",
+      "Boxing Center accueille les habitants de Colomiers dans deux clubs situés à proximité, dans l’agglomération toulousaine : Toulouse Minimes et Portet-sur-Garonne. Les deux proposent la boxe anglaise, le MMA, le boxing fitness et la boxe enfants, 6 jours sur 7 de 10h à 21h15. Ce site sert à déterminer lequel des deux correspond le mieux à ta semaine et à tes trajets.",
   },
   {
     titre: 'Où faire du MMA près de Colomiers ?',
@@ -34,9 +34,9 @@ const QUESTIONS = [
       "Oui. Boxe anglaise, MMA, boxing fitness et boxe enfants sont ouverts aux débutants complets. Aucun test d'entrée, aucune condition physique préalable. Les cours de boxe accessibles depuis Colomiers accueillent des gens qui n'ont jamais fait de sport de leur vie, et c'est la situation la plus banale d'un club.",
   },
   {
-    titre: 'À quelle distance sont les clubs, depuis Colomiers ?',
+    titre: 'Où se trouvent exactement les deux clubs ?',
     texte:
-      "Toulouse Minimes se trouve 12 rue de Fenouillet, dans Toulouse, en direction nord-est. Portet-sur-Garonne se trouve 61 route d'Espagne, au sud de l'agglomération. On ne t'annonce pas un temps de trajet : il dépend entièrement de l'heure à laquelle tu pars. Regarde plutôt quel axe correspond à tes déplacements habituels.",
+      "Toulouse Minimes est au 12 rue de Fenouillet, dans Toulouse, en direction nord-est de Colomiers. Portet-sur-Garonne est au 61 route d'Espagne, au sud de l'agglomération. Deux axes distincts : choisis celui qui suit tes trajets habituels, c'est le meilleur critère pour tenir sur la durée.",
   },
   {
     titre: 'Quels horaires pour un cours de boxe quand on travaille ?',
@@ -56,42 +56,41 @@ const QUESTIONS = [
   {/* ─────────── H02 — LA VÉRITÉ GÉOGRAPHIQUE ─────────── */}
   <section class="section marine verite" aria-labelledby="t-verite">
     <div class="enveloppe">
-      <p class="numero-section mono"><span>02</span><span>Ce qu’il faut savoir tout de suite</span></p>
+      <p class="numero-section mono"><span>02</span><span>Les clubs à proximité</span></p>
 
       <div class="verite__grille">
         <div>
           <h2 id="t-verite">
-            Pas de salle à Colomiers.<br />
-            <span class="verite__nuance">Deux salles juste à côté.</span>
+            Deux clubs complets,<br />
+            <span class="verite__nuance">à proximité de Colomiers.</span>
           </h2>
         </div>
 
         <div class="verite__texte">
           <p class="lead">
-            Autant le dire dès la première minute plutôt que de te le faire découvrir
-            devant une porte&nbsp;: <strong>Boxing Center n’a pas de club dans Colomiers même</strong>.
+            <strong>Boxing Center accueille les habitants de Colomiers</strong> dans ses
+            deux clubs de l’agglomération toulousaine, ouverts à tous les niveaux.
           </p>
           <p>
-            Ce que Boxing Center a, ce sont deux salles complètes dans l’agglomération
-            toulousaine, qui accueillent déjà des habitants de Colomiers&nbsp;:
-            <a class="lien" href={minimes.site} rel="noopener">{minimes.nom}</a> et
-            <a class="lien" href={portet.site} rel="noopener">{portet.nom}</a>.
-            Les habitants de Colomiers peuvent rejoindre le club Boxing Center
-            Portet-sur-Garonne, situé à proximité et accessible pour pratiquer la boxe,
-            le MMA, le fitness et les sports de combat dans un cadre complet.
+            Deux salles complètes, avec ring, sacs, tatamis et coachs diplômés. Au
+            nord-est, <a class="lien" href={minimes.site} rel="noopener">{minimes.nom}</a>,
+            dans Toulouse même. Au sud, les habitants de Colomiers peuvent rejoindre
+            notre club <a class="lien" href={portet.site} rel="noopener">{portet.nom}</a>,
+            situé à proximité et accessible pour pratiquer la boxe, le MMA, le fitness
+            et les sports de combat dans un cadre complet.
           </p>
           <p>
-            La vraie question n’est donc pas «&nbsp;est-ce qu’il y a un club à Colomiers&nbsp;»,
-            mais <strong>lequel de ces deux clubs correspond à ta semaine</strong>. C’est
-            exactement ce que cette page sert à déterminer.
+            La seule question qui reste, c’est <strong>lequel des deux correspond à ta
+            semaine</strong>&nbsp;: à tes horaires, à tes trajets, à ce que tu viens
+            chercher. C’est exactement ce que cette page sert à déterminer.
           </p>
         </div>
       </div>
 
       <ul class="verite__points">
         <li>
-          <span class="mono">Depuis Colomiers</span>
-          <p>Les deux clubs sont dans l’agglomération, dans deux directions différentes.</p>
+          <span class="mono">À proximité</span>
+          <p>Deux clubs dans l’agglomération toulousaine, sur deux axes au choix.</p>
         </li>
         <li>
           <span class="mono">Amplitude</span>
