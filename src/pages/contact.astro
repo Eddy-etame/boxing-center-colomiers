@@ -35,7 +35,10 @@ const erreur = Astro.url.searchParams.get('erreur') === '1';
 
   <section class="section clair formulaire" id="formulaire">
     <div class="enveloppe formulaire__inner">
-      <form class="form" method="POST" action="/api/contact" data-form>
+      {/* La barre finale compte : `trailingSlash: 'always'` fait répondre un
+          308 sur /api/contact, et on n'a aucune raison de faire dépendre un
+          POST du bon comportement d'une redirection. */}
+      <form class="form" method="POST" action="/api/contact/" data-form>
         {erreur && (
           <div class="alerte" role="alert" tabindex="-1" data-alerte>
             <p class="mono">Le message n’est pas parti</p>
@@ -292,9 +295,13 @@ const erreur = Astro.url.searchParams.get('erreur') === '1';
 </style>
 
 <script>
-  import { parcours, enPhrase } from '../scripts/parcours';
+  import { parcours, enPhrase, recommander } from '../scripts/parcours';
 
   const p = parcours();
+  // Le club peut n'avoir jamais été enregistré (le visiteur n'est pas passé
+  // par le moteur de la page d'accueil) mais être déductible de son parcours.
+  // Sans ça, le message annonce un club que le menu déroulant laisse vide.
+  const clubDeduit = p.club ?? recommander(p)?.club;
   const champParcours = document.querySelector<HTMLInputElement>('[data-parcours-champ]');
   const message = document.querySelector<HTMLTextAreaElement>('[data-message]');
   const aide = document.querySelector<HTMLElement>('[data-aide]');
@@ -314,7 +321,7 @@ const erreur = Astro.url.searchParams.get('erreur') === '1';
 
   // Le site rend au visiteur ce qu'il a parcouru : il ne retape pas ce qu'il
   // a déjà dit en cliquant. C'est le moment où le parcours sert vraiment.
-  if (p.discipline || p.creneau || p.club) {
+  if (p.discipline || p.creneau || clubDeduit) {
     const phrase = enPhrase(p);
     if (champParcours) champParcours.value = phrase;
 
@@ -322,8 +329,8 @@ const erreur = Astro.url.searchParams.get('erreur') === '1';
       const opt = [...activite.options].find((o) => o.value === LIBELLES[p.discipline!]);
       if (opt) activite.value = opt.value;
     }
-    if (club && p.club && CLUBS[p.club]) {
-      const opt = [...club.options].find((o) => o.value === CLUBS[p.club!]);
+    if (club && clubDeduit && CLUBS[clubDeduit]) {
+      const opt = [...club.options].find((o) => o.value === CLUBS[clubDeduit]);
       if (opt) club.value = opt.value;
     }
 

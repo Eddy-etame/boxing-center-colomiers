@@ -33,6 +33,18 @@ const LIBELLE_DISCIPLINE: Record<Discipline, string> = {
   'boxe-enfants': 'Boxe enfants',
 };
 
+/**
+ * La même discipline ne s'écrit pas pareil dans un titre et dans une phrase.
+ * « MMA » ne se met pas en minuscules, et « boxe anglaise » a besoin de son
+ * article. Sans ça le message pré-rempli sort en « je cherche mma ».
+ */
+const DANS_UNE_PHRASE: Record<Discipline, string> = {
+  'boxe-anglaise': 'de la boxe anglaise',
+  mma: 'du MMA',
+  'boxing-fitness': 'du boxing fitness',
+  'boxe-enfants': 'un cours de boxe pour mon enfant',
+};
+
 const LIBELLE_CRENEAU: Record<Creneau, string> = {
   midi: 'Le midi',
   'apres-midi': "L'après-midi",
@@ -170,10 +182,10 @@ export function effacer() {
 /** Phrase lisible du parcours, réutilisée telle quelle dans le message envoyé. */
 export function enPhrase(p: Parcours = etat): string {
   const bouts: string[] = ['Je pars de Colomiers'];
-  if (p.discipline) bouts.push(`je cherche ${LIBELLE_DISCIPLINE[p.discipline].toLowerCase()}`);
+  if (p.discipline) bouts.push(`je cherche ${DANS_UNE_PHRASE[p.discipline]}`);
   if (p.creneau) bouts.push(`je peux m’entraîner ${LIBELLE_CRENEAU[p.creneau].toLowerCase()}`);
   const club = p.club ?? recommander(p)?.club;
-  if (club) bouts.push(`et ${LIBELLE_CLUB[club]} semble être le club le plus adapté`);
+  if (club) bouts.push(`et ${LIBELLE_CLUB[club]} me semble être le club le plus adapté`);
   return bouts.join(', ') + '.';
 }
 
