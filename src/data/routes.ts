@@ -18,6 +18,7 @@ export type RouteId =
   | 'tarifs'
   | 'contact'
   | 'merci'
+  | 'introuvable'
   | 'mentions-legales'
   | 'confidentialite';
 
@@ -44,7 +45,7 @@ export const ROUTES: readonly Route[] = [
     question: 'Où pratiquer la boxe ou le MMA quand on habite à Colomiers ?',
     titre: 'Club de boxe et MMA près de Colomiers | Boxing Center',
     description:
-      "Tu habites Colomiers et tu cherches un club de boxe, de MMA ou de sport de combat ? Boxing Center accueille les Columérins dans ses clubs de Toulouse Minimes et Portet-sur-Garonne, 6 jours sur 7 de 10h à 21h15.",
+      "Club de boxe, MMA et sports de combat près de Colomiers : Boxing Center accueille les Columérins à Toulouse Minimes et Portet-sur-Garonne, 6 j/7 de 10h à 21h15.",
     menu: true,
     index: true,
   },
@@ -53,9 +54,9 @@ export const ROUTES: readonly Route[] = [
     chemin: '/boxe-anglaise/',
     nav: 'Boxe anglaise',
     question: 'À quoi ressemble un cours de boxe anglaise, et est-ce que je peux commencer ?',
-    titre: 'Boxe anglaise près de Colomiers — cours débutants et confirmés | Boxing Center',
+    titre: 'Boxe anglaise près de Colomiers | Boxing Center',
     description:
-      "Cours de boxe anglaise accessibles depuis Colomiers, pour débutants comme pour confirmés. Encadrement diplômé, matériel prêté à l'essai, clubs Boxing Center à Toulouse Minimes et Portet-sur-Garonne.",
+      "Cours de boxe anglaise accessibles depuis Colomiers, débutants comme confirmés. Clubs Boxing Center à Toulouse Minimes et Portet-sur-Garonne, 6 j/7.",
     menu: true,
     index: true,
   },
@@ -64,9 +65,9 @@ export const ROUTES: readonly Route[] = [
     chemin: '/mma/',
     nav: 'MMA',
     question: 'Où faire du MMA quand on part de Colomiers, et comment on commence ?',
-    titre: 'Club de MMA près de Colomiers — cours tous niveaux | Boxing Center',
+    titre: 'Club de MMA près de Colomiers | Boxing Center',
     description:
-      'Tu cherches un club de MMA près de Colomiers ? Boxing Center propose le MMA à Toulouse Minimes et Portet-sur-Garonne : frappe, corps à corps, sol, avec un encadrement qui construit les débutants.',
+      'Club de MMA près de Colomiers : frappe, corps à corps et sol, avec un encadrement qui construit les débutants. Toulouse Minimes et Portet-sur-Garonne.',
     menu: true,
     index: true,
   },
@@ -75,9 +76,9 @@ export const ROUTES: readonly Route[] = [
     chemin: '/boxing-fitness/',
     nav: 'Boxing Fitness & Femme',
     question: 'Je veux boxer pour la forme, sans prendre de coup. C’est possible ?',
-    titre: 'Boxing fitness et boxe femme près de Colomiers | Boxing Center',
+    titre: 'Boxing fitness et boxe femme — Colomiers | Boxing Center',
     description:
-      "Boxing fitness accessible depuis Colomiers : cardio, geste de boxe, défoulement, sans opposition ni obligation de combattre. Un cadre pensé pour les débutantes et les débutants.",
+      "Boxing fitness et boxe femme depuis Colomiers : cardio, geste de boxe, défoulement — sans opposition ni obligation de combattre. Ouvert aux débutantes.",
     menu: true,
     index: true,
   },
@@ -86,9 +87,9 @@ export const ROUTES: readonly Route[] = [
     chemin: '/boxe-enfants/',
     nav: 'Boxe enfants',
     question: 'Quelle boxe pour mon enfant, et est-ce que c’est sans danger ?',
-    titre: 'Boxe enfant près de Colomiers — boxe éducative encadrée | Boxing Center',
+    titre: 'Boxe enfant près de Colomiers | Boxing Center',
     description:
-      "Cours de boxe enfant accessibles depuis Colomiers. Boxe éducative : le geste, le cadre, le respect. Encadrement diplômé aux clubs Boxing Center de Toulouse Minimes et Portet-sur-Garonne.",
+      "Cours de boxe enfant accessibles depuis Colomiers. Boxe éducative encadrée : le geste, le cadre, le respect. Sans mise en danger.",
     menu: true,
     index: true,
   },
@@ -97,9 +98,9 @@ export const ROUTES: readonly Route[] = [
     chemin: '/plannings/',
     nav: 'Plannings',
     question: 'Quand est-ce que je peux m’entraîner, avec mes horaires à moi ?',
-    titre: 'Plannings et horaires des cours près de Colomiers | Boxing Center',
+    titre: 'Plannings et horaires près de Colomiers | Boxing Center',
     description:
-      "Les clubs Boxing Center accueillent 6 jours sur 7, de 10h à 21h15. Retrouve les créneaux qui collent à tes journées et accède aux plannings détaillés de Toulouse Minimes et Portet-sur-Garonne.",
+      "Les clubs Boxing Center accueillent 6 j/7, de 10h à 21h15. Trouve le créneau qui tient dans ta semaine et accède aux plannings détaillés des deux clubs.",
     menu: true,
     index: true,
   },
@@ -108,9 +109,9 @@ export const ROUTES: readonly Route[] = [
     chemin: '/tarifs/',
     nav: 'Tarifs',
     question: 'Combien ça coûte, et qu’est-ce qui est compris ?',
-    titre: 'Tarifs des cours de boxe et MMA près de Colomiers | Boxing Center',
+    titre: 'Tarifs boxe et MMA près de Colomiers | Boxing Center',
     description:
-      "Ce que coûte la pratique de la boxe ou du MMA depuis Colomiers, ce qui est compris dans une adhésion, et où consulter les tarifs à jour des clubs Boxing Center Toulouse Minimes et Portet-sur-Garonne.",
+      "Ce qui est compris dans une adhésion à un club de boxe, et où consulter les tarifs à jour de Boxing Center Toulouse Minimes et Portet-sur-Garonne.",
     menu: true,
     index: true,
   },
@@ -119,7 +120,7 @@ export const ROUTES: readonly Route[] = [
     chemin: '/contact/',
     nav: 'Contact',
     question: 'Je veux poser ma question à quelqu’un.',
-    titre: 'Contact — poser sa question avant de venir | Boxing Center Colomiers',
+    titre: 'Contact | Boxing Center depuis Colomiers',
     description:
       "Une question avant de te déplacer depuis Colomiers ? Écris-nous, on te dit quel club et quel créneau correspondent à ce que tu cherches. Téléphone : 05 62 24 46 82.",
     menu: true,
@@ -132,6 +133,17 @@ export const ROUTES: readonly Route[] = [
     question: 'Message envoyé.',
     titre: 'Message bien reçu | Boxing Center Colomiers',
     description: 'Ta demande est partie. On te répond rapidement.',
+    menu: false,
+    index: false,
+  },
+  {
+    id: 'introuvable',
+    chemin: '/404/',
+    nav: 'Page introuvable',
+    question: 'Cette adresse ne mène nulle part.',
+    titre: 'Page introuvable | Boxing Center depuis Colomiers',
+    description:
+      "Cette page n'existe pas ou a changé d'adresse. Voilà les pages du site, et où joindre les deux clubs.",
     menu: false,
     index: false,
   },

@@ -4,9 +4,10 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node scripts/verifier.mjs",
     "preview": "astro preview",
-    "images": "node scripts/build-images.mjs"
+    "images": "node scripts/build-images.mjs",
+    "verifier": "node scripts/verifier.mjs"
   },
   "dependencies": {
     "astro": "^5.13.0",
