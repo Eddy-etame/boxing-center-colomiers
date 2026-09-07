@@ -21,6 +21,15 @@ export type Contenu = {
   chapeau: string;
   photoHero: MediaSlug;
   photoSecondaire: MediaSlug;
+  /**
+   * La paire noir-et-blanc / couleur du même instant. Le photographe a
+   * réellement pris ces images deux fois : la couleur qui arrive au scroll
+   * n'est pas un filtre qu'on retire, ce sont deux vraies prises.
+   * Absent = la page n'a pas de bascule.
+   */
+  bascule?: 'garde' | 'paos' | 'corps';
+  /** ce que le visiteur gagne concrètement — sert la bande de conversion */
+  promesse: string;
   /** Le corps de la page : des questions, pas des rubriques. */
   blocs: readonly Bloc[];
   /** Ce que la séance contient réellement, dans l'ordre. */
@@ -32,6 +41,9 @@ export type Contenu = {
 export const CONTENUS: readonly Contenu[] = [
   {
     id: 'boxe-anglaise',
+    bascule: 'garde',
+    promesse:
+      "Apprendre à boxer pour de vrai, encadré, sans avoir à prouver quoi que ce soit à personne.",
     h1: 'Faire de la boxe anglaise quand on part de Colomiers',
     chapeau:
       "La boxe anglaise se pratique aux poings, avec des gants, dans un cadre encadré. Aucun niveau n'est demandé pour commencer. Depuis Colomiers, deux clubs Boxing Center la proposent : Toulouse Minimes et Portet-sur-Garonne, ouverts 6 jours sur 7 de 10h à 21h15.",
@@ -87,6 +99,9 @@ export const CONTENUS: readonly Contenu[] = [
 
   {
     id: 'mma',
+    bascule: 'corps',
+    promesse:
+      "La discipline la plus complète, construite étape par étape, même en partant de zéro.",
     h1: 'Où faire du MMA quand on habite à Colomiers',
     chapeau:
       "Le MMA combine la frappe debout, le corps à corps et le travail au sol. Il se pratique avec un encadrement technique, par étapes, et il est accessible aux débutants. Depuis Colomiers, les clubs Boxing Center de Toulouse Minimes et Portet-sur-Garonne accueillent la pratique 6 jours sur 7, de 10h à 21h15.",
@@ -142,6 +157,9 @@ export const CONTENUS: readonly Contenu[] = [
 
   {
     id: 'boxing-fitness',
+    bascule: 'paos',
+    promesse:
+      "Le cardio et le défoulement de la boxe, sans opposition et sans obligation de combattre.",
     h1: 'Boxing fitness depuis Colomiers : boxer sans combattre',
     chapeau:
       "Le boxing fitness reprend les gestes de la boxe — frappe, déplacement, garde — sans aucune opposition. On ne prend pas de coup, on ne combat pas, et il n'y a rien à prouver. C'est une pratique de cardio et de remise en forme, ouverte à toutes et à tous, dans les clubs Boxing Center accessibles depuis Colomiers.",
@@ -197,6 +215,8 @@ export const CONTENUS: readonly Contenu[] = [
 
   {
     id: 'boxe-enfants',
+    promesse:
+      "Un cadre qui apprend le geste, la maîtrise et le respect — et ça se voit hors de la salle.",
     h1: 'Quelle boxe pour un enfant qui habite à Colomiers',
     chapeau:
       "La boxe éducative apprend le geste, la distance et le respect de l'adversaire, sans mise en danger. C'est un cadre, pas un ring. Les clubs Boxing Center accessibles depuis Colomiers — Toulouse Minimes et Portet-sur-Garonne — encadrent les enfants avec des coachs diplômés.",

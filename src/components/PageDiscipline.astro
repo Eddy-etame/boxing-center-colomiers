@@ -9,8 +9,9 @@
  */
 import Base from '../layouts/Base.astro';
 import Photo from '../components/Photo.astro';
+import Bascule from '../components/Bascule.astro';
 import { contenu, type Contenu } from '../data/contenus';
-import { discipline, CLUBS, HORAIRES, DISCIPLINES } from '../data/verite';
+import { discipline, CLUBS, HORAIRES, DISCIPLINES, CONTACT } from '../data/verite';
 import { route } from '../data/routes';
 
 interface Props { id: Contenu['id'] }
@@ -68,6 +69,19 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
       </div>
     </div>
   </section>
+
+  {c.bascule && (
+    <section class="section vue" aria-labelledby="t-vue">
+      <div class="enveloppe">
+        <p class="numero-section mono"><span>En salle</span></p>
+        <h2 id="t-vue" class="vue__titre">Voilà à quoi ça ressemble vraiment.</h2>
+      </div>
+      <Bascule nom={c.bascule} sizes="100vw" ratio="16 / 9" />
+      <div class="enveloppe">
+        <p class="mono vue__legende">Boxing Center Toulouse Minimes</p>
+      </div>
+    </section>
+  )}
 
   {/* ── Le déroulé d'une séance ── */}
   <section class="section seance" aria-labelledby="t-seance">
@@ -172,6 +186,29 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
       </ul>
     </div>
   </section>
+  {/* ── Conversion : la page finit par une action, pas par une sortie ── */}
+  <section class="section conversion" aria-labelledby="t-conversion">
+    <div class="enveloppe conversion__inner">
+      <p class="numero-section mono"><span>Passer à l’acte</span></p>
+      <h2 id="t-conversion" class="conversion__titre">{c.promesse}</h2>
+      <p class="lead conversion__texte">
+        Deux clubs à proximité de Colomiers, {HORAIRES.texte.valeur.toLowerCase()}.
+        Si tu sais lequel viser, ouvre son site. Si tu hésites, dis-nous ce que tu
+        cherches&nbsp;: on te répond avec le club et le créneau qui te correspondent.
+      </p>
+      <div class="conversion__actions">
+        <a class="bouton bouton--signal" href={route('contact').chemin}>
+          <span>Poser ma question</span>
+          <span class="fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="bouton" href={`tel:${CONTACT.telephoneLien.valeur}`}>
+          <span>{CONTACT.telephone.valeur}</span>
+          <span class="fleche" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
 </Base>
 
 <style>
@@ -336,6 +373,17 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
     font-size: var(--t-petit);
   }
 
+  /* ── Bascule noir et blanc → couleur ── */
+  .vue { padding-bottom: var(--e-7); }
+  .vue__titre { max-width: 20ch; margin-bottom: var(--e-7); }
+  .vue__legende { margin-top: var(--e-4); color: var(--acier-sombre); text-transform: none; }
+
+  /* ── Conversion ── */
+  .conversion { background: var(--marine); }
+  .conversion__inner { max-width: 46rem; }
+  .conversion__titre { font-size: var(--t-h2); max-width: 22ch; margin-bottom: var(--e-5); }
+  .conversion__texte { max-width: 50ch; color: var(--acier); }
+  .conversion__actions { display: flex; flex-wrap: wrap; gap: var(--e-3); margin-top: var(--e-7); }
   /* ── Suite ────────────────────────────────────────────────────────── */
   .suite__titre { max-width: 20ch; margin-bottom: var(--e-6); }
   .suite__liste { list-style: none; border-top: 1px solid var(--trait); }
