@@ -1,0 +1,120 @@
+---
+/**
+ * LA BASCULE — le noir et blanc devient la couleur.
+ *
+ * Ce n'est PAS un filtre CSS qu'on retire. Le photographe a réellement pris
+ * ces instants deux fois, en noir et blanc et en couleur. On superpose les
+ * deux vraies photographies et on ouvre la seconde au scroll.
+ *
+ * Ce que ça raconte : tant que rien n'est décidé, le monde reste en gris.
+ * La certitude colore. C'est la même loi que le rouge du Parcours, appliquée
+ * à la photographie.
+ *
+ * Sans JavaScript et en mouvement réduit : la couleur est simplement là.
+ */
+import Photo from './Photo.astro';
+import { paire, type PAIRES } from '../data/medias';
+
+interface Props {
+  nom: (typeof PAIRES)[number];
+  sizes?: string;
+  ratio?: string;
+  class?: string;
+}
+
+const { nom, sizes = '100vw', ratio, class: classe = '' } = Astro.props;
+const { nb, couleur } = paire(nom);
+---
+
+<div class:list={['bascule', classe]} data-bascule>
+  <div class="bascule__couche bascule__couche--nb">
+    <Photo slug={nb.slug as any} sizes={sizes} ratio={ratio} />
+  </div>
+  <div class="bascule__couche bascule__couche--couleur" data-couleur>
+    <Photo slug={couleur.slug as any} sizes={sizes} ratio={ratio} />
+  </div>
+</div>
+
+<style>
+  .bascule {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .bascule__couche--couleur {
+    position: absolute;
+    inset: 0;
+    /* --ouverture va de 0 à 1 pendant que la section traverse l'écran.
+       Le balayage est légèrement oblique : une coupe droite ferait rideau. */
+    clip-path: polygon(
+      0 0,
+      calc(var(--ouverture, 0) * 118%) 0,
+      calc(var(--ouverture, 0) * 118% - 9%) 100%,
+      0 100%
+    );
+  }
+  .bascule__couche--couleur :global(figcaption) { display: none; }
+
+  /* Sans JS, ou en mouvement réduit : la couleur est acquise d'emblée. */
+  .no-js .bascule__couche--couleur { clip-path: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .bascule__couche--couleur { clip-path: none; }
+  }
+
+  .bascule__couche :global(picture) { height: 100%; }
+  .bascule__couche :global(img) { height: 100%; }
+</style>
+
+<script>
+  const blocs = document.querySelectorAll<HTMLElement>('[data-bascule]');
+  const reduit = matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (blocs.length && !reduit.matches) {
+    let enVue: HTMLElement[] = [];
+    let planifie = false;
+
+    // Une seule boucle partagée pour toutes les bascules de la page, et
+    // seulement pour celles à l'écran : le scroll ne doit rien coûter.
+    const calculer = () => {
+      planifie = false;
+      const h = window.innerHeight;
+      for (const bloc of enVue) {
+        const r = bloc.getBoundingClientRect();
+        // 0 quand le bloc entre par le bas, 1 quand son haut atteint le tiers
+        // supérieur de l'écran.
+        const brut = (h - r.top) / (h * 0.62 + r.height * 0.38);
+        const o = Math.min(1, Math.max(0, brut));
+        bloc.style.setProperty('--ouverture', o.toFixed(3));
+      }
+    };
+
+    const surScroll = () => {
+      if (planifie) return;
+      planifie = true;
+      requestAnimationFrame(calculer);
+    };
+
+    const obs = new IntersectionObserver(
+      (entrees) => {
+        for (const e of entrees) {
+          const el = e.target as HTMLElement;
+          if (e.isIntersecting) {
+            if (!enVue.includes(el)) enVue.push(el);
+          } else {
+            enVue = enVue.filter((x) => x !== el);
+            // Figé à son extrémité la plus proche : pas de retour en arrière
+            // visuel quand on quitte la section.
+            el.style.setProperty('--ouverture', e.boundingClientRect.top < 0 ? '1' : '0');
+          }
+        }
+        if (enVue.length) surScroll();
+      },
+      { rootMargin: '15% 0px 15% 0px' }
+    );
+
+    blocs.forEach((b) => obs.observe(b));
+    addEventListener('scroll', surScroll, { passive: true });
+    addEventListener('resize', surScroll, { passive: true });
+    surScroll();
+  }
+</script>

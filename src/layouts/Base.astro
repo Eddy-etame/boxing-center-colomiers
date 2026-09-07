@@ -1,0 +1,145 @@
+---
+import '../styles/jetons.css';
+import '../styles/base.css';
+import Entete from '../components/Entete.astro';
+import PiedDePage from '../components/PiedDePage.astro';
+import Parcours from '../components/Parcours.astro';
+import { route, type RouteId } from '../data/routes';
+import { SITE, CLUBS, CONTACT, HORAIRES } from '../data/verite';
+
+interface Props {
+  page: RouteId;
+  /** renseigne le parcours quand la page EST une décision de discipline */
+  discipline?: 'boxe-anglaise' | 'mma' | 'boxing-fitness' | 'boxe-enfants';
+  /** image de partage social, dans /public/photos */
+  ogPhoto?: string;
+}
+
+const { page, discipline, ogPhoto = 'club-boxe-colomiers-boxing-center' } = Astro.props;
+const r = route(page);
+const canonique = new URL(r.chemin, SITE.origine).href;
+const og = new URL(`/photos/${ogPhoto}-1440.jpg`, SITE.origine).href;
+
+/**
+ * JSON-LD — il confirme le HTML visible, il n'ajoute jamais un fait que la
+ * page ne dit pas. Aucun `LocalBusiness` n'est émis pour Colomiers : ce
+ * serait déclarer un établissement qui n'existe pas.
+ */
+const donnees = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.origine}/#site`,
+      url: SITE.origine + '/',
+      name: SITE.nom,
+      inLanguage: SITE.langue,
+      publisher: { '@id': `${SITE.origine}/#organisation` },
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${SITE.origine}/#organisation`,
+      name: 'Boxing Center',
+      url: SITE.origine + '/',
+      telephone: CONTACT.telephone.valeur,
+      email: CONTACT.email.valeur,
+      /* Les vraies salles sont des entités distinctes, sur leurs vrais sites. */
+      subOrganization: CLUBS.map((c) => ({
+        '@type': 'SportsActivityLocation',
+        name: c.nom,
+        url: c.site,
+        addressLocality: c.ville,
+        openingHours: `Mo-Sa ${HORAIRES.ouverture.valeur}-${HORAIRES.fermeture.valeur}`,
+      })),
+      areaServed: {
+        '@type': 'City',
+        name: SITE.villeOrigine,
+        containedInPlace: { '@type': 'AdministrativeArea', name: SITE.departement },
+      },
+    },
+    {
+      '@type': 'WebPage',
+      '@id': `${canonique}#page`,
+      url: canonique,
+      name: r.titre,
+      description: r.description,
+      isPartOf: { '@id': `${SITE.origine}/#site` },
+      inLanguage: SITE.langue,
+      about: { '@id': `${SITE.origine}/#organisation` },
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{r.titre}</title>
+    <meta name="description" content={r.description} />
+    <link rel="canonical" href={canonique} />
+    {!r.index && <meta name="robots" content="noindex, follow" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.nom} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={r.titre} />
+    <meta property="og:description" content={r.description} />
+    <meta property="og:url" content={canonique} />
+    <meta property="og:image" content={og} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#07090D" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/logo.png" sizes="any" />
+
+    <!-- Les deux fontes du premier écran sont préchargées ; le reste suit. -->
+    <link rel="preload" href="/fonts/archivo-black-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Retire .no-js avant le premier rendu : pas de scintillement. -->
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+
+    <script type="application/ld+json" set:html={JSON.stringify(donnees)} />
+  </head>
+
+  <body data-discipline={discipline}>
+    <a class="saut" href="#contenu">Aller au contenu</a>
+
+    <Entete actuelle={page} />
+    <Parcours />
+
+    <main id="contenu">
+      <slot />
+    </main>
+
+    <PiedDePage />
+
+    <script>
+      import { demarrer } from '../scripts/parcours';
+      demarrer();
+
+      // Révélations au scroll : une seule fois, puis on cesse d'observer.
+      const cibles = document.querySelectorAll('.reveler');
+      if (cibles.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const obs = new IntersectionObserver(
+          (entrees) => {
+            for (const e of entrees) {
+              if (!e.isIntersecting) continue;
+              e.target.classList.add('vu');
+              obs.unobserve(e.target);
+            }
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.05 }
+        );
+        cibles.forEach((c) => obs.observe(c));
+      } else {
+        cibles.forEach((c) => c.classList.add('vu'));
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,152 @@
+{
+  "materiel-boxe-colomiers-boxing-center": {
+    "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACQAwCdASoUAA0APxF8tFGsKCUisAgBgCIJaQAAW4Vq5inXDBYwAP7oxJzoXB2T+wrAm5FAadZgcCMo4cAAAA==",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  },
+  "cours-boxe-colomiers-sac-de-frappe": {
+    "lqip": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADwBACdASoUABwAPxF8slIsKCSisBgIAYAiCWMAw6wOz0raSzCxGxU5L5jhVoS/FYAA/ieEmG69UTW2MNq/9lj6bPcDmv15dR8boDWfCYzHfam21eDL3ZpaQ48M4hkg6E5BI3qyoMrxZ+mZbHPhZ07iTIWbzBmmgAA=",
+    "w": 2607,
+    "h": 3671,
+    "ratio": 0.7102
+  },
+  "club-boxe-colomiers-boxing-center": {
+    "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABwBACdASoUABwAPxF4slAsJ6SisAgBgCIJaQAANFrvTh9S2613CGq28qb8AAD+gNdMgzKSCkDa++xQ8c5xa0WYIlwzEqFwBq6g+FpfPCVUZn49PS3kV0Cy272jQaCSnkVn+UpAAAA=",
+    "w": 3042,
+    "h": 4284,
+    "ratio": 0.7101
+  },
+  "encadrement-coach-boxe-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAACQAwCdASoUAA0APxF4slEsJ6SisAgBgCIJaQAAW+RIAgbEcMqAAP53A4ZHZ+WIbbJX1MoWhUSyPMu1LDTDLQAA",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  },
+  "boxe-anglaise-colomiers-technique": {
+    "lqip": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAABQBQCdASoUABwAPxF4slGsJySiqA1RgCIJYwDCgEVsFZw6e646GhWUeltP/i8Ag0624AAA/oVbUXpjKYoIWKn61ZYaQB1heC9zBRJrM9CHiJPcDa+9BKcitt9hui2fiCnusH/a9+BH6u3iu4Xuj2AAAAA=",
+    "w": 4016,
+    "h": 5655,
+    "ratio": 0.7102
+  },
+  "cours-collectifs-boxe-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoUAA0APxF2slEsJySisAgBgCIJZwDG9BMdSQVfmKP0AP6jNFrsFc6OAUulu8tfWLB787+jOr8qnoFh8YwrIAAA",
+    "w": 5257,
+    "h": 3298,
+    "ratio": 1.594
+  },
+  "preparation-physique-boxe-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABwAwCdASoUAA0APxF0tFEsJqUisAgBgCIJZwAAWOwkuSZTowAA/RK5r+p3cNJ/XHQNOSZn0x5JUjxrWWpo/n+RXHyanBy5vBAAAA==",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  },
+  "salle-boxing-center-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwBQCdASoUABwAPxF2sFAsJ6SisAgBgCIJZQDGQCHh3XeaVirdEXTiEcb8JqdhHy118AD+qXuzfQxyZqNqabFvsWMbfb9FeQPzKAi/jtttKUAetCWAkpyEvHRooeWOPZKRUG+aYBeTNJhW/AA=",
+    "w": 3237,
+    "h": 4558,
+    "ratio": 0.7102
+  },
+  "ring-boxe-colomiers-boxing-center": {
+    "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoUAA0APxFysVAsJqSisAgBgCIJQBfnBC16GmQ1dB6WAP5JJqKTPKwb15MviWaLE4B3m+nNz7+qS4mwOOncH4AA",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  },
+  "sparring-boxe-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAwCdASoUAA0APxFwsFAsJiSisAgBgCIJZwDImB59RyIgN6Tc1mLAAP6/d2+jt+hH4lRvPHnVdhuAxE5uV2rm1vGlcAAA",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  },
+  "bandage-mains-boxe-colomiers-debutant": {
+    "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAABwBQCdASoUABwAPxF0sFAsJySisAgBgCIJZwDKtCHuxieVHUVuMZ/sEt3f56axOFOC1OAAAOG0/Esu+N5nXUxUCgmYIMwIEI5/zEh4vrgsYNuSFVmUyUnXFN9tgAA20NAI/gWXPy319B47EPVLTxyPvbrFAAAA",
+    "w": 4016,
+    "h": 5655,
+    "ratio": 0.7102
+  },
+  "sport-combat-colomiers-sac-frappe": {
+    "lqip": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAAAwBQCdASoUABwAPvlwqVAqpyQit/qoAVAfCWMAyJgiw/HqwpXx/NxaagNZfe32A+ZhoAD+owLq+lyXdiZJj0WLp8brHztCFGVwNI1R6rbiN0xWZcclaxMy0bLSxvITiBoQUGrDATH1rKv6msuIwOs7OavTVLGAAAA=",
+    "w": 4016,
+    "h": 5655,
+    "ratio": 0.7102
+  },
+  "boxe-colomiers-garde-nb": {
+    "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQBACdASoUABMAPxF6sFKsJ6QiqA1RgCIJaQAAFEhxP/H9+phiVc7gAAD+ufK3T/7iVtbJ7ywhugSyGqcdKv1Yf0XboA5tNck1wuh+6RKAAAAA",
+    "w": 4016,
+    "h": 3775,
+    "ratio": 1.0638
+  },
+  "boxe-colomiers-garde": {
+    "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAABQBACdASoUABMAPxF6sFKsJ6QiqA1RgCIJZQDDNAd5OyO/bf0JeHN/RkFwAP658rdeZHVFuwIqGPmSizH4IicPCPyLVkhtpjLmkWXrKLoXeuC2DF0mfjbwAAA=",
+    "w": 4016,
+    "h": 3775,
+    "ratio": 1.0638
+  },
+  "ambiance-club-boxe-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAwBQCdASoUABwAPxFytFOsJiSisBgIAYAiCWUAzjgxEa89DGj7HC0JJljouUdxsiIVwAD7DlamkR77kUTnt7bGjLu6zX9+OFXJLkHRWFedNIPFmjoD/o0TiBjPUSr3l6orMDKtGKAAAA==",
+    "w": 3443,
+    "h": 4849,
+    "ratio": 0.71
+  },
+  "deplacement-boxe-anglaise-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACQBACdASoUABwAPxF2slCsJ6SisAgBgCIJZQDIXB5AjpXzF30zf7ffa3tdcAAA/s18QgaMjF+iU0GCNYk+Frmmc6n9ksU/xdAri2hR+vz+zvExnPcVOVyI5akqDduZCfU3PiSAAAA=",
+    "w": 4016,
+    "h": 5655,
+    "ratio": 0.7102
+  },
+  "coach-boxe-colomiers-paos": {
+    "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAQBQCdASoUABwAPxF2s1IsJySisBgIAYAiCWkAACNj1CvHFWkA+yzHenGSc8r1RvQAAPvu0Sf8KClsJibS463gLcxyAG1thzTmsrJWdlWwJ4ZO+SSErRy4BhMUlZQp6i/qVdIAAAA=",
+    "w": 2252,
+    "h": 3171,
+    "ratio": 0.7102
+  },
+  "mma-colomiers-boxing-center": {
+    "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADQAwCdASoUAA0APxF0slCsJqSisAgBgCIJZwAARogpiKv8BTOsY9AA/tlSrqlg3xQHbutlpE7uIZOxjgwk9yUROvRjMPIAAAA=",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  },
+  "boxing-fitness-colomiers-nb": {
+    "lqip": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAACQAwCdASoUAA0APxFwsFAsJiSisAgBgCIJaQAAQapySWHCa0oAAP7ZWBpudTgjb6jr5Hs4IT7XmIDAumy74QQAAAA=",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  },
+  "boxing-fitness-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAACQAwCdASoUAA0APxF4slEsJ6SisAgBgCIJZwDLLBiYGIaDiECAAP7jS18M8ERhYNWupfO8nKQOSvm27y+zWoNAuQTKAA==",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  },
+  "premiere-seance-boxe-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACQBACdASoUABwAPxF2slCsJ6SisAgBgCIJZwDM0CHH6yf5gafZWln9ZDfYwwAA/m9I64J/De4z3p8MDWGGIlbFKVu/AGcUZF13wI+jIr1UG9cQMKR58JfYl2bGw+FkFauaJw53JAA=",
+    "w": 3351,
+    "h": 4719,
+    "ratio": 0.7101
+  },
+  "cours-boxe-colomiers-encadrement": {
+    "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABQBACdASoUABMAPxF2r1AsJ6QisAgBgCIJZQDKAB7GJGa55GXBQMVhFMAAAP7o8D0PBtz6p6fjNanGMSd7YK5EdepT+0gVQvf1IzBhHAhsKRp4QEfWpM0GvsQAAA==",
+    "w": 4016,
+    "h": 3775,
+    "ratio": 1.0638
+  },
+  "cours-boxe-colomiers-encadrement-2": {
+    "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAwCdASoUABMAPxF4sVGsJySiqA1RgCIJZQDOOAVbb2BzfyC+R4AA/uNLYGkEhimvZmIOWR3BhWIPo5/NpFjdxLpfOcd2+mS7nbnLx3ntlt+jEEoDQKQxbgAAAA==",
+    "w": 4016,
+    "h": 3775,
+    "ratio": 1.0638
+  },
+  "travail-au-corps-boxe-colomiers-nb": {
+    "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoUAA0APxFwsFAsJiSisAgBgCIJaQAAWllAh5hngz5AAP7AHaLo5fKP2A47z6IxoSUliA4++8QvvKe/A/6YAAAA",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  },
+  "travail-au-corps-boxe-colomiers": {
+    "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQBACdASoUAA0APxF0sFAsJySisAgBgCIJZwDGfCG6YUbqRtigcObsgAD+wCcwvAEVTBRV0WCNp9dy013QLy61D3WHXzDehwAAAA==",
+    "w": 6016,
+    "h": 3775,
+    "ratio": 1.5936
+  }
+}

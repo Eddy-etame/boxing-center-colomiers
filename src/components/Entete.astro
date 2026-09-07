@@ -1,0 +1,297 @@
+---
+import { MENU, type RouteId } from '../data/routes';
+import { CONTACT } from '../data/verite';
+
+interface Props { actuelle: RouteId }
+const { actuelle } = Astro.props;
+---
+
+<header class="entete" data-entete>
+  <div class="enveloppe entete__inner">
+    <a href="/" class="marque" aria-label="Boxing Center — depuis Colomiers, retour à l'accueil">
+      <img src="/logo.png" alt="" width="201" height="94" />
+      <span class="marque__contexte mono">depuis Colomiers</span>
+    </a>
+
+    <nav class="nav" aria-label="Navigation principale">
+      <ul>
+        {MENU.map((r) => (
+          <li>
+            <a
+              href={r.chemin}
+              class:list={['nav__lien', { 'est-actuelle': r.id === actuelle }]}
+              aria-current={r.id === actuelle ? 'page' : undefined}
+            >
+              {r.nav}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <a class="tel mono" href={`tel:${CONTACT.telephoneLien.valeur}`}>
+      <span class="tel__icone" aria-hidden="true">
+        <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4">
+          <path d="M3 2h3l1.5 3.5-2 1.5a9 9 0 0 0 3.5 3.5l1.5-2L14 10v3a1 1 0 0 1-1 1A11 11 0 0 1 2 3a1 1 0 0 1 1-1Z" />
+        </svg>
+      </span>
+      <span class="tel__numero">{CONTACT.telephone.valeur}</span>
+    </a>
+
+    <button type="button" class="burger" data-burger aria-expanded="false" aria-controls="menu-mobile">
+      <span class="vh">Ouvrir le menu</span>
+      <span class="burger__trait" aria-hidden="true"></span>
+      <span class="burger__trait" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<div class="menu-mobile" id="menu-mobile" data-menu hidden>
+  <nav class="enveloppe" aria-label="Navigation">
+    <ul>
+      {MENU.map((r, i) => (
+        <li style={`--i:${i}`}>
+          <a href={r.chemin} class:list={{ 'est-actuelle': r.id === actuelle }}>
+            <span class="menu-mobile__num mono">{String(i + 1).padStart(2, '0')}</span>
+            <span class="menu-mobile__nom">{r.nav}</span>
+            <span class="menu-mobile__question mono">{r.question}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a class="bouton bouton--signal bouton--plein" href={`tel:${CONTACT.telephoneLien.valeur}`}>
+      <span>{CONTACT.telephone.valeur}</span>
+      <span class="fleche" aria-hidden="true">→</span>
+    </a>
+  </nav>
+</div>
+
+<style>
+  .entete {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-entete);
+    background: color-mix(in srgb, var(--encre) 88%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    border-bottom: 1px solid var(--trait-sombre-faible);
+    color: var(--os);
+    transition: background var(--d-normal) var(--e-mecanique);
+  }
+  /* Une fois passé le premier écran, l'en-tête se densifie : on est en
+     lecture, plus en découverte. */
+  .entete[data-compact] {
+    background: color-mix(in srgb, var(--encre) 97%, transparent);
+  }
+
+  .entete__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--e-5);
+    min-height: 4.5rem;
+    transition: min-height var(--d-normal) var(--e-mecanique);
+  }
+  .entete[data-compact] .entete__inner { min-height: 3.75rem; }
+
+  .marque {
+    display: flex;
+    align-items: center;
+    gap: var(--e-3);
+    text-decoration: none;
+    flex: none;
+  }
+  .marque img {
+    height: 2rem;
+    width: auto;
+    transition: height var(--d-normal) var(--e-mecanique);
+  }
+  .entete[data-compact] .marque img { height: 1.75rem; }
+
+  /* Le contexte géographique est porté ici, en permanence : le visiteur ne
+     doit jamais croire qu'il regarde une salle de Colomiers. */
+  .marque__contexte {
+    padding-left: var(--e-3);
+    border-left: 1px solid var(--trait-sombre);
+    color: var(--acier-sombre);
+    letter-spacing: 0.12em;
+  }
+  @media (max-width: 30rem) { .marque__contexte { display: none; } }
+
+  .nav { margin-left: auto; }
+  .nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 1.4vw, 1.75rem);
+    list-style: none;
+  }
+  .nav__lien {
+    position: relative;
+    display: block;
+    padding-block: 0.5rem;
+    font-size: var(--t-petit);
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--acier);
+    white-space: nowrap;
+    transition: color var(--d-rapide) var(--e-mecanique);
+  }
+  /* Le soulignement se tend depuis la gauche : même grammaire que la route. */
+  .nav__lien::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--signal);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--d-normal) var(--e-resolution);
+  }
+  .nav__lien:hover { color: var(--os); }
+  .nav__lien:hover::after { transform: scaleX(1); }
+  .nav__lien.est-actuelle { color: var(--os); }
+  .nav__lien.est-actuelle::after { transform: scaleX(1); }
+
+  .tel {
+    display: flex;
+    align-items: center;
+    gap: var(--e-2);
+    padding: 0.55rem var(--e-4);
+    border: 1px solid var(--trait-sombre);
+    border-radius: var(--rayon-1);
+    color: var(--os);
+    text-decoration: none;
+    flex: none;
+    transition: border-color var(--d-rapide) var(--e-mecanique),
+      color var(--d-rapide) var(--e-mecanique);
+  }
+  .tel:hover { border-color: var(--signal); color: var(--signal); }
+  .tel__icone { display: grid; place-items: center; color: var(--signal); }
+
+  .burger {
+    display: none;
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-right: calc(var(--e-2) * -1);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+  .burger__trait {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    margin: 5px auto;
+    background: var(--os);
+    transition: transform var(--d-normal) var(--e-sortie),
+      opacity var(--d-rapide) linear;
+  }
+  .burger[aria-expanded='true'] .burger__trait:first-child {
+    transform: translateY(3.25px) rotate(45deg);
+  }
+  .burger[aria-expanded='true'] .burger__trait:last-child {
+    transform: translateY(-3.25px) rotate(-45deg);
+  }
+
+  @media (max-width: 64rem) {
+    .nav { display: none; }
+    .burger { display: block; margin-left: auto; }
+    .tel__numero { display: none; }
+    .tel { padding: 0.55rem 0.7rem; }
+  }
+
+  /* ── Menu plein écran ─────────────────────────────────────────────── */
+  .menu-mobile {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-menu);
+    background: var(--encre);
+    padding-top: 5.5rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .menu-mobile ul { list-style: none; }
+  .menu-mobile li {
+    border-top: 1px solid var(--trait-sombre-faible);
+    /* Les entrées entrent en cascade : la navigation se déroule. */
+    animation: entree-menu var(--d-normal) var(--e-sortie) both;
+    animation-delay: calc(var(--i) * 35ms + 60ms);
+  }
+  .menu-mobile li:last-of-type { border-bottom: 1px solid var(--trait-sombre-faible); }
+
+  @keyframes entree-menu {
+    from { opacity: 0; transform: translateY(0.75rem); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .menu-mobile a {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0 var(--e-3);
+    padding: var(--e-4) 0;
+    text-decoration: none;
+    color: var(--os);
+  }
+  .menu-mobile__num { grid-row: span 2; color: var(--acier-sombre); padding-top: 0.35em; }
+  .menu-mobile__nom {
+    font-family: var(--police-titre);
+    font-size: clamp(1.5rem, 6vw, 2.25rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .menu-mobile__question {
+    color: var(--acier-sombre);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    margin-top: 0.35rem;
+  }
+  .menu-mobile a.est-actuelle .menu-mobile__nom { color: var(--signal); }
+  .menu-mobile .bouton { margin-top: var(--e-6); margin-bottom: var(--e-8); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu-mobile li { animation: none; }
+  }
+</style>
+
+<script>
+  const entete = document.querySelector<HTMLElement>('[data-entete]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+
+  // Compression de l'en-tête, sans écouter le scroll : une sentinelle
+  // invisible en haut de page suffit, et ne coûte rien au fil du défilement.
+  if (entete) {
+    const sentinelle = document.createElement('div');
+    sentinelle.setAttribute('aria-hidden', 'true');
+    sentinelle.style.cssText = 'position:absolute;top:0;height:1px;width:1px';
+    document.body.prepend(sentinelle);
+    new IntersectionObserver(
+      ([e]) => entete.toggleAttribute('data-compact', !e.isIntersecting),
+      { rootMargin: '-80px 0px 0px 0px' }
+    ).observe(sentinelle);
+  }
+
+  if (burger && menu) {
+    const basculer = (ouvert: boolean) => {
+      burger.setAttribute('aria-expanded', String(ouvert));
+      menu.hidden = !ouvert;
+      burger.querySelector('.vh')!.textContent = ouvert ? 'Fermer le menu' : 'Ouvrir le menu';
+      document.documentElement.style.overflow = ouvert ? 'hidden' : '';
+      if (ouvert) menu.querySelector<HTMLAnchorElement>('a')?.focus();
+    };
+
+    burger.addEventListener('click', () =>
+      basculer(burger.getAttribute('aria-expanded') !== 'true')
+    );
+
+    // Échap ferme et rend le focus au bouton : on ne piège personne.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !menu.hidden) {
+        basculer(false);
+        burger.focus();
+      }
+    });
+  }
+</script>

@@ -1,0 +1,340 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { CONTACT, CLUBS, DISCIPLINES, HORAIRES } from '../data/verite';
+
+const erreur = Astro.url.searchParams.get('erreur') === '1';
+---
+
+<Base page="contact">
+  <section class="section entete-page" aria-labelledby="t-contact">
+    <div class="enveloppe entete-page__inner">
+      <div>
+        <p class="numero-section mono"><span>Contact</span></p>
+        <h1 id="t-contact">Tu hésites encore&nbsp;?<br />Dis-nous ce que tu cherches.</h1>
+        <p class="lead faible entete-page__intro">
+          Il n’y a pas de mauvaise question. «&nbsp;Je n’ai jamais fait de sport&nbsp;»,
+          «&nbsp;j’ai 45 ans&nbsp;», «&nbsp;je ne veux pas prendre de coup&nbsp;»,
+          «&nbsp;mon fils a 9 ans&nbsp;» — ce sont les messages qu’on reçoit le plus
+          souvent, et ce sont exactement ceux auxquels on sait répondre.
+        </p>
+      </div>
+
+      <div class="direct">
+        <p class="mono direct__cle">Plus rapide</p>
+        <a class="direct__tel" href={`tel:${CONTACT.telephoneLien.valeur}`}>
+          {CONTACT.telephone.valeur}
+        </a>
+        <p class="direct__horaires mono">{HORAIRES.texte.valeur}</p>
+        <a class="lien direct__mail" href={`mailto:${CONTACT.email.valeur}`}>
+          {CONTACT.email.valeur}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section clair formulaire" id="formulaire">
+    <div class="enveloppe formulaire__inner">
+      <form class="form" method="POST" action="/api/contact" data-form>
+        {erreur && (
+          <div class="alerte" role="alert" tabindex="-1" data-alerte>
+            <p class="mono">Le message n’est pas parti</p>
+            <p>
+              Vérifie que le prénom, l’e-mail et le message sont bien remplis, puis
+              renvoie. Si ça bloque encore, appelle le {CONTACT.telephone.valeur} — c’est
+              plus rapide que d’insister.
+            </p>
+          </div>
+        )}
+
+        {/* Le parcours suivi sur le site part avec le message. Rempli par le
+            script ; vide si le visiteur n'a rien parcouru. */}
+        <input type="hidden" name="parcours" data-parcours-champ value="" />
+
+        {/* Pot de miel. Hors flux, hors tabulation, invisible aux lecteurs
+            d'écran : seuls les robots le remplissent. */}
+        <div class="pot" aria-hidden="true">
+          <label for="_gotcha">Ne pas remplir</label>
+          <input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="form__duo">
+          <p class="champ">
+            <label for="prenom">Prénom <abbr title="obligatoire">*</abbr></label>
+            <input type="text" id="prenom" name="prenom" required autocomplete="given-name" />
+          </p>
+          <p class="champ">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" autocomplete="family-name" />
+          </p>
+        </div>
+
+        <div class="form__duo">
+          <p class="champ">
+            <label for="email">E-mail <abbr title="obligatoire">*</abbr></label>
+            <input type="email" id="email" name="email" required autocomplete="email" inputmode="email" />
+          </p>
+          <p class="champ">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" autocomplete="tel" inputmode="tel" />
+          </p>
+        </div>
+
+        <div class="form__duo">
+          <p class="champ">
+            <label for="activite">Activité recherchée</label>
+            <select id="activite" name="activite" data-activite>
+              <option value="">Je ne sais pas encore</option>
+              {DISCIPLINES.map((d) => <option value={d.nom}>{d.nom}</option>)}
+              <option value="Autre sport de combat">Autre sport de combat</option>
+            </select>
+          </p>
+          <p class="champ">
+            <label for="club">Club souhaité</label>
+            <select id="club" name="club" data-club>
+              <option value="">Je ne sais pas encore</option>
+              {CLUBS.map((c) => <option value={c.nom}>{c.nomCourt}</option>)}
+              <option value="Peu importe">Peu importe, dites-moi</option>
+            </select>
+          </p>
+        </div>
+
+        <p class="champ">
+          <label for="secteur">D’où tu pars</label>
+          <input
+            type="text"
+            id="secteur"
+            name="secteur"
+            value="Colomiers"
+            autocomplete="address-level2"
+          />
+        </p>
+
+        <p class="champ">
+          <label for="message">Ta question <abbr title="obligatoire">*</abbr></label>
+          <textarea id="message" name="message" rows="6" required data-message></textarea>
+          <span class="champ__aide" data-aide hidden>
+            On a pré-rempli ce message à partir de ton parcours sur le site. Change-le
+            comme tu veux.
+          </span>
+        </p>
+
+        <button type="submit" class="bouton bouton--signal bouton--plein form__envoi">
+          <span>Envoyer ma question</span>
+          <span class="fleche" aria-hidden="true">→</span>
+        </button>
+
+        <p class="form__legal">
+          Ta demande est transmise à {CONTACT.email.valeur} pour te répondre, et rien
+          d’autre. <a class="lien" href="/confidentialite/">Ce qu’on en fait exactement</a>.
+        </p>
+      </form>
+
+      <aside class="a-cote">
+        <div class="a-cote__image">
+          <Photo
+            slug="premiere-seance-boxe-colomiers"
+            sizes="(max-width: 60rem) 100vw, 34vw"
+            ratio="3 / 4"
+          />
+        </div>
+        <div class="a-cote__clubs">
+          <p class="mono">Ou va voir directement</p>
+          {CLUBS.map((c) => (
+            <a class="a-cote__club" href={c.site} rel="noopener">
+              <span>{c.nomCourt}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .entete-page__inner {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--e-7) var(--e-8);
+    align-items: start;
+  }
+  @media (max-width: 60rem) { .entete-page__inner { grid-template-columns: 1fr; } }
+  .entete-page__intro { max-width: 50ch; margin-top: var(--e-5); }
+
+  .direct {
+    padding: var(--e-5);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon-1);
+  }
+  .direct__cle { color: var(--acier-sombre); margin-bottom: var(--e-3); }
+  .direct__tel {
+    display: block;
+    font-family: var(--police-titre);
+    font-size: clamp(1.5rem, 3.4vw, 2.25rem);
+    letter-spacing: -0.02em;
+    color: var(--os);
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+    transition: color var(--d-rapide) var(--e-mecanique);
+  }
+  .direct__tel:hover { color: var(--signal); }
+  .direct__horaires {
+    margin-block: var(--e-3) var(--e-4);
+    padding-top: var(--e-3);
+    border-top: 1px solid var(--trait-faible);
+    text-transform: none;
+    color: var(--texte-faible);
+  }
+  .direct__mail { font-size: var(--t-petit); }
+
+  .formulaire__inner {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--e-8);
+    align-items: start;
+  }
+  @media (max-width: 60rem) { .formulaire__inner { grid-template-columns: 1fr; } }
+
+  .form__duo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-4);
+  }
+  @media (max-width: 40rem) { .form__duo { grid-template-columns: 1fr; } }
+
+  .champ { display: grid; gap: var(--e-2); margin-bottom: var(--e-4); }
+  .champ label { font-size: var(--t-petit); font-weight: 600; }
+  .champ abbr { color: var(--signal-profond); text-decoration: none; }
+
+  /* Champ à ligne, pas à boîte : le trait s'épaissit et rougit au focus.
+     Même grammaire que la route. */
+  .champ input,
+  .champ select,
+  .champ textarea {
+    width: 100%;
+    padding: 0.7rem 0.75rem 0.7rem 0;
+    border: 0;
+    border-bottom: 1px solid var(--acier-sombre);
+    border-radius: 0;
+    background: transparent;
+    font-size: var(--t-base);
+    transition: border-color var(--d-rapide) var(--e-mecanique),
+      box-shadow var(--d-rapide) var(--e-mecanique);
+  }
+  .champ textarea { resize: vertical; min-height: 8rem; }
+  .champ select { padding-left: 0; }
+
+  .champ input:focus,
+  .champ select:focus,
+  .champ textarea:focus {
+    outline: none;
+    border-bottom-color: var(--signal);
+    box-shadow: 0 1px 0 0 var(--signal);
+  }
+  /* Le focus visible reste garanti au clavier même sans la règle globale. */
+  .champ input:focus-visible,
+  .champ select:focus-visible,
+  .champ textarea:focus-visible {
+    outline: 2px solid var(--signal-profond);
+    outline-offset: 3px;
+  }
+
+  .champ__aide {
+    font-size: var(--t-micro);
+    color: var(--texte-faible);
+    font-family: var(--police-mono);
+    line-height: 1.5;
+  }
+
+  .pot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .form__envoi { margin-top: var(--e-4); justify-content: center; gap: var(--e-3); }
+  .form__legal {
+    margin-top: var(--e-4);
+    font-size: var(--t-micro);
+    color: var(--texte-faible);
+    line-height: 1.6;
+  }
+
+  .alerte {
+    padding: var(--e-4);
+    margin-bottom: var(--e-5);
+    border-left: 3px solid var(--signal);
+    background: color-mix(in srgb, var(--signal) 7%, transparent);
+  }
+  .alerte .mono { color: var(--signal-profond); margin-bottom: var(--e-2); }
+  .alerte p:last-child { margin: 0; font-size: var(--t-petit); }
+
+  .a-cote { display: grid; gap: var(--e-5); }
+  .a-cote__image { max-width: 22rem; }
+  .a-cote__clubs .mono { color: var(--acier-sombre); margin-bottom: var(--e-3); }
+  .a-cote__club {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--e-3);
+    padding: var(--e-4) 0;
+    border-top: 1px solid var(--trait);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color var(--d-rapide) var(--e-mecanique),
+      padding-left var(--d-normal) var(--e-sortie);
+  }
+  .a-cote__club:last-child { border-bottom: 1px solid var(--trait); }
+  .a-cote__club:hover { color: var(--signal-profond); padding-left: var(--e-2); }
+</style>
+
+<script>
+  import { parcours, enPhrase } from '../scripts/parcours';
+
+  const p = parcours();
+  const champParcours = document.querySelector<HTMLInputElement>('[data-parcours-champ]');
+  const message = document.querySelector<HTMLTextAreaElement>('[data-message]');
+  const aide = document.querySelector<HTMLElement>('[data-aide]');
+  const activite = document.querySelector<HTMLSelectElement>('[data-activite]');
+  const club = document.querySelector<HTMLSelectElement>('[data-club]');
+
+  const LIBELLES: Record<string, string> = {
+    'boxe-anglaise': 'Boxe anglaise',
+    mma: 'MMA',
+    'boxing-fitness': 'Boxing Fitness & Femme',
+    'boxe-enfants': 'Boxe enfants',
+  };
+  const CLUBS: Record<string, string> = {
+    minimes: 'Boxing Center Toulouse Minimes',
+    portet: 'Boxing Center Portet-sur-Garonne',
+  };
+
+  // Le site rend au visiteur ce qu'il a parcouru : il ne retape pas ce qu'il
+  // a déjà dit en cliquant. C'est le moment où le parcours sert vraiment.
+  if (p.discipline || p.creneau || p.club) {
+    const phrase = enPhrase(p);
+    if (champParcours) champParcours.value = phrase;
+
+    if (activite && p.discipline && LIBELLES[p.discipline]) {
+      const opt = [...activite.options].find((o) => o.value === LIBELLES[p.discipline!]);
+      if (opt) activite.value = opt.value;
+    }
+    if (club && p.club && CLUBS[p.club]) {
+      const opt = [...club.options].find((o) => o.value === CLUBS[p.club!]);
+      if (opt) club.value = opt.value;
+    }
+
+    // On ne remplace jamais un message que le visiteur a commencé à écrire.
+    if (message && !message.value.trim()) {
+      message.value = `Bonjour,\n\n${phrase}\n\n`;
+      aide?.removeAttribute('hidden');
+    }
+  }
+
+  // L'alerte d'erreur prend le focus au retour du serveur : au lecteur
+  // d'écran, l'échec ne passe pas inaperçu.
+  document.querySelector<HTMLElement>('[data-alerte]')?.focus();
+</script>

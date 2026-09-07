@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT, SITE, CLUBS } from '../data/verite';
+---
+
+<Base page="mentions-legales">
+  <section class="section legal" aria-labelledby="t-legal">
+    <div class="enveloppe legal__inner">
+      <nav class="fil mono" aria-label="Fil d’Ariane">
+        <a href="/">Accueil</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Mentions légales</span>
+      </nav>
+
+      <h1 id="t-legal">Mentions légales</h1>
+
+      {/* À COMPLÉTER avant mise en ligne : raison sociale, forme juridique,
+          capital, RCS, SIRET, TVA, directeur de publication, hébergeur. Ces
+          informations sont obligatoires et ne peuvent pas être devinées. */}
+      <div class="avis mono" role="note">
+        À compléter avant la mise en ligne — raison sociale, forme juridique,
+        SIRET, RCS, directeur de la publication et hébergeur.
+      </div>
+
+      <h2>Éditeur du site</h2>
+      <p>
+        Le site <strong>{SITE.origine.replace('https://', '')}</strong> est édité par
+        Boxing Center.
+      </p>
+      <dl class="fiche">
+        <div><dt>Téléphone</dt><dd><a class="lien" href={`tel:${CONTACT.telephoneLien.valeur}`}>{CONTACT.telephone.valeur}</a></dd></div>
+        <div><dt>Courriel</dt><dd><a class="lien" href={`mailto:${CONTACT.email.valeur}`}>{CONTACT.email.valeur}</a></dd></div>
+        <div><dt>Raison sociale</dt><dd class="attente">à compléter</dd></div>
+        <div><dt>Forme juridique</dt><dd class="attente">à compléter</dd></div>
+        <div><dt>Siège social</dt><dd class="attente">à compléter</dd></div>
+        <div><dt>SIRET</dt><dd class="attente">à compléter</dd></div>
+        <div><dt>Directeur de la publication</dt><dd class="attente">à compléter</dd></div>
+      </dl>
+
+      <h2>Hébergement</h2>
+      <p class="attente">À compléter : nom, raison sociale et adresse de l’hébergeur.</p>
+
+      <h2>Nature du site</h2>
+      <p>
+        Ce site est un point d’entrée éditorial destiné aux habitants de
+        {' '}{SITE.villeOrigine} et de ses environs. <strong>Il ne représente pas une
+        salle Boxing Center située à {SITE.villeOrigine}.</strong> Les entraînements
+        se déroulent dans les clubs suivants, qui disposent chacun de leur propre
+        site&nbsp;:
+      </p>
+      <ul class="liste">
+        {CLUBS.map((c) => (
+          <li><a class="lien" href={c.site} rel="noopener">{c.nom}</a> — {new URL(c.site).hostname}</li>
+        ))}
+      </ul>
+
+      <h2>Propriété intellectuelle</h2>
+      <p>
+        La marque, le logo et les éléments d’identité Boxing Center sont la
+        propriété de leurs titulaires. Les photographies présentées sur ce site ont
+        été prises à Boxing Center Toulouse Minimes et sont créditées
+        B. M. Photographie&nbsp;; toute reproduction sans autorisation est interdite.
+      </p>
+
+      <h2>Liens sortants</h2>
+      <p>
+        Ce site renvoie vers les sites officiels des clubs Boxing Center. Le contenu
+        de ces sites relève de leurs éditeurs respectifs.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal__inner { max-width: 44rem; }
+  .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--acier-sombre); text-decoration: none; }
+  .fil a:hover { color: var(--signal); }
+  .fil span[aria-current] { color: var(--acier); }
+
+  .legal h1 { margin-bottom: var(--e-6); }
+  .legal h2 {
+    font-size: var(--t-h3);
+    margin-top: var(--e-7);
+    margin-bottom: var(--e-3);
+    padding-top: var(--e-4);
+    border-top: 1px solid var(--trait);
+  }
+  .legal p { color: var(--texte-faible); max-width: 62ch; }
+  .legal strong { color: var(--texte); font-weight: 600; }
+
+  /* Ce qui manque est signalé, pas masqué. */
+  .avis {
+    padding: var(--e-4);
+    margin-bottom: var(--e-6);
+    border-left: 3px solid var(--signal);
+    background: color-mix(in srgb, var(--signal) 8%, transparent);
+    color: var(--os);
+    text-transform: none;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+  }
+
+  .fiche { display: grid; gap: 0; margin: var(--e-4) 0 0; }
+  .fiche > div {
+    display: grid;
+    grid-template-columns: 14rem 1fr;
+    gap: var(--e-4);
+    padding: var(--e-3) 0;
+    border-top: 1px solid var(--trait-faible);
+    font-size: var(--t-petit);
+  }
+  @media (max-width: 40rem) { .fiche > div { grid-template-columns: 1fr; gap: 0.25rem; } }
+  .fiche dt { color: var(--acier-sombre); }
+  .fiche dd { margin: 0; }
+  .attente { color: var(--signal); font-style: italic; }
+
+  .liste { list-style: none; display: grid; gap: var(--e-2); margin-top: var(--e-3); font-size: var(--t-petit); color: var(--texte-faible); }
+</style>

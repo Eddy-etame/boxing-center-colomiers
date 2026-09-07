@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT, SITE } from '../data/verite';
+---
+
+<Base page="confidentialite">
+  <section class="section legal" aria-labelledby="t-conf">
+    <div class="enveloppe legal__inner">
+      <nav class="fil mono" aria-label="Fil d’Ariane">
+        <a href="/">Accueil</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Confidentialité</span>
+      </nav>
+
+      <h1 id="t-conf">Ce qu’on fait de tes données</h1>
+      <p class="chapeau">
+        Version courte&nbsp;: on collecte ce que tu écris dans le formulaire, on
+        s’en sert pour te répondre, et rien d’autre. Pas de revente, pas de
+        publicité, pas de profilage.
+      </p>
+
+      <h2>Ce qui est collecté</h2>
+      <p>
+        Uniquement ce que tu remplis toi-même dans le formulaire de contact&nbsp;:
+        prénom, nom, adresse e-mail, téléphone, activité recherchée, club souhaité,
+        commune de départ et message.
+      </p>
+      <p>
+        Le formulaire transmet également le <strong>parcours que tu as suivi sur le
+        site</strong> — la discipline et le créneau que tu as sélectionnés. C’est ce
+        qui permet de te répondre avec une information utile plutôt qu’un message
+        générique. Ce parcours est conservé dans ton navigateur (stockage local),
+        jamais sur un serveur, et tu peux l’effacer à tout moment avec la croix de
+        la barre de parcours.
+      </p>
+
+      <h2>À quoi ça sert</h2>
+      <p>
+        À te répondre, et uniquement à ça. Les demandes arrivent à
+        <a class="lien" href={`mailto:${CONTACT.email.valeur}`}>{CONTACT.email.valeur}</a>.
+        Aucune donnée n’est vendue, louée ni transmise à un tiers à des fins
+        commerciales.
+      </p>
+
+      <h2>Comment c’est transmis</h2>
+      <p>
+        Le formulaire est acheminé par un service tiers d’envoi de formulaires
+        (Inlet), qui relaie le message vers l’adresse ci-dessus. La soumission part
+        de notre serveur, pas de ton navigateur.
+      </p>
+
+      <h2>Combien de temps</h2>
+      <p>
+        Le temps de traiter ta demande et d’assurer un suivi raisonnable. Tu peux
+        demander la suppression de ton message à tout moment en écrivant à
+        <a class="lien" href={`mailto:${CONTACT.email.valeur}`}>{CONTACT.email.valeur}</a>.
+      </p>
+
+      <h2>Cookies</h2>
+      <p>
+        Ce site ne dépose <strong>aucun cookie</strong> et n’utilise aucun traceur
+        publicitaire ni outil de mesure d’audience tiers. Le seul stockage utilisé
+        est le stockage local du navigateur, pour retenir ton parcours&nbsp;: il ne
+        quitte jamais ton appareil.
+      </p>
+
+      <h2>Tes droits</h2>
+      <p>
+        Conformément au RGPD, tu disposes d’un droit d’accès, de rectification,
+        d’effacement, de limitation et d’opposition sur les données te concernant.
+        Pour l’exercer, écris à
+        <a class="lien" href={`mailto:${CONTACT.email.valeur}`}>{CONTACT.email.valeur}</a>
+        ou appelle le
+        <a class="lien" href={`tel:${CONTACT.telephoneLien.valeur}`}>{CONTACT.telephone.valeur}</a>.
+      </p>
+
+      <p class="pied-note mono">
+        Site&nbsp;: {SITE.origine.replace('https://', '')}
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal__inner { max-width: 44rem; }
+  .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--acier-sombre); text-decoration: none; }
+  .fil a:hover { color: var(--signal); }
+  .fil span[aria-current] { color: var(--acier); }
+
+  .legal h1 { margin-bottom: var(--e-5); }
+  .chapeau {
+    max-width: 58ch;
+    padding-left: var(--e-5);
+    border-left: 2px solid var(--signal);
+    font-size: var(--t-lead);
+    line-height: 1.5;
+    color: var(--acier);
+  }
+  .legal h2 {
+    font-size: var(--t-h3);
+    margin-top: var(--e-7);
+    margin-bottom: var(--e-3);
+    padding-top: var(--e-4);
+    border-top: 1px solid var(--trait);
+  }
+  .legal p { color: var(--texte-faible); max-width: 62ch; }
+  .legal strong { color: var(--texte); font-weight: 600; }
+  .pied-note { margin-top: var(--e-8); color: var(--acier-sombre); }
+</style>

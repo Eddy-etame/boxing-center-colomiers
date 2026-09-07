@@ -1,0 +1,305 @@
+---
+/**
+ * PLANNINGS.
+ *
+ * On ne recopie pas les grilles horaires des clubs : elles changent, et une
+ * copie périmée est pire que pas de copie. Cette page fait le seul travail
+ * qu'un site tiers peut faire honnêtement — aider à choisir un créneau selon
+ * sa vie — puis renvoie vers la source à jour.
+ *
+ * Le cahier des charges §9.1 impose un lien direct vers boxe-toulouse.com sur
+ * cette page. Il est ici, visible et orienté action.
+ */
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { CLUBS, HORAIRES, CONTACT } from '../data/verite';
+import { route } from '../data/routes';
+
+const CRENEAUX = [
+  {
+    id: 'midi',
+    nom: 'Le midi',
+    plage: '12h — 14h',
+    pour: 'Tu travailles à Toulouse et tu veux garder tes soirées',
+    note: 'Le créneau le plus calme. Idéal pour débuter sans public.',
+  },
+  {
+    id: 'apres-midi',
+    nom: 'L’après-midi',
+    plage: '14h — 18h',
+    pour: 'Horaires décalés, étudiant, temps partiel, travail de nuit',
+    note: 'La salle est disponible, les coachs sont là, il y a de la place.',
+  },
+  {
+    id: 'soir',
+    nom: 'Le soir',
+    plage: '18h — 21h15',
+    pour: 'Tu sors du travail et tu passes avant de rentrer',
+    note: 'Le plus fréquenté, et le plus vivant. C’est là qu’il y a le plus de monde à qui se mesurer.',
+  },
+  {
+    id: 'week-end',
+    nom: 'Le week-end',
+    plage: 'Samedi',
+    pour: 'La semaine est trop pleine pour tenir un rythme',
+    note: 'Une séance par semaine, tenue toute l’année, vaut mieux que trois abandonnées en mars.',
+  },
+];
+---
+
+<Base page="plannings" ogPhoto="cours-collectifs-boxe-colomiers">
+  <section class="section tete" aria-labelledby="t-plannings">
+    <div class="enveloppe tete__inner">
+      <nav class="fil mono" aria-label="Fil d’Ariane">
+        <a href="/">Accueil</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Plannings</span>
+      </nav>
+      <h1 id="t-plannings">Quand est-ce que tu peux t’entraîner&nbsp;?</h1>
+      <p class="tete__chapeau">
+        Les clubs Boxing Center accueillent {HORAIRES.texte.valeur.toLowerCase()}. Cette
+        page t’aide à repérer le créneau qui tient dans ta semaine&nbsp;; les grilles
+        horaires détaillées, discipline par discipline, sont sur le site de chaque club.
+      </p>
+    </div>
+  </section>
+
+  {/* L'amplitude, comme donnée */}
+  <section class="section marine amplitude" aria-labelledby="t-amplitude">
+    <div class="enveloppe amplitude__inner">
+      <div>
+        <p class="numero-section mono"><span>L’amplitude</span></p>
+        <p class="amplitude__grand">10h <span aria-hidden="true">→</span> 21h15</p>
+        <p class="amplitude__jours mono">6 jours sur 7</p>
+      </div>
+      <div class="amplitude__texte">
+        <h2 id="t-amplitude">Onze heures d’ouverture par jour.</h2>
+        <p class="lead faible">
+          C’est la donnée qui compte le plus quand on vient d’une autre commune.
+          Elle veut dire que tu n’as pas à faire coïncider ta vie avec un créneau
+          unique&nbsp;: c’est le créneau qui s’adapte à ta semaine.
+        </p>
+        <ul class="amplitude__args">
+          {HORAIRES.arguments.map((a) => (
+            <li><span class="amplitude__tiret" aria-hidden="true"></span>{a}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* Choisir un créneau selon sa vie, pas selon une grille */}
+  <section class="section clair creneaux" aria-labelledby="t-creneaux">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>Choisir son créneau</span></p>
+      <h2 id="t-creneaux" class="creneaux__titre">
+        Le bon créneau, c’est celui que tu tiendras en novembre.
+      </h2>
+      <p class="lead creneaux__intro">
+        La question n’est pas «&nbsp;quand est-ce que je peux&nbsp;», c’est
+        «&nbsp;quand est-ce que je pourrai encore dans six mois&nbsp;». Clique sur
+        celui qui te correspond&nbsp;: il rejoint ton parcours et on t’oriente vers
+        le bon club.
+      </p>
+
+      <ul class="creneaux__liste">
+        {CRENEAUX.map((c) => (
+          <li>
+            <button type="button" class="creneau" data-choix={`creneau:${c.id}`}>
+              <span class="creneau__haut">
+                <span class="creneau__nom">{c.nom}</span>
+                <span class="creneau__plage mono">{c.plage}</span>
+              </span>
+              <span class="creneau__pour">{c.pour}</span>
+              <span class="creneau__note">{c.note}</span>
+              <span class="creneau__choisir mono">Ajouter à mon parcours <span aria-hidden="true">+</span></span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* Les grilles réelles — les backlinks exigés par le cahier des charges */}
+  <section class="section grilles" aria-labelledby="t-grilles">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>Les grilles à jour</span></p>
+      <h2 id="t-grilles" class="grilles__titre">
+        Les horaires détaillés sont chez les clubs.
+      </h2>
+      <p class="lead faible grilles__intro">
+        On ne recopie pas leurs plannings ici&nbsp;: une grille recopiée devient
+        fausse dès la première modification, et une information fausse sur un
+        horaire fait perdre un déplacement. Va la chercher à la source.
+      </p>
+
+      <div class="grilles__clubs">
+        {CLUBS.map((c) => (
+          <a class="grille" href={c.site} rel="noopener">
+            <span class="grille__nom">{c.nomCourt}</span>
+            <span class="grille__cta mono">
+              Voir les plannings Boxing Center {c.nomCourt}
+              <span aria-hidden="true">↗</span>
+            </span>
+            <span class="grille__hote mono">{new URL(c.site).hostname}</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="grilles__aide">
+        <p>
+          Un doute sur un créneau précis ou sur une discipline&nbsp;?
+          Appelle le <a class="lien" href={`tel:${CONTACT.telephoneLien.valeur}`}>{CONTACT.telephone.valeur}</a>
+          ou <a class="lien" href={route('contact').chemin}>écris-nous</a> — on vérifie et on te répond.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section papier illustration">
+    <div class="enveloppe">
+      <Photo slug="ambiance-club-boxe-colomiers" sizes="100vw" ratio="21 / 9" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tete__inner { max-width: 58rem; }
+  .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--acier-sombre); text-decoration: none; }
+  .fil a:hover { color: var(--signal); }
+  .fil span[aria-current] { color: var(--acier); }
+  .tete h1 { max-width: 16ch; margin-bottom: var(--e-5); }
+  .tete__chapeau {
+    max-width: 62ch;
+    padding-left: var(--e-5);
+    border-left: 2px solid var(--signal);
+    font-size: var(--t-lead);
+    line-height: 1.5;
+    color: var(--acier);
+  }
+
+  .amplitude__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-7) var(--e-8);
+    align-items: center;
+  }
+  @media (max-width: 60rem) { .amplitude__inner { grid-template-columns: 1fr; } }
+  .amplitude__grand {
+    font-family: var(--police-titre);
+    font-size: var(--t-display);
+    line-height: 0.85;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+  .amplitude__jours { margin-top: var(--e-3); color: var(--signal); letter-spacing: 0.18em; }
+  .amplitude__texte h2 { max-width: 16ch; margin-bottom: var(--e-4); }
+  .amplitude__args { list-style: none; display: grid; gap: var(--e-3); margin-top: var(--e-5); }
+  .amplitude__args li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e-3);
+    font-size: var(--t-petit);
+    color: var(--texte-faible);
+  }
+  .amplitude__tiret {
+    flex: none;
+    width: 1.25rem;
+    height: 1px;
+    background: var(--signal);
+    transform: translateY(-0.3em);
+  }
+
+  .creneaux__titre { max-width: 22ch; margin-bottom: var(--e-4); }
+  .creneaux__intro { max-width: 56ch; color: var(--texte-faible); }
+  .creneaux__liste {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--e-4);
+    margin-top: var(--e-7);
+  }
+  @media (max-width: 52rem) { .creneaux__liste { grid-template-columns: 1fr; } }
+
+  .creneau {
+    display: grid;
+    gap: var(--e-2);
+    width: 100%;
+    height: 100%;
+    padding: var(--e-5);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon-1);
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    align-content: start;
+    transition: border-color var(--d-rapide) var(--e-mecanique),
+      transform var(--d-normal) var(--e-sortie);
+  }
+  .creneau:hover { border-color: var(--signal); transform: translateY(-2px); }
+  .creneau__haut { display: flex; align-items: baseline; justify-content: space-between; gap: var(--e-3); }
+  .creneau__nom { font-family: var(--police-titre); font-size: var(--t-h3); letter-spacing: -0.02em; }
+  .creneau__plage { color: var(--signal-profond); }
+  .creneau__pour { font-weight: 600; font-size: var(--t-petit); }
+  .creneau__note { font-size: var(--t-petit); color: var(--texte-faible); }
+  .creneau__choisir {
+    margin-top: var(--e-3);
+    padding-top: var(--e-3);
+    border-top: 1px solid var(--trait-faible);
+    color: var(--acier-sombre);
+    transition: color var(--d-rapide) var(--e-mecanique);
+  }
+  .creneau:hover .creneau__choisir { color: var(--signal-profond); }
+
+  .grilles__titre { max-width: 20ch; margin-bottom: var(--e-4); }
+  .grilles__intro { max-width: 58ch; }
+  .grilles__clubs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-5);
+    margin-top: var(--e-7);
+  }
+  @media (max-width: 52rem) { .grilles__clubs { grid-template-columns: 1fr; } }
+
+  /* Le lien sortant est un bloc franc : le cahier des charges demande des
+     liens visibles et orientés action, pas un lien noyé dans un paragraphe. */
+  .grille {
+    display: grid;
+    gap: var(--e-3);
+    padding: var(--e-6) var(--e-5);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon-1);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: border-color var(--d-rapide) var(--e-mecanique);
+  }
+  .grille::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--signal);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform var(--d-normal) var(--e-sortie);
+  }
+  .grille:hover { border-color: var(--signal); color: var(--blanc); }
+  .grille:hover::before { transform: scaleY(1); }
+  .grille__nom { font-family: var(--police-titre); font-size: var(--t-h3); letter-spacing: -0.02em; }
+  .grille__cta { color: var(--signal); text-transform: none; letter-spacing: 0.05em; font-size: var(--t-petit); }
+  .grille:hover .grille__cta { color: var(--blanc); }
+  .grille__hote { color: var(--acier-sombre); }
+  .grille:hover .grille__hote { color: color-mix(in srgb, var(--blanc) 80%, transparent); }
+
+  .grilles__aide {
+    margin-top: var(--e-6);
+    padding-top: var(--e-5);
+    border-top: 1px solid var(--trait);
+    font-size: var(--t-petit);
+    color: var(--texte-faible);
+  }
+</style>

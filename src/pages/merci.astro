@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+import { CONTACT, CLUBS, HORAIRES } from '../data/verite';
+---
+
+<Base page="merci">
+  <section class="section merci" aria-labelledby="t-merci">
+    <div class="enveloppe merci__inner">
+      {/* La coche se dessine plutôt que d'apparaître : quelque chose s'est
+          réellement conclu. C'est le seul endroit du site où le rouge est
+          entièrement acquis. */}
+      <svg class="merci__marque" viewBox="0 0 64 64" aria-hidden="true">
+        <circle class="merci__cercle" cx="32" cy="32" r="30" fill="none" />
+        <path class="merci__coche" d="M19 33.5 L28 42 L45 23" fill="none" />
+      </svg>
+
+      <p class="numero-section mono"><span>Message reçu</span></p>
+
+      <h1 id="t-merci">
+        C’est parti.<br />
+        <span class="merci__accent">On te répond.</span>
+      </h1>
+
+      <p class="lead merci__texte">
+        Ta demande est arrivée. Une vraie personne la lit et te répond avec le club
+        et le créneau qui correspondent à ce que tu as décrit — pas un message
+        automatique.
+      </p>
+
+      <div class="merci__urgent">
+        <p class="mono">Si c’est pressé</p>
+        <a class="merci__tel" href={`tel:${CONTACT.telephoneLien.valeur}`}>
+          {CONTACT.telephone.valeur}
+        </a>
+        <p class="mono merci__horaires">{HORAIRES.texte.valeur}</p>
+      </div>
+
+      <div class="merci__suite">
+        <p class="mono">En attendant, va voir les clubs</p>
+        <div class="merci__liens">
+          {CLUBS.map((c) => (
+            <a class="bouton" href={c.site} rel="noopener">
+              <span>{c.nomCourt}</span>
+              <span class="fleche" aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+        <a class="lien merci__retour" href="/">← Revenir à l’accueil</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .merci { min-height: 74svh; display: grid; align-items: center; }
+  .merci__inner { display: grid; justify-items: start; max-width: 44rem; }
+
+  .merci__marque { width: 3.5rem; height: 3.5rem; margin-bottom: var(--e-5); }
+  .merci__cercle {
+    stroke: var(--signal);
+    stroke-width: 1.5;
+    opacity: 0.35;
+    stroke-dasharray: 189;
+    stroke-dashoffset: 189;
+    animation: cercler 900ms var(--e-resolution) 0.1s forwards;
+  }
+  .merci__coche {
+    stroke: var(--signal);
+    stroke-width: 3;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    stroke-dasharray: 42;
+    stroke-dashoffset: 42;
+    animation: cocher 420ms var(--e-sortie) 0.55s forwards;
+  }
+  @keyframes cercler { to { stroke-dashoffset: 0; } }
+  @keyframes cocher { to { stroke-dashoffset: 0; } }
+
+  .merci h1 { margin-bottom: var(--e-5); }
+  .merci__accent { color: var(--signal); }
+  .merci__texte { max-width: 44ch; color: var(--texte-faible); }
+
+  .merci__urgent {
+    margin-top: var(--e-7);
+    padding: var(--e-5);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon-1);
+    width: 100%;
+    max-width: 22rem;
+  }
+  .merci__urgent .mono { color: var(--acier-sombre); margin-bottom: var(--e-2); }
+  .merci__tel {
+    display: block;
+    font-family: var(--police-titre);
+    font-size: var(--t-h3);
+    color: var(--os);
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+  .merci__tel:hover { color: var(--signal); }
+  .merci__horaires {
+    margin-top: var(--e-3);
+    padding-top: var(--e-3);
+    border-top: 1px solid var(--trait-faible);
+    text-transform: none;
+    color: var(--texte-faible);
+  }
+
+  .merci__suite {
+    margin-top: var(--e-8);
+    padding-top: var(--e-5);
+    border-top: 1px solid var(--trait);
+    width: 100%;
+  }
+  .merci__suite > .mono { color: var(--acier-sombre); margin-bottom: var(--e-4); }
+  .merci__liens { display: flex; flex-wrap: wrap; gap: var(--e-3); }
+  .merci__retour { display: inline-block; margin-top: var(--e-6); font-size: var(--t-petit); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .merci__cercle,
+    .merci__coche { stroke-dashoffset: 0; animation: none; }
+  }
+</style>
+
+<script>
+  // Le parcours a rempli son office : la demande est partie. On le remet à
+  // zéro pour que la prochaine visite reparte d'une page propre.
+  import { effacer } from '../scripts/parcours';
+  effacer();
+</script>

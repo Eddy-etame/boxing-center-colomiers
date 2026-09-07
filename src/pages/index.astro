@@ -1,0 +1,467 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Decision from '../components/Decision.astro';
+import Photo from '../components/Photo.astro';
+import Bascule from '../components/Bascule.astro';
+import { CLUBS, DISCIPLINES, HORAIRES, CONTACT } from '../data/verite';
+
+const minimes = CLUBS[0];
+const portet = CLUBS[1];
+---
+
+<Base page="accueil">
+  <Hero />
+
+  {/* ─────────── H02 — LA VÉRITÉ GÉOGRAPHIQUE ─────────── */}
+  <section class="section marine verite" aria-labelledby="t-verite">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>02</span><span>Ce qu’il faut savoir tout de suite</span></p>
+
+      <div class="verite__grille">
+        <div>
+          <h2 id="t-verite">
+            Pas de salle à Colomiers.<br />
+            <span class="verite__nuance">Deux salles juste à côté.</span>
+          </h2>
+        </div>
+
+        <div class="verite__texte">
+          <p class="lead">
+            Autant le dire dès la première minute plutôt que de te le faire découvrir
+            devant une porte&nbsp;: <strong>Boxing Center n’a pas de club dans Colomiers même</strong>.
+          </p>
+          <p>
+            Ce que Boxing Center a, ce sont deux salles complètes dans l’agglomération
+            toulousaine, qui accueillent déjà des habitants de Colomiers&nbsp;:
+            <a class="lien" href={minimes.site} rel="noopener">{minimes.nom}</a> et
+            <a class="lien" href={portet.site} rel="noopener">{portet.nom}</a>.
+            Les habitants de Colomiers peuvent rejoindre le club Boxing Center
+            Portet-sur-Garonne, situé à proximité et accessible pour pratiquer la boxe,
+            le MMA, le fitness et les sports de combat dans un cadre complet.
+          </p>
+          <p>
+            La vraie question n’est donc pas «&nbsp;est-ce qu’il y a un club à Colomiers&nbsp;»,
+            mais <strong>lequel de ces deux clubs correspond à ta semaine</strong>. C’est
+            exactement ce que cette page sert à déterminer.
+          </p>
+        </div>
+      </div>
+
+      <ul class="verite__points">
+        <li>
+          <span class="mono">Depuis Colomiers</span>
+          <p>Les deux clubs sont dans l’agglomération, dans deux directions différentes.</p>
+        </li>
+        <li>
+          <span class="mono">Amplitude</span>
+          <p>{HORAIRES.texte.valeur} — tu viens quand ta journée te le permet.</p>
+        </li>
+        <li>
+          <span class="mono">Niveau</span>
+          <p>Débutant complet comme compétiteur&nbsp;: les deux publics s’entraînent là-bas.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  {/* ─────────── H03 + H05 — LE MOTEUR ─────────── */}
+  <Decision />
+
+  {/* ─────────── H04 — LES DISCIPLINES ─────────── */}
+  <section class="section discipline" aria-labelledby="t-disciplines">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>04</span><span>Les disciplines</span></p>
+      <h2 id="t-disciplines" class="discipline__titre">
+        Quatre portes d’entrée.<br />Aucune ne demande d’expérience.
+      </h2>
+
+      <ul class="discipline__liste">
+        {DISCIPLINES.map((d, i) => (
+          <li class="reveler" style={`--retard:${i * 70}ms`}>
+            <a class="dcarte" href={d.route}>
+              <span class="mono dcarte__num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="dcarte__nom">{d.nom}</h3>
+              <p class="dcarte__question mono">«&nbsp;{d.question}&nbsp;»</p>
+              <p class="dcarte__reponse">{d.reponse}</p>
+              <span class="dcarte__aller mono">
+                Voir la discipline <span class="fleche" aria-hidden="true">→</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  {/* ─────────── H09 — LA BASCULE (preuve visuelle) ─────────── */}
+  <section class="section bascule-section" aria-labelledby="t-bascule">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>05</span><span>Ce à quoi ça ressemble</span></p>
+      <div class="bascule-section__tete">
+        <h2 id="t-bascule">Ce n’est pas une salle de sport avec des sacs au fond.</h2>
+        <p class="lead faible">
+          C’est un club de boxe&nbsp;: un ring, des coachs qui corrigent au geste près,
+          et des gens de tous niveaux dans la même séance. Les photos ci-dessous ont
+          été prises à Boxing Center Toulouse Minimes.
+        </p>
+      </div>
+    </div>
+
+    <Bascule nom="paos" sizes="100vw" ratio="16 / 9" class="bascule-section__image" />
+
+    <div class="enveloppe">
+      <p class="mono bascule-section__legende">
+        Aux pattes d’ours avec le coach — Boxing Center Toulouse Minimes
+      </p>
+    </div>
+  </section>
+
+  {/* ─────────── H06 — LES VRAIES DESTINATIONS ─────────── */}
+  <section class="section clair destinations" aria-labelledby="t-destinations">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>06</span><span>Les deux clubs, en vrai</span></p>
+      <h2 id="t-destinations" class="destinations__titre">
+        Voilà où tu t’entraînes réellement.
+      </h2>
+
+      <div class="destinations__grille">
+        {CLUBS.map((c, i) => (
+          <article class="club reveler" style={`--retard:${i * 100}ms`}>
+            <div class="club__image">
+              <Photo
+                slug={i === 0 ? 'salle-boxing-center-colomiers' : 'ring-boxe-colomiers-boxing-center'}
+                sizes="(max-width: 52rem) 100vw, 44vw"
+                ratio="4 / 3"
+              />
+            </div>
+            <div class="club__corps">
+              <p class="mono club__index">Club {String(i + 1).padStart(2, '0')}</p>
+              <h3 class="club__nom">{c.nomCourt}</h3>
+              <p class="club__angle">{c.angle}</p>
+              <p class="club__depuis mono">{c.depuisColomiers}</p>
+              <a class="bouton club__lien" href={c.site} rel="noopener">
+                <span>Ouvrir le site du club</span>
+                <span class="fleche" aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ─────────── H08 — L'AMPLITUDE HORAIRE ─────────── */}
+  <section class="section horaires" aria-labelledby="t-horaires">
+    <div class="enveloppe horaires__inner">
+      <div>
+        <p class="numero-section mono"><span>07</span><span>Les horaires</span></p>
+        <h2 id="t-horaires" class="horaires__chiffre">
+          <span class="horaires__grand">10h → 21h15</span>
+          <span class="horaires__jours mono">6 jours sur 7</span>
+        </h2>
+      </div>
+      <div class="horaires__args">
+        <p class="lead">
+          C’est la donnée qui change tout quand on vient d’une autre commune&nbsp;:
+          <strong> tu n’as pas à caler ta vie sur un créneau unique.</strong>
+        </p>
+        <ul>
+          {HORAIRES.arguments.map((a) => (
+            <li><span class="horaires__tiret" aria-hidden="true"></span>{a}</li>
+          ))}
+        </ul>
+        <a class="lien horaires__vers" href="/plannings/">Voir les créneaux en détail →</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ─────────── H07 — LA PREMIÈRE SÉANCE ─────────── */}
+  <section class="section papier premiere" aria-labelledby="t-premiere">
+    <div class="enveloppe premiere__inner">
+      <div class="premiere__image">
+        <Photo
+          slug="bandage-mains-boxe-colomiers-debutant"
+          sizes="(max-width: 60rem) 100vw, 40vw"
+          ratio="3 / 4"
+        />
+      </div>
+      <div class="premiere__texte">
+        <p class="numero-section mono"><span>08</span><span>La première fois</span></p>
+        <h2 id="t-premiere">Personne n’est jamais arrivé en sachant boxer.</h2>
+        <ol class="premiere__etapes">
+          <li>
+            <span class="mono">01</span>
+            <p><strong>Tu arrives en tenue de sport.</strong> Un short, un tee-shirt, une bouteille d’eau. Rien d’autre n’est exigé pour un premier cours.</p>
+          </li>
+          <li>
+            <span class="mono">02</span>
+            <p><strong>Tu ne combats pas.</strong> Une première séance, c’est de la mise en mouvement, de la corde, du sac et du geste. L’opposition vient bien plus tard, et seulement si tu la veux.</p>
+          </li>
+          <li>
+            <span class="mono">03</span>
+            <p><strong>Le coach vient te voir.</strong> Il sait qui est nouveau. Tu n’as pas à te signaler ni à te débrouiller seul dans un coin.</p>
+          </li>
+          <li>
+            <span class="mono">04</span>
+            <p><strong>Tu repars courbaturé, pas humilié.</strong> C’est le seul objectif de la première séance.</p>
+          </li>
+        </ol>
+        <p class="premiere__note">
+          Pour le matériel, les gants et les conditions exactes d’un premier cours,
+          demande directement au club — c’est lui qui a l’information à jour.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ─────────── H10 — CONVERGENCE ─────────── */}
+  <section class="section convergence" aria-labelledby="t-convergence">
+    <div class="enveloppe convergence__inner">
+      <p class="numero-section mono"><span>09</span><span>La suite</span></p>
+      <h2 id="t-convergence" class="convergence__titre">
+        Il ne reste qu’une chose à faire&nbsp;:<br />
+        <span class="convergence__accent">y aller.</span>
+      </h2>
+      <p class="lead convergence__texte">
+        Si tu sais déjà quel club viser, ouvre son site et regarde ses créneaux.
+        Si tu hésites encore, écris-nous&nbsp;: on lit chaque message et on répond
+        avec le club et le créneau qui correspondent à ce que tu cherches.
+      </p>
+      <div class="convergence__actions">
+        <a class="bouton bouton--signal" href="/contact/">
+          <span>Poser ma question</span>
+          <span class="fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="bouton" href={`tel:${CONTACT.telephoneLien.valeur}`}>
+          <span>{CONTACT.telephone.valeur}</span>
+          <span class="fleche" aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── H02 Vérité ─────────────────────────────────────────────────────── */
+  .verite__grille {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-6) var(--e-8);
+    align-items: start;
+  }
+  @media (max-width: 60rem) { .verite__grille { grid-template-columns: 1fr; } }
+
+  /* Sans largeur imposée, « côté. » tombe seul sur une troisième ligne. */
+  .verite__grille h2 { max-width: 13ch; }
+  .verite__nuance { color: var(--signal); }
+  .verite__texte { max-width: 54ch; }
+  .verite__texte strong { color: var(--os); font-weight: 600; }
+  .verite__texte .lead { margin-bottom: var(--e-4); }
+  .verite__texte p:not(.lead) { color: var(--texte-faible); }
+
+  .verite__points {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--e-5);
+    list-style: none;
+    margin-top: var(--e-8);
+    padding-top: var(--e-6);
+    border-top: 1px solid var(--trait);
+  }
+  @media (max-width: 52rem) { .verite__points { grid-template-columns: 1fr; gap: var(--e-4); } }
+  .verite__points span { display: block; margin-bottom: var(--e-2); color: var(--signal); }
+  .verite__points p { margin: 0; font-size: var(--t-petit); color: var(--texte-faible); }
+
+  /* ── H04 Disciplines ────────────────────────────────────────────────── */
+  .discipline__titre { max-width: 20ch; margin-bottom: var(--e-8); }
+
+  .discipline__liste {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    list-style: none;
+    border-top: 1px solid var(--trait);
+  }
+  @media (max-width: 52rem) { .discipline__liste { grid-template-columns: 1fr; } }
+
+  .discipline__liste li { border-bottom: 1px solid var(--trait); }
+  .discipline__liste li:nth-child(odd) { border-right: 1px solid var(--trait); }
+  @media (max-width: 52rem) {
+    .discipline__liste li:nth-child(odd) { border-right: 0; }
+  }
+
+  /* Pas de carte : une zone de la grille. Le survol allume la zone entière. */
+  .dcarte {
+    display: grid;
+    gap: var(--e-3);
+    padding: var(--e-6) var(--e-5) var(--e-6) 0;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+    align-content: start;
+    transition: padding-left var(--d-normal) var(--e-sortie),
+      background var(--d-normal) var(--e-mecanique);
+  }
+  .discipline__liste li:nth-child(even) .dcarte { padding-left: var(--e-5); }
+  @media (max-width: 52rem) {
+    .discipline__liste li:nth-child(even) .dcarte { padding-left: 0; }
+  }
+  .dcarte:hover {
+    padding-left: var(--e-5);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--signal) 8%, transparent), transparent 60%);
+  }
+
+  .dcarte__num { color: var(--acier-sombre); }
+  .dcarte:hover .dcarte__num { color: var(--signal); }
+  .dcarte__nom { font-size: var(--t-h3); }
+  .dcarte__question {
+    color: var(--acier);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: var(--t-petit);
+  }
+  .dcarte__reponse { margin: 0; color: var(--texte-faible); max-width: 44ch; }
+  .dcarte__aller {
+    margin-top: var(--e-2);
+    color: var(--acier-sombre);
+    transition: color var(--d-rapide) var(--e-mecanique);
+  }
+  .dcarte:hover .dcarte__aller { color: var(--signal); }
+  .dcarte .fleche {
+    display: inline-block;
+    transition: transform var(--d-normal) var(--e-sortie);
+  }
+  .dcarte:hover .fleche { transform: translateX(5px); }
+
+  /* ── H09 Bascule ────────────────────────────────────────────────────── */
+  .bascule-section { padding-bottom: var(--e-7); }
+  .bascule-section__tete {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-5) var(--e-8);
+    align-items: end;
+    margin-bottom: var(--e-7);
+  }
+  @media (max-width: 60rem) { .bascule-section__tete { grid-template-columns: 1fr; } }
+  .bascule-section__tete .lead { max-width: 46ch; }
+  .bascule-section__legende { margin-top: var(--e-4); color: var(--acier-sombre); text-transform: none; }
+
+  /* ── H06 Destinations ───────────────────────────────────────────────── */
+  .destinations__titre { max-width: 18ch; margin-bottom: var(--e-8); }
+  .destinations__grille {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-7);
+  }
+  @media (max-width: 52rem) { .destinations__grille { grid-template-columns: 1fr; } }
+
+  .club { display: grid; gap: var(--e-5); }
+  .club__image { overflow: hidden; }
+  .club__image :global(img) {
+    transition: transform 900ms var(--e-sortie);
+  }
+  .club:hover .club__image :global(img) { transform: scale(1.03); }
+
+  .club__index { color: var(--acier-sombre); margin-bottom: var(--e-2); }
+  .club__nom { font-size: var(--t-h2); margin-bottom: var(--e-3); }
+  .club__angle { max-width: 40ch; color: var(--texte-faible); }
+  .club__depuis {
+    padding-top: var(--e-3);
+    margin-bottom: var(--e-5);
+    border-top: 1px solid var(--trait-faible);
+    text-transform: none;
+    letter-spacing: 0.04em;
+    color: var(--texte-faible);
+  }
+
+  /* ── H08 Horaires ───────────────────────────────────────────────────── */
+  .horaires__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-7) var(--e-8);
+    align-items: center;
+  }
+  @media (max-width: 60rem) { .horaires__inner { grid-template-columns: 1fr; } }
+
+  .horaires__chiffre { display: grid; gap: var(--e-3); }
+  .horaires__grand {
+    font-size: var(--t-display);
+    line-height: 0.85;
+    letter-spacing: -0.045em;
+    /* Chiffres alignés : c'est une donnée, elle doit se lire comme une donnée. */
+    font-variant-numeric: tabular-nums;
+  }
+  .horaires__jours {
+    font-size: var(--t-base);
+    color: var(--signal);
+    letter-spacing: 0.18em;
+  }
+
+  .horaires__args ul { list-style: none; display: grid; gap: var(--e-3); margin-top: var(--e-5); }
+  .horaires__args li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e-3);
+    font-size: var(--t-petit);
+    color: var(--texte-faible);
+  }
+  .horaires__tiret {
+    flex: none;
+    width: 1.25rem;
+    height: 1px;
+    background: var(--signal);
+    transform: translateY(-0.3em);
+  }
+  .horaires__vers { display: inline-block; margin-top: var(--e-5); font-size: var(--t-petit); }
+  .horaires__args strong { color: var(--texte); font-weight: 600; }
+
+  /* ── H07 Première séance ────────────────────────────────────────────── */
+  .premiere__inner {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+    gap: var(--e-8);
+    align-items: start;
+  }
+  @media (max-width: 60rem) {
+    .premiere__inner { grid-template-columns: 1fr; gap: var(--e-6); }
+    .premiere__image { max-width: 22rem; }
+  }
+
+  .premiere__texte h2 { max-width: 18ch; margin-bottom: var(--e-6); }
+
+  .premiere__etapes { list-style: none; display: grid; }
+  .premiere__etapes li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--e-3);
+    padding: var(--e-4) 0;
+    border-top: 1px solid var(--trait-faible);
+  }
+  .premiere__etapes li:last-child { border-bottom: 1px solid var(--trait-faible); }
+  .premiere__etapes span { color: var(--signal-profond); padding-top: 0.25em; }
+  .premiere__etapes p { margin: 0; font-size: var(--t-petit); color: var(--texte-faible); }
+  .premiere__etapes strong { color: var(--texte); font-weight: 600; }
+
+  .premiere__note {
+    margin-top: var(--e-5);
+    padding-left: var(--e-4);
+    border-left: 2px solid var(--signal);
+    font-size: var(--t-petit);
+    color: var(--texte-faible);
+  }
+
+  /* ── H10 Convergence ────────────────────────────────────────────────── */
+  .convergence { text-align: center; }
+  .convergence__inner { display: grid; justify-items: center; }
+  .convergence .numero-section { width: min(100%, 28rem); }
+  .convergence__titre { font-size: var(--t-h1); margin-bottom: var(--e-5); }
+  .convergence__accent { color: var(--signal); }
+  .convergence__texte { max-width: 48ch; color: var(--texte-faible); }
+  .convergence__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--e-3);
+    margin-top: var(--e-7);
+  }
+</style>

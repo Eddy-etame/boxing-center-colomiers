@@ -1,0 +1,203 @@
+---
+/**
+ * Le pied de page est une carte de connaissance, pas un dépotoir de liens :
+ * il redit où sont les vrais clubs, ce que ce site est (et n'est pas), et
+ * comment joindre quelqu'un.
+ */
+import { MENU, route } from '../data/routes';
+import { CLUBS, CONTACT, HORAIRES, DISCIPLINES, SITE } from '../data/verite';
+
+const annee = new Date().getFullYear();
+---
+
+<footer class="pied">
+  <div class="enveloppe">
+    <div class="pied__haut">
+      <div class="pied__verite">
+        <p class="mono pied__cle">Ce site</p>
+        <p class="pied__phrase">
+          <strong>Boxing Center — depuis Colomiers</strong> est le point d’entrée
+          des habitants de Colomiers vers les clubs Boxing Center.
+          <span class="pied__insiste">
+            Il n’existe pas de salle Boxing Center à Colomiers&nbsp;:
+          </span>
+          les entraînements ont lieu à Toulouse Minimes et à Portet-sur-Garonne.
+        </p>
+      </div>
+
+      <div class="pied__clubs">
+        <p class="mono pied__cle">Les salles, en vrai</p>
+        <ul class="pied__liste-clubs">
+          {CLUBS.map((c) => (
+            <li>
+              <a class="pied__club" href={c.site} rel="noopener">
+                <span class="pied__club-nom">{c.nomCourt}</span>
+                <span class="pied__club-site mono">{new URL(c.site).hostname}</span>
+                <span class="pied__club-fleche" aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="mono pied__horaires">
+          {HORAIRES.texte.valeur}
+        </p>
+      </div>
+    </div>
+
+    <div class="pied__grille">
+      <nav aria-label="Pages du site">
+        <p class="mono pied__cle">Le site</p>
+        <ul>
+          {MENU.map((r) => (
+            <li><a class="lien" href={r.chemin}>{r.nav}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Disciplines">
+        <p class="mono pied__cle">Les disciplines</p>
+        <ul>
+          {DISCIPLINES.map((d) => (
+            <li><a class="lien" href={d.route}>{d.nom}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <div>
+        <p class="mono pied__cle">Nous joindre</p>
+        <ul>
+          <li>
+            <a class="lien" href={`tel:${CONTACT.telephoneLien.valeur}`}>
+              {CONTACT.telephone.valeur}
+            </a>
+          </li>
+          <li>
+            <a class="lien" href={`mailto:${CONTACT.email.valeur}`}>
+              {CONTACT.email.valeur}
+            </a>
+          </li>
+          <li><a class="lien" href={route('contact').chemin}>Formulaire de contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="mono pied__cle">Légal</p>
+        <ul>
+          <li><a class="lien" href={route('mentions-legales').chemin}>Mentions légales</a></li>
+          <li><a class="lien" href={route('confidentialite').chemin}>Confidentialité</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pied__bas">
+      <p class="mono">© {annee} Boxing Center — {SITE.villeOrigine}, {SITE.departement}</p>
+      {/* Le crédit se porte ici, en texte lisible, plutôt qu'en filigrane
+          incrusté dans chaque image. À compléter dès que les conditions
+          d'utilisation du lot sont confirmées. */}
+      <p class="mono pied__credit">
+        Photographies prises à Boxing Center Toulouse Minimes — B. M. Photographie.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .pied {
+    background: var(--marine);
+    color: var(--os);
+    border-top: 1px solid var(--trait-sombre-faible);
+    padding-block: var(--e-9) var(--e-6);
+  }
+
+  .pied__cle {
+    color: var(--acier-sombre);
+    margin-bottom: var(--e-4);
+  }
+
+  .pied__haut {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--e-8);
+    padding-bottom: var(--e-8);
+    border-bottom: 1px solid var(--trait-sombre-faible);
+  }
+  @media (max-width: 52rem) {
+    .pied__haut { grid-template-columns: 1fr; gap: var(--e-7); }
+  }
+
+  .pied__phrase {
+    font-size: var(--t-lead);
+    line-height: 1.45;
+    max-width: 34ch;
+    color: var(--acier);
+  }
+  .pied__phrase strong { color: var(--os); font-weight: 600; }
+  /* La correction géographique est la phrase la plus importante du site. */
+  .pied__insiste { color: var(--os); border-bottom: 1px solid var(--signal); }
+
+  .pied__liste-clubs { list-style: none; display: grid; gap: var(--e-2); }
+
+  .pied__club {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: var(--e-2);
+    padding: var(--e-4) 0;
+    border-top: 1px solid var(--trait-sombre-faible);
+    text-decoration: none;
+    color: var(--os);
+    transition: color var(--d-rapide) var(--e-mecanique);
+  }
+  .pied__club:hover { color: var(--signal); }
+  .pied__club-nom {
+    font-family: var(--police-titre);
+    font-size: var(--t-h3);
+    letter-spacing: -0.02em;
+  }
+  .pied__club-site {
+    grid-column: 1;
+    color: var(--acier-sombre);
+    text-transform: none;
+  }
+  .pied__club-fleche {
+    grid-row: span 2;
+    align-self: center;
+    font-size: 1.25rem;
+    transition: transform var(--d-normal) var(--e-sortie);
+  }
+  .pied__club:hover .pied__club-fleche { transform: translate(3px, -3px); }
+
+  .pied__horaires {
+    margin-top: var(--e-4);
+    padding-top: var(--e-4);
+    border-top: 1px solid var(--trait-sombre-faible);
+    color: var(--acier);
+    text-transform: none;
+    letter-spacing: 0.06em;
+  }
+
+  .pied__grille {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--e-6);
+    padding-block: var(--e-8);
+  }
+  @media (max-width: 52rem) {
+    .pied__grille { grid-template-columns: repeat(2, 1fr); gap: var(--e-7) var(--e-5); }
+  }
+
+  .pied__grille ul { list-style: none; display: grid; gap: var(--e-3); }
+  .pied__grille a { font-size: var(--t-petit); color: var(--acier); }
+  .pied__grille a:hover { color: var(--os); }
+
+  .pied__bas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--e-3);
+    padding-top: var(--e-5);
+    border-top: 1px solid var(--trait-sombre-faible);
+  }
+  .pied__bas p { margin: 0; color: var(--acier-sombre); }
+  .pied__credit { text-transform: none; letter-spacing: 0.04em; }
+</style>

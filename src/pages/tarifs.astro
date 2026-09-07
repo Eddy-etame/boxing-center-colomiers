@@ -1,0 +1,265 @@
+---
+/**
+ * TARIFS.
+ *
+ * Aucun prix n'est affiché ici, et c'est une décision, pas un oubli : les
+ * tarifs, les offres et leurs conditions appartiennent à chaque club et
+ * changent d'une saison à l'autre. Publier un chiffre non vérifié sur un site
+ * tiers, c'est fabriquer une déception à l'accueil.
+ *
+ * Ce que cette page apporte à la place — et qu'aucune grille tarifaire ne
+ * donne : ce qui est compris, ce à quoi il faut penser en plus, et comment
+ * comparer honnêtement avec une salle de sport classique.
+ *
+ * Cahier des charges §9.1 : lien direct vers boxe-toulouse.com, ici aussi.
+ */
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { CLUBS, CONTACT, HORAIRES } from '../data/verite';
+import { route } from '../data/routes';
+
+const COMPRIS = [
+  {
+    titre: 'L’encadrement',
+    texte:
+      "C’est le poste principal, et c’est ce qui n’existe pas dans une salle en libre accès. Un coach qui corrige un geste, c’est la différence entre progresser et répéter une erreur pendant un an.",
+  },
+  {
+    titre: 'L’accès aux créneaux',
+    texte: `L’amplitude d’accueil est large — ${HORAIRES.texte.valeur.toLowerCase()} — ce qui change la valeur réelle d’une adhésion : elle ne se périme pas parce que ton emploi du temps a bougé.`,
+  },
+  {
+    titre: 'Le matériel collectif',
+    texte:
+      'Sacs, ring, tatamis, pattes d’ours : tout ce qui coûte cher et qu’on ne peut pas avoir chez soi. Pour le matériel personnel prêté ou non, demande au club.',
+  },
+  {
+    titre: 'La licence, selon les cas',
+    texte:
+      'Certaines pratiques impliquent une licence fédérale et un certificat médical. Les conditions exactes dépendent de la discipline et du club — c’est une question à poser avant de s’inscrire, pas après.',
+  },
+];
+---
+
+<Base page="tarifs" ogPhoto="materiel-boxe-colomiers-boxing-center">
+  <section class="section tete" aria-labelledby="t-tarifs">
+    <div class="enveloppe tete__inner">
+      <nav class="fil mono" aria-label="Fil d’Ariane">
+        <a href="/">Accueil</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Tarifs</span>
+      </nav>
+      <h1 id="t-tarifs">Combien ça coûte, la boxe, quand on part de Colomiers&nbsp;?</h1>
+      <p class="tete__chapeau">
+        Les tarifs sont fixés par chaque club Boxing Center et peuvent évoluer selon
+        la saison, la discipline et la formule. Tu les trouveras à jour sur le site
+        du club concerné. Cette page te dit ce qui est compris dans une adhésion et
+        comment comparer honnêtement avec une salle de sport classique.
+      </p>
+    </div>
+  </section>
+
+  {/* Pourquoi on n'affiche pas de chiffre */}
+  <section class="section marine franchise" aria-labelledby="t-franchise">
+    <div class="enveloppe franchise__inner">
+      <div>
+        <p class="numero-section mono"><span>Pourquoi pas de prix ici</span></p>
+        <h2 id="t-franchise">On préfère ne rien afficher plutôt qu’afficher un chiffre faux.</h2>
+      </div>
+      <div class="franchise__texte">
+        <p class="lead">
+          Un tarif recopié sur un site tiers devient obsolète à la première
+          modification, et personne ne pense à le corriger.
+        </p>
+        <p>
+          Le résultat, c’est quelqu’un qui se déplace depuis Colomiers avec un
+          chiffre en tête et qui en découvre un autre au comptoir. On préfère
+          t’envoyer directement à la source, et t’aider sur ce qu’une grille
+          tarifaire ne dit jamais&nbsp;: ce que tu paies vraiment, et pour quoi.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Ce que couvre une adhésion */}
+  <section class="section clair compris" aria-labelledby="t-compris">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>Ce que tu paies</span></p>
+      <h2 id="t-compris" class="compris__titre">Ce qu’il y a dans une adhésion.</h2>
+      <div class="compris__grille">
+        {COMPRIS.map((c, i) => (
+          <article class="reveler" style={`--retard:${i * 60}ms`}>
+            <p class="mono compris__num">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="compris__nom">{c.titre}</h3>
+            <p class="compris__texte">{c.texte}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* La vraie comparaison */}
+  <section class="section comparer" aria-labelledby="t-comparer">
+    <div class="enveloppe comparer__inner">
+      <div class="comparer__image">
+        <Photo
+          slug="materiel-boxe-colomiers-boxing-center"
+          sizes="(max-width: 60rem) 100vw, 40vw"
+          ratio="4 / 3"
+        />
+      </div>
+      <div class="comparer__texte">
+        <p class="numero-section mono"><span>La bonne comparaison</span></p>
+        <h2 id="t-comparer">Ce n’est pas le même produit qu’une salle de sport.</h2>
+        <p class="lead faible">
+          Comparer un club de boxe à une salle à quinze euros par mois n’a pas de
+          sens&nbsp;: on ne compare pas la même chose.
+        </p>
+        <ul class="comparer__liste">
+          <li>
+            <span class="mono">En salle classique</span>
+            <p>Tu paies l’accès à des machines. Personne ne te regarde, personne ne te corrige, et personne ne remarque si tu arrêtes de venir.</p>
+          </li>
+          <li>
+            <span class="mono">En club de boxe</span>
+            <p>Tu paies du temps de coach, une progression construite, et un groupe qui s’aperçoit de ton absence. C’est précisément ce qui fait qu’on tient dans la durée.</p>
+          </li>
+        </ul>
+        <p class="comparer__note">
+          Le vrai coût d’un abonnement, c’est celui qu’on paie sans y aller.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Les tarifs à jour — backlinks du cahier des charges */}
+  <section class="section papier ou" aria-labelledby="t-ou">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>Les tarifs à jour</span></p>
+      <h2 id="t-ou" class="ou__titre">Va les voir directement chez le club.</h2>
+      <div class="ou__clubs">
+        {CLUBS.map((c) => (
+          <a class="grille" href={c.site} rel="noopener">
+            <span class="grille__nom">{c.nomCourt}</span>
+            <span class="grille__cta mono">
+              Consulter les tarifs Boxing Center {c.nomCourt}
+              <span aria-hidden="true">↗</span>
+            </span>
+            <span class="grille__hote mono">{new URL(c.site).hostname}</span>
+          </a>
+        ))}
+      </div>
+      <p class="ou__aide">
+        Une question sur une formule, une réduction ou une inscription en cours
+        d’année&nbsp;? Appelle le
+        <a class="lien" href={`tel:${CONTACT.telephoneLien.valeur}`}>{CONTACT.telephone.valeur}</a>
+        ou <a class="lien" href={route('contact').chemin}>envoie-nous ta question</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tete__inner { max-width: 58rem; }
+  .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--acier-sombre); text-decoration: none; }
+  .fil a:hover { color: var(--signal); }
+  .fil span[aria-current] { color: var(--acier); }
+  .tete h1 { max-width: 17ch; margin-bottom: var(--e-5); }
+  .tete__chapeau {
+    max-width: 62ch;
+    padding-left: var(--e-5);
+    border-left: 2px solid var(--signal);
+    font-size: var(--t-lead);
+    line-height: 1.5;
+    color: var(--acier);
+  }
+
+  .franchise__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-6) var(--e-8);
+    align-items: start;
+  }
+  @media (max-width: 60rem) { .franchise__inner { grid-template-columns: 1fr; } }
+  .franchise h2 { max-width: 15ch; }
+  .franchise__texte { max-width: 54ch; }
+  .franchise__texte p:not(.lead) { color: var(--texte-faible); }
+
+  .compris__titre { max-width: 18ch; margin-bottom: var(--e-7); }
+  .compris__grille {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--e-7) var(--e-8);
+  }
+  @media (max-width: 52rem) { .compris__grille { grid-template-columns: 1fr; gap: var(--e-6); } }
+  .compris__num { color: var(--signal-profond); margin-bottom: var(--e-3); }
+  .compris__nom { font-size: var(--t-h3); margin-bottom: var(--e-3); }
+  .compris__texte { max-width: 52ch; color: var(--texte-faible); }
+
+  .comparer__inner {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: var(--e-8);
+    align-items: start;
+  }
+  @media (max-width: 60rem) {
+    .comparer__inner { grid-template-columns: 1fr; }
+    .comparer__image { max-width: 26rem; }
+  }
+  .comparer h2 { max-width: 20ch; margin-bottom: var(--e-4); }
+  .comparer .lead { max-width: 48ch; }
+  .comparer__liste { list-style: none; display: grid; margin-top: var(--e-5); }
+  .comparer__liste li { padding: var(--e-4) 0; border-top: 1px solid var(--trait); }
+  .comparer__liste li:last-child { border-bottom: 1px solid var(--trait); }
+  .comparer__liste .mono { display: block; color: var(--signal); margin-bottom: var(--e-2); }
+  .comparer__liste p { margin: 0; font-size: var(--t-petit); color: var(--texte-faible); max-width: 56ch; }
+  .comparer__note {
+    margin-top: var(--e-5);
+    padding-left: var(--e-4);
+    border-left: 2px solid var(--signal);
+    font-weight: 600;
+  }
+
+  .ou__titre { max-width: 18ch; margin-bottom: var(--e-6); }
+  .ou__clubs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e-5); }
+  @media (max-width: 52rem) { .ou__clubs { grid-template-columns: 1fr; } }
+
+  .grille {
+    display: grid;
+    gap: var(--e-3);
+    padding: var(--e-6) var(--e-5);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon-1);
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: border-color var(--d-rapide) var(--e-mecanique);
+  }
+  .grille::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--signal);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform var(--d-normal) var(--e-sortie);
+  }
+  .grille:hover { border-color: var(--signal); color: var(--blanc); }
+  .grille:hover::before { transform: scaleY(1); }
+  .grille__nom { font-family: var(--police-titre); font-size: var(--t-h3); letter-spacing: -0.02em; }
+  .grille__cta { color: var(--signal-profond); text-transform: none; letter-spacing: 0.05em; font-size: var(--t-petit); }
+  .grille:hover .grille__cta { color: var(--blanc); }
+  .grille__hote { color: var(--acier-sombre); }
+  .grille:hover .grille__hote { color: color-mix(in srgb, var(--blanc) 80%, transparent); }
+
+  .ou__aide {
+    margin-top: var(--e-6);
+    padding-top: var(--e-5);
+    border-top: 1px solid var(--trait);
+    font-size: var(--t-petit);
+    color: var(--texte-faible);
+  }
+</style>

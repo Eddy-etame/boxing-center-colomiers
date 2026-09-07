@@ -1,0 +1,278 @@
+/* Base — remise à zéro, typographie, primitives partagées. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* L'en-tête ET la barre de parcours sont collants : les ancres ne doivent
+     pas atterrir dessous. */
+  scroll-padding-top: 8.5rem;
+  /* `clip` et pas `hidden` : `hidden` sur html ou body fabrique un conteneur
+     de défilement imbriqué, ce qui casse position:sticky et fausse scrollY.
+     `clip` coupe le débordement sans rien rendre défilable. */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--encre);
+  color: var(--os);
+  font-family: var(--police-texte);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--t-h1); }
+h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); line-height: 1.1; letter-spacing: -0.015em; }
+
+p { margin: 0 0 1em; text-wrap: pretty; }
+p:last-child { margin-bottom: 0; }
+
+a { color: inherit; }
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+ul, ol { margin: 0; padding: 0; }
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* ── Focus : jamais retiré, toujours visible sur les deux polarités ────── */
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: var(--rayon-1);
+}
+.clair :focus-visible,
+.papier :focus-visible {
+  outline-color: var(--signal-profond);
+}
+
+/* La barre de parcours se cale sous l'en-tête et suit sa compression, pour
+   qu'il n'y ait jamais ni chevauchement ni trou entre les deux. */
+:root { --haut-parcours: 4.5rem; }
+html:has(.entete[data-compact]) { --haut-parcours: 3.75rem; }
+@media (max-width: 64rem) {
+  html:has(.entete[data-compact]) { --haut-parcours: 3.5rem; }
+}
+
+/* ── Primitives de mise en page ───────────────────────────────────────── */
+.enveloppe {
+  width: 100%;
+  max-width: var(--largeur-max);
+  margin-inline: auto;
+  padding-inline: var(--marge);
+}
+
+.section {
+  position: relative;
+  background: var(--fond);
+  color: var(--texte);
+  padding-block: var(--section-y);
+}
+
+.lecture {
+  max-width: var(--largeur-lecture);
+}
+
+/* Étiquette technique : numéro de section, coordonnées, libellés de route. */
+.mono {
+  font-family: var(--police-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+}
+
+.numero-section {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  margin-bottom: var(--e-5);
+}
+.numero-section::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--trait);
+}
+
+.lead {
+  font-size: var(--t-lead);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--texte);
+}
+
+.faible { color: var(--texte-faible); }
+
+/* ── Liens de texte : soulignement qui se lève au survol ──────────────── */
+.lien {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  padding-bottom: 0.08em;
+  transition: background-size var(--d-rapide) var(--e-mecanique),
+    color var(--d-rapide) var(--e-mecanique);
+}
+.lien:hover {
+  background-size: 100% 2px;
+  color: var(--signal);
+}
+.clair .lien:hover,
+.papier .lien:hover { color: var(--signal-profond); }
+
+/* ── Boutons ──────────────────────────────────────────────────────────── */
+.bouton {
+  --hauteur: 3.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-5);
+  min-height: var(--hauteur);
+  padding: 0 var(--e-5);
+  border: 1px solid var(--trait);
+  border-radius: var(--rayon-1);
+  background: transparent;
+  color: var(--texte);
+  font-family: var(--police-mono);
+  font-size: var(--t-petit);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: border-color var(--d-rapide) var(--e-mecanique),
+    color var(--d-rapide) var(--e-mecanique);
+}
+/* Le remplissage vient du bas : le bouton se « charge ». */
+.bouton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--texte);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--d-normal) var(--e-sortie);
+}
+.bouton:hover { border-color: var(--texte); }
+.bouton:hover::before { transform: scaleY(1); }
+.bouton:hover { color: var(--fond); }
+.bouton:active { transform: translateY(1px); }
+
+.bouton .fleche {
+  flex: none;
+  transition: transform var(--d-normal) var(--e-sortie);
+}
+.bouton:hover .fleche { transform: translateX(4px); }
+
+/* Appel principal : rouge, uniquement quand l'action est la conclusion
+   d'une décision. Voir la loi de couleur dans jetons.css. */
+.bouton--signal {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--blanc);
+}
+.bouton--signal::before { background: var(--blanc); }
+.bouton--signal:hover { color: var(--signal-profond); border-color: var(--blanc); }
+
+.bouton--plein { width: 100%; }
+
+/* ── Révélation au scroll ─────────────────────────────────────────────── */
+.reveler {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition: opacity var(--d-lent) var(--e-sortie),
+    transform var(--d-lent) var(--e-sortie);
+  transition-delay: var(--retard, 0ms);
+}
+.reveler.vu {
+  opacity: 1;
+  transform: none;
+}
+/* Sans JS, rien ne reste caché. */
+.no-js .reveler { opacity: 1; transform: none; }
+
+/* ── Lien d'évitement ─────────────────────────────────────────────────── */
+.saut {
+  position: absolute;
+  left: var(--marge);
+  top: 0;
+  z-index: var(--z-saut);
+  transform: translateY(-150%);
+  background: var(--signal);
+  color: var(--blanc);
+  padding: var(--e-3) var(--e-4);
+  font-family: var(--police-mono);
+  font-size: var(--t-petit);
+  text-decoration: none;
+  transition: transform var(--d-rapide) var(--e-sortie);
+}
+.saut:focus { transform: translateY(0.5rem); }
+
+.vh {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── Mouvement réduit : un mode conçu, pas une amputation ─────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveler { opacity: 1; transform: none; }
+}
+
+/* ── Couleurs forcées (Windows high contrast) ─────────────────────────── */
+@media (forced-colors: active) {
+  .bouton { border: 1px solid ButtonBorder; }
+  .route-trait { stroke: CanvasText !important; }
+}

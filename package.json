@@ -1,0 +1,18 @@
+{
+  "name": "boxing-center-colomiers",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "images": "node scripts/build-images.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.13.0",
+    "@astrojs/vercel": "^8.2.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.0"
+  }
+}

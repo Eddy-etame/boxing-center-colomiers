@@ -1,0 +1,186 @@
+/*
+  JETONS — la constitution visuelle.
+
+  Thèse : PRÉCISION SOUS PRESSION.
+  La photographie apporte l'intensité physique. L'interface apporte le contrôle.
+  La tension entre les deux fait la sophistication ; si on résout d'un côté on
+  perd (trop physique = site de gym générique, trop contrôlé = tableau de bord).
+
+  LOI DE COULEUR : le rouge se mérite. Il ne veut pas dire « boxe », il veut
+  dire « une décision est devenue active ». Cible : 3 à 8 % du champ visuel.
+*/
+
+@font-face {
+  font-family: 'Archivo Black';
+  src: url('/fonts/archivo-black-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo Black';
+  src: url('/fonts/archivo-black-latin-ext.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo-latin.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo-latin-ext.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/space-mono-400-latin.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/space-mono-700-latin.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* ── Couleur ─────────────────────────────────────────────────────────── */
+  --encre: #07090d;
+  --marine: #0a1020;
+  --marine-clair: #111a30;
+  --os: #f4f1ea;
+  --papier: #fbfaf7;
+  --blanc: #ffffff;
+  --acier: #aebccf;
+  --acier-sombre: #6c7d94;
+  --sourdine: #a7adba;
+
+  /* Le rouge. Sur fond clair on utilise --signal-profond pour le texte. */
+  --signal: #e21d2f;
+  --signal-profond: #b20f20;
+  --signal-vif: #ff2f42;
+
+  --trait-sombre: rgba(255, 255, 255, 0.16);
+  --trait-clair: rgba(7, 9, 13, 0.16);
+  --trait-sombre-faible: rgba(255, 255, 255, 0.08);
+  --trait-clair-faible: rgba(7, 9, 13, 0.08);
+
+  /* Polarité par défaut : sombre. Chaque section peut basculer. */
+  --fond: var(--encre);
+  --texte: var(--os);
+  --texte-faible: var(--acier);
+  --trait: var(--trait-sombre);
+  --trait-faible: var(--trait-sombre-faible);
+
+  /* ── Typographie ─────────────────────────────────────────────────────── */
+  --police-titre: 'Archivo Black', 'Archivo', system-ui, sans-serif;
+  --police-texte: 'Archivo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --police-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* Échelle fluide. Le pas est resserré en bas (lisibilité) et ouvert en
+     haut (le display doit pouvoir écraser la page sur grand écran). */
+  --t-micro: clamp(0.6875rem, 0.66rem + 0.14vw, 0.75rem);
+  --t-petit: clamp(0.8125rem, 0.79rem + 0.12vw, 0.875rem);
+  --t-base: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --t-lead: clamp(1.125rem, 1.02rem + 0.52vw, 1.5rem);
+  --t-h3: clamp(1.25rem, 1.09rem + 0.8vw, 1.75rem);
+  --t-h2: clamp(1.75rem, 1.32rem + 2.1vw, 3rem);
+  --t-h1: clamp(2.5rem, 1.4rem + 5.5vw, 6rem);
+  --t-display: clamp(3rem, 0.9rem + 10.5vw, 10rem);
+
+  /* ── Espace ──────────────────────────────────────────────────────────── */
+  --e-1: 0.25rem;
+  --e-2: 0.5rem;
+  --e-3: 0.75rem;
+  --e-4: 1rem;
+  --e-5: 1.5rem;
+  --e-6: 2rem;
+  --e-7: 3rem;
+  --e-8: 4rem;
+  --e-9: 6rem;
+  --e-10: 8rem;
+  --section-y: clamp(4rem, 3rem + 6vw, 9rem);
+
+  /* ── Grille ──────────────────────────────────────────────────────────── */
+  --marge: clamp(1.25rem, 0.7rem + 2.6vw, 4rem);
+  --largeur-max: 84rem;
+  --largeur-lecture: 38rem;
+
+  /* ── Rayons — presque rien. Le système est éditorial, pas SaaS. ─────── */
+  --rayon-0: 0;
+  --rayon-1: 2px;
+  --rayon-2: 4px;
+  --rayon-rond: 999px;
+
+  /* ── Trait de route ──────────────────────────────────────────────────── */
+  --route-fin: 1px;
+  --route-normal: 2px;
+  --route-epais: 3px;
+
+  /* ── Mouvement ───────────────────────────────────────────────────────── */
+  --d-instant: 90ms;
+  --d-rapide: 180ms;
+  --d-normal: 320ms;
+  --d-lent: 620ms;
+  --d-route: 900ms;
+
+  /* sortie : quelque chose part / entre. franc, sans rebond. */
+  --e-sortie: cubic-bezier(0.22, 1, 0.36, 1);
+  /* mécanique : un état bascule. sec. */
+  --e-mecanique: cubic-bezier(0.65, 0, 0.35, 1);
+  /* résolution : la route se tend. accélère puis se pose. */
+  --e-resolution: cubic-bezier(0.16, 0.84, 0.24, 1);
+
+  --z-fond: 0;
+  --z-contenu: 10;
+  --z-colle: 100;
+  --z-entete: 200;
+  --z-menu: 300;
+  --z-saut: 400;
+}
+
+/* Polarité claire — appliquée par section, jamais par préférence système :
+   le parcours de couleur est narratif, il n'appartient pas au visiteur. */
+.clair {
+  --fond: var(--os);
+  --texte: var(--encre);
+  --texte-faible: #4c5566;
+  --trait: var(--trait-clair);
+  --trait-faible: var(--trait-clair-faible);
+}
+.papier {
+  --fond: var(--papier);
+  --texte: var(--encre);
+  --texte-faible: #4c5566;
+  --trait: var(--trait-clair);
+  --trait-faible: var(--trait-clair-faible);
+}
+.marine {
+  --fond: var(--marine);
+  --texte: var(--os);
+  --texte-faible: var(--acier);
+  --trait: var(--trait-sombre);
+  --trait-faible: var(--trait-sombre-faible);
+}

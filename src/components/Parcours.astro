@@ -1,0 +1,235 @@
+---
+/**
+ * LE PARCOURS — le mécanisme signature du site.
+ *
+ * Une ligne fine, présente sur toutes les pages, qui montre où en est le
+ * visiteur dans sa décision :
+ *
+ *     COLOMIERS ──── discipline ──── créneau ──── club
+ *
+ * Au départ tout est en acier : rien n'est décidé, donc rien n'est rouge.
+ * Chaque page visitée, chaque choix fait, tend un segment de plus et le fait
+ * passer au rouge. Le rouge n'est pas décoratif : il dit « ce point est
+ * maintenant établi ».
+ *
+ * Quand les trois segments sont tendus, le terminus affiche le club qui
+ * correspond réellement — et le formulaire de contact arrive pré-rempli avec
+ * ce parcours. C'est ça, le +1 : le site se souvient du chemin, sur tout le
+ * site, et le rend au visiteur au moment où il en a besoin.
+ *
+ * Sans JavaScript : la ligne s'affiche à l'état latent et n'occupe personne.
+ * Elle n'a jamais la charge d'une information critique.
+ */
+---
+
+<aside class="parcours" data-parcours hidden aria-labelledby="parcours-titre">
+  <div class="enveloppe parcours__inner">
+    <h2 id="parcours-titre" class="vh">Ton parcours</h2>
+
+    <svg class="parcours__ligne" viewBox="0 0 100 8" preserveAspectRatio="none" aria-hidden="true">
+      <line class="route-trait" x1="1" y1="4" x2="99" y2="4" />
+      <line class="route-trait route-trait--actif" x1="1" y1="4" x2="99" y2="4" data-tendu />
+    </svg>
+
+    <ol class="parcours__etapes">
+      <li class="parcours__etape est-acquis" data-etape="origine">
+        <span class="parcours__cle">Départ</span>
+        <span class="parcours__valeur">Colomiers</span>
+      </li>
+      <li class="parcours__etape" data-etape="discipline">
+        <span class="parcours__cle">Discipline</span>
+        <span class="parcours__valeur" data-vide="à choisir"></span>
+      </li>
+      <li class="parcours__etape" data-etape="creneau">
+        <span class="parcours__cle">Créneau</span>
+        <span class="parcours__valeur" data-vide="à choisir"></span>
+      </li>
+      <li class="parcours__etape parcours__etape--terminus" data-etape="club">
+        <span class="parcours__cle">Destination</span>
+        <span class="parcours__valeur" data-vide="—"></span>
+      </li>
+    </ol>
+
+    <button type="button" class="parcours__effacer" data-effacer>
+      <span class="vh">Effacer mon parcours</span>
+      <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true">
+        <path d="M2 2 L14 14 M14 2 L2 14" stroke="currentColor" stroke-width="1.6" fill="none" />
+      </svg>
+    </button>
+  </div>
+</aside>
+
+<style>
+  /* Collante SOUS l'en-tête : c'est tout l'intérêt du mécanisme. Le parcours
+     ne sert à rien s'il disparaît au premier défilement — il doit accompagner
+     le visiteur de page en page ET d'écran en écran. */
+  .parcours {
+    position: sticky;
+    top: var(--haut-parcours, 4.5rem);
+    z-index: var(--z-colle);
+    background: color-mix(in srgb, var(--encre) 94%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    border-block: 1px solid var(--trait-sombre-faible);
+    color: var(--os);
+    /* La barre se déplie plutôt qu'elle n'apparaît : elle arrive quand le
+       visiteur a commencé à décider, pas avant. */
+    animation: deplier var(--d-normal) var(--e-sortie) both;
+  }
+
+  @keyframes deplier {
+    from { opacity: 0; clip-path: inset(0 0 100% 0); }
+    to { opacity: 1; clip-path: inset(0 0 0 0); }
+  }
+
+  .parcours__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--e-4);
+    min-height: 3rem;
+  }
+
+  .parcours__ligne {
+    position: absolute;
+    inset-inline: var(--marge);
+    top: 50%;
+    width: calc(100% - 2 * var(--marge));
+    height: 8px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .route-trait {
+    stroke: var(--acier-sombre);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    opacity: 0.5;
+  }
+
+  /* Le trait rouge se tend depuis la gauche, proportionnellement à ce qui
+     est réellement décidé. --tension est écrit par le script. */
+  .route-trait--actif {
+    stroke: var(--signal);
+    stroke-width: 1.5;
+    opacity: 1;
+    stroke-dasharray: 100;
+    stroke-dashoffset: calc(100 - var(--tension, 0) * 98);
+    transition: stroke-dashoffset var(--d-route) var(--e-resolution);
+  }
+
+  .parcours__etapes {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--e-3);
+  }
+
+  .parcours__etape {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e-2);
+    background: var(--encre);
+    padding-inline: var(--e-2);
+    font-family: var(--police-mono);
+    font-size: var(--t-micro);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .parcours__etape:first-child { padding-left: 0; }
+  .parcours__etape:last-child { padding-right: 0; }
+
+  .parcours__cle {
+    color: var(--acier-sombre);
+  }
+  /* Sur petit écran la clé disparaît : la valeur suffit à se repérer. */
+  @media (max-width: 60rem) {
+    .parcours__cle { display: none; }
+  }
+
+  .parcours__valeur {
+    color: var(--acier);
+    transition: color var(--d-normal) var(--e-mecanique);
+  }
+  .parcours__valeur:empty::before {
+    content: attr(data-vide);
+    color: var(--acier-sombre);
+    text-transform: none;
+    letter-spacing: 0.06em;
+    font-style: italic;
+    opacity: 0.7;
+  }
+
+  /* Un point acquis passe au rouge — et seulement à ce moment-là. */
+  .est-acquis .parcours__valeur { color: var(--signal); }
+  .parcours__etape--terminus.est-acquis .parcours__valeur {
+    color: var(--blanc);
+    background: var(--signal);
+    padding: 0.15em 0.5em;
+  }
+
+  .parcours__effacer {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    border: 1px solid var(--trait-sombre-faible);
+    border-radius: var(--rayon-1);
+    background: transparent;
+    color: var(--acier-sombre);
+    cursor: pointer;
+    transition: color var(--d-rapide) var(--e-mecanique),
+      border-color var(--d-rapide) var(--e-mecanique);
+  }
+  .parcours__effacer:hover {
+    color: var(--signal);
+    border-color: var(--signal);
+  }
+
+  /* Sur écran étroit les quatre étapes ne tiennent pas : plutôt que d'en
+     rogner une — la destination, justement celle qui compte — on laisse la
+     ligne défiler horizontalement. Le bouton d'effacement, lui, ne bouge pas. */
+  @media (max-width: 60rem) {
+    .parcours__inner { gap: var(--e-3); }
+    .parcours__etapes {
+      justify-content: flex-start;
+      gap: var(--e-4);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      padding-block: 0.6rem;
+      /* La dernière étape doit pouvoir atteindre le bord. */
+      scroll-snap-type: x proximity;
+    }
+    .parcours__etapes::-webkit-scrollbar { display: none; }
+    .parcours__etape { scroll-snap-align: start; }
+    .parcours__etape:last-child { padding-right: var(--e-4); }
+    /* Le trait n'a plus de sens sous une liste qui défile. */
+    .parcours__ligne { display: none; }
+  }
+
+  @media (max-width: 40rem) {
+    .parcours__etape { font-size: 0.625rem; letter-spacing: 0.06em; }
+  }
+
+  /* Repère de débordement : un dégradé dit qu'il reste de la ligne à droite. */
+  @media (max-width: 60rem) {
+    .parcours__inner::after {
+      content: '';
+      position: absolute;
+      right: calc(2.5rem + var(--e-3));
+      top: 0;
+      bottom: 0;
+      width: 2.5rem;
+      pointer-events: none;
+      background: linear-gradient(to right, transparent, var(--encre));
+    }
+  }
+</style>

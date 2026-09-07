@@ -1,0 +1,324 @@
+---
+/**
+ * LE MOTEUR DE PROXIMITÉ.
+ *
+ * Il transforme « d'où je pars + ce que je cherche + quand je peux » en une
+ * destination réelle, et il dit POURQUOI. Pas de score, pas de pourcentage de
+ * compatibilité, pas de boîte noire : une phrase qu'un humain pourrait dire.
+ *
+ * Ce sont de vrais <input type="radio"> dans un <fieldset>. Au clavier, au
+ * lecteur d'écran et sans JavaScript, la section reste lisible et utile : elle
+ * affiche alors les deux clubs et leurs deux angles. Le JavaScript ne fait que
+ * resserrer la réponse — il ne la crée pas.
+ */
+import { CLUBS, DISCIPLINES } from '../data/verite';
+
+const CRENEAUX = [
+  { id: 'midi', nom: 'Le midi', detail: 'Entre 12h et 14h' },
+  { id: 'apres-midi', nom: "L'après-midi", detail: 'Entre 14h et 18h' },
+  { id: 'soir', nom: 'Le soir', detail: 'À partir de 18h' },
+  { id: 'week-end', nom: 'Le week-end', detail: 'Samedi' },
+] as const;
+---
+
+<section class="section clair decision" id="ton-parcours" aria-labelledby="t-decision">
+  <div class="enveloppe">
+    <p class="numero-section mono"><span>03</span><span>Ton parcours</span></p>
+
+    <div class="decision__tete">
+      <h2 id="t-decision">
+        Dis-nous deux choses.<br />
+        On te dit où aller.
+      </h2>
+      <p class="lead faible decision__intro">
+        Tu pars de Colomiers. Les deux clubs Boxing Center ne sont pas dans la même
+        direction&nbsp;: selon ce que tu cherches et l’heure à laquelle tu peux
+        t’entraîner, l’un des deux est plus tenable que l’autre sur la durée.
+      </p>
+    </div>
+
+    <form class="decision__form" data-decision novalidate>
+      <fieldset class="champ">
+        <legend class="champ__titre">
+          <span class="mono champ__num">01</span>
+          Qu’est-ce que tu cherches&nbsp;?
+        </legend>
+        <div class="options">
+          {DISCIPLINES.map((d) => (
+            <label class="option">
+              <input type="radio" name="discipline" value={d.id} data-choix={`discipline:${d.id}`} />
+              <span class="option__corps">
+                <span class="option__nom">{d.nom}</span>
+                <span class="option__detail">{d.question}</span>
+              </span>
+              <span class="option__marque" aria-hidden="true"></span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset class="champ">
+        <legend class="champ__titre">
+          <span class="mono champ__num">02</span>
+          Quand est-ce que tu peux&nbsp;?
+        </legend>
+        <div class="options">
+          {CRENEAUX.map((c) => (
+            <label class="option">
+              <input type="radio" name="creneau" value={c.id} data-choix={`creneau:${c.id}`} />
+              <span class="option__corps">
+                <span class="option__nom">{c.nom}</span>
+                <span class="option__detail">{c.detail}</span>
+              </span>
+              <span class="option__marque" aria-hidden="true"></span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    </form>
+
+    <!-- Le résultat. aria-live : le lecteur d'écran l'entend changer. -->
+    <div class="resultat" data-resultat aria-live="polite">
+      <div class="resultat__latent" data-latent>
+        <p class="mono">En attente de tes deux réponses</p>
+        <p class="resultat__sansjs">
+          Les deux clubs Boxing Center accueillent les Columérins&nbsp;:
+          {CLUBS.map((c, i) => (
+            <>
+              {i > 0 && ' et '}
+              <a class="lien" href={c.site} rel="noopener">{c.nomCourt}</a>
+            </>
+          ))}. {CLUBS[0].angle} {CLUBS[1].angle}
+        </p>
+      </div>
+
+      <div class="resultat__resolu" data-resolu hidden>
+        <p class="mono resultat__cle">Depuis Colomiers, vise</p>
+        <p class="resultat__club" data-club></p>
+        <p class="resultat__pourquoi" data-pourquoi></p>
+        <div class="resultat__actions">
+          <a class="bouton bouton--signal" data-site href="#" rel="noopener">
+            <span data-site-libelle>Voir le club</span>
+            <span class="fleche" aria-hidden="true">↗</span>
+          </a>
+          <a class="bouton" href="/contact/">
+            <span>Poser ma question</span>
+            <span class="fleche" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .decision__tete {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-6) var(--e-8);
+    align-items: end;
+    margin-bottom: var(--e-8);
+  }
+  @media (max-width: 52rem) { .decision__tete { grid-template-columns: 1fr; } }
+  .decision__intro { max-width: 46ch; }
+
+  .decision__form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-8);
+  }
+  @media (max-width: 52rem) { .decision__form { grid-template-columns: 1fr; gap: var(--e-7); } }
+
+  .champ { border: 0; padding: 0; margin: 0; }
+
+  .champ__titre {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e-3);
+    width: 100%;
+    padding: 0 0 var(--e-4);
+    margin-bottom: var(--e-4);
+    border-bottom: 1px solid var(--trait);
+    font-family: var(--police-titre);
+    font-size: var(--t-h3);
+    letter-spacing: -0.015em;
+  }
+  .champ__num { color: var(--signal-profond); }
+
+  .options { display: grid; }
+
+  /* Rangée de sélection, pas une carte : pas d'ombre, pas de rayon, pas de
+     boîte flottante. Une ligne, un état. */
+  .option {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--e-4);
+    padding: var(--e-4) var(--e-3);
+    border-bottom: 1px solid var(--trait-faible);
+    cursor: pointer;
+    transition: background var(--d-rapide) var(--e-mecanique),
+      padding-left var(--d-normal) var(--e-sortie);
+  }
+  .option:hover { background: color-mix(in srgb, var(--encre) 4%, transparent); }
+
+  /* Le trait rouge se tend à gauche de la ligne choisie : même grammaire que
+     le Parcours, à une autre échelle. */
+  .option::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--signal);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform var(--d-normal) var(--e-resolution);
+  }
+  .option:has(:checked)::before { transform: scaleY(1); }
+  .option:has(:checked) { padding-left: var(--e-5); }
+
+  .option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* Le focus clavier doit se voir sur la rangée entière, pas sur l'input caché. */
+  .option:has(:focus-visible) {
+    outline: 2px solid var(--signal-profond);
+    outline-offset: -2px;
+  }
+
+  .option__corps { display: grid; gap: 0.15rem; }
+  .option__nom {
+    font-size: var(--t-base);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .option__detail {
+    font-size: var(--t-petit);
+    color: var(--texte-faible);
+    line-height: 1.4;
+  }
+  .option:has(:checked) .option__nom { color: var(--signal-profond); }
+
+  .option__marque {
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 1px solid var(--acier-sombre);
+    border-radius: var(--rayon-rond);
+    display: grid;
+    place-items: center;
+    transition: border-color var(--d-rapide) var(--e-mecanique);
+  }
+  .option__marque::after {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--rayon-rond);
+    background: var(--signal);
+    transform: scale(0);
+    transition: transform var(--d-rapide) var(--e-sortie);
+  }
+  .option:has(:checked) .option__marque { border-color: var(--signal); }
+  .option:has(:checked) .option__marque::after { transform: scale(1); }
+
+  /* ── Résultat ─────────────────────────────────────────────────────── */
+  .resultat {
+    margin-top: var(--e-8);
+    padding-top: var(--e-6);
+    border-top: 1px solid var(--trait);
+  }
+
+  .resultat__latent .mono { color: var(--acier-sombre); margin-bottom: var(--e-3); }
+  .resultat__sansjs { max-width: 62ch; color: var(--texte-faible); }
+
+  .resultat__cle { color: var(--acier-sombre); margin-bottom: var(--e-2); }
+
+  .resultat__club {
+    font-family: var(--police-titre);
+    font-size: var(--t-h2);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--signal-profond);
+    margin-bottom: var(--e-4);
+    /* La destination arrive par en dessous, une fois seulement. */
+    animation: resoudre var(--d-lent) var(--e-resolution) both;
+  }
+  @keyframes resoudre {
+    from { opacity: 0; transform: translateY(0.5rem); clip-path: inset(0 100% 0 0); }
+    to { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+  }
+
+  .resultat__pourquoi { max-width: 52ch; font-size: var(--t-lead); line-height: 1.45; }
+
+  .resultat__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-3);
+    margin-top: var(--e-6);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .resultat__club { animation: none; }
+  }
+</style>
+
+<script>
+  import { definir, parcours, recommander } from '../scripts/parcours';
+
+  const bloc = document.querySelector<HTMLElement>('[data-resultat]');
+  const latent = document.querySelector<HTMLElement>('[data-latent]');
+  const resolu = document.querySelector<HTMLElement>('[data-resolu]');
+  const form = document.querySelector<HTMLFormElement>('[data-decision]');
+  if (!bloc || !latent || !resolu || !form) throw new Error('Décision : structure absente');
+
+  const SITES: Record<string, { nom: string; site: string }> = {
+    minimes: { nom: 'Toulouse Minimes', site: 'https://boxe-toulouse.com/' },
+    portet: { nom: 'Portet-sur-Garonne', site: 'https://boxing-center-portet.fr/' },
+  };
+
+  function peindre() {
+    const p = parcours();
+    const reco = recommander(p);
+
+    if (!reco) {
+      latent.hidden = false;
+      resolu.hidden = true;
+      return;
+    }
+
+    const club = reco.club ? SITES[reco.club] : null;
+    latent.hidden = true;
+    resolu.hidden = false;
+
+    resolu.querySelector('[data-club]')!.textContent = club
+      ? club.nom
+      : 'Les deux clubs conviennent';
+    resolu.querySelector('[data-pourquoi]')!.textContent = reco.pourquoi;
+
+    const lien = resolu.querySelector<HTMLAnchorElement>('[data-site]')!;
+    lien.href = club?.site ?? '#ton-parcours';
+    lien.querySelector('[data-site-libelle]')!.textContent = club
+      ? `Ouvrir le site de ${club.nom}`
+      : 'Préciser mon créneau';
+    lien.hidden = !club;
+
+    if (reco.club) definir({ club: reco.club });
+  }
+
+  // Restaure les choix déjà faits lors d'une visite précédente : le visiteur
+  // ne recommence jamais de zéro.
+  const p = parcours();
+  for (const [cle, valeur] of Object.entries(p)) {
+    const input = form.querySelector<HTMLInputElement>(`input[name="${cle}"][value="${valeur}"]`);
+    if (input) input.checked = true;
+  }
+  peindre();
+
+  // Le clic est déjà capté par le moteur (data-choix) ; on ne fait que
+  // redessiner ce bloc quand l'état change, d'où qu'il vienne.
+  document.addEventListener('parcours:maj', peindre);
+</script>

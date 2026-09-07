@@ -1,0 +1,103 @@
+---
+/**
+ * Photo — la seule façon d'afficher une image du lot.
+ *
+ * Sert AVIF puis WebP puis JPEG, quatre largeurs, avec un aperçu flou en
+ * base64 posé en fond pendant le chargement (aucune requête réseau de plus,
+ * aucun trou blanc, aucun décalage de mise en page).
+ *
+ * Toute photo passe par le manifeste : pas de src en dur, donc pas d'image
+ * sans provenance ni texte alternatif.
+ */
+import { media, type MediaSlug } from '../data/medias';
+import photos from '../data/photos.json';
+
+interface Props {
+  slug: MediaSlug;
+  /** tailles CSS de l'image, pour que le navigateur choisisse la bonne largeur */
+  sizes?: string;
+  /** l'image du premier écran : chargée en priorité, jamais en lazy */
+  prioritaire?: boolean;
+  /** rapport d'affichage forcé, ex. '3/4' pour un portrait recadré */
+  ratio?: string;
+  class?: string;
+  /** remplace le cadrage par défaut du manifeste */
+  focus?: string;
+}
+
+const { slug, sizes = '100vw', prioritaire = false, ratio, class: classe = '', focus } = Astro.props;
+
+const m = media(slug);
+const infos = (photos as Record<string, { lqip: string; w: number; h: number; ratio: number }>)[slug];
+
+if (!infos) {
+  throw new Error(
+    `Photo « ${slug} » absente de src/data/photos.json — lance « npm run images ».`
+  );
+}
+
+const LARGEURS = [480, 900, 1440, 2000].filter((l) => l <= infos.w);
+const jeu = (ext: string) => LARGEURS.map((l) => `/photos/${slug}-${l}.${ext} ${l}w`).join(', ');
+const position = focus ?? m.focus ?? '50% 50%';
+const rapport = ratio ?? `${infos.w} / ${infos.h}`;
+---
+
+<figure class:list={['photo', classe]} style={`--ratio:${rapport}; --lqip:url('${infos.lqip}'); --position:${position}`}>
+  <picture>
+    <source type="image/avif" srcset={jeu('avif')} sizes={sizes} />
+    <source type="image/webp" srcset={jeu('webp')} sizes={sizes} />
+    <img
+      src={`/photos/${slug}-${LARGEURS.at(-1)}.jpg`}
+      srcset={jeu('jpg')}
+      sizes={sizes}
+      width={infos.w}
+      height={infos.h}
+      alt={m.alt}
+      loading={prioritaire ? 'eager' : 'lazy'}
+      fetchpriority={prioritaire ? 'high' : 'auto'}
+      decoding={prioritaire ? 'sync' : 'async'}
+      onload="this.closest('.photo')?.classList.add('chargee')"
+    />
+  </picture>
+  {m.caption && <figcaption class="mono">{m.caption}</figcaption>}
+</figure>
+
+<style>
+  .photo {
+    margin: 0;
+    position: relative;
+  }
+
+  picture {
+    display: block;
+    position: relative;
+    aspect-ratio: var(--ratio);
+    overflow: hidden;
+    background-color: var(--marine);
+    background-image: var(--lqip);
+    background-size: cover;
+    background-position: var(--position);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--position);
+    opacity: 0;
+    transition: opacity var(--d-lent) var(--e-sortie);
+  }
+
+  /* Le fondu ne se joue qu'une fois, à l'arrivée du vrai fichier. */
+  .chargee img { opacity: 1; }
+  .no-js .photo img { opacity: 1; }
+
+  figcaption {
+    margin-top: var(--e-3);
+    padding-left: var(--e-3);
+    border-left: 1px solid var(--trait);
+    text-transform: none;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+  }
+</style>

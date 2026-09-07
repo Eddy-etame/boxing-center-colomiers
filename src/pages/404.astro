@@ -1,0 +1,85 @@
+---
+/**
+ * 404 — une page perdue est une route qui ne mène nulle part. On la traite
+ * avec la grammaire du site : le tracé s'interrompt, et on propose les
+ * destinations réelles plutôt qu'un « retour à l'accueil » sec.
+ */
+import Base from '../layouts/Base.astro';
+import { MENU } from '../data/routes';
+import { CONTACT } from '../data/verite';
+---
+
+<Base page="merci">
+  <section class="section quatre" aria-labelledby="t-404">
+    <div class="enveloppe quatre__inner">
+      <svg class="quatre__route" viewBox="0 0 400 60" aria-hidden="true">
+        <line class="quatre__trait" x1="0" y1="30" x2="150" y2="30" />
+        <line class="quatre__trait quatre__trait--mort" x1="250" y1="30" x2="400" y2="30" />
+        <circle class="quatre__fin" cx="150" cy="30" r="4" />
+      </svg>
+
+      <p class="numero-section mono"><span>Erreur 404</span></p>
+      <h1 id="t-404">Cette page n’existe pas.<br /><span class="quatre__accent">Le reste, si.</span></h1>
+      <p class="lead quatre__texte">
+        Soit l’adresse a changé, soit elle a été mal recopiée. Voilà où tu voulais
+        probablement aller.
+      </p>
+
+      <ul class="quatre__liste">
+        {MENU.map((r) => (
+          <li>
+            <a href={r.chemin}>
+              <span class="quatre__nom">{r.nav}</span>
+              <span class="quatre__q mono">{r.question}</span>
+              <span aria-hidden="true" class="quatre__fleche">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <p class="quatre__aide">
+        Rien de tout ça&nbsp;? Appelle le
+        <a class="lien" href={`tel:${CONTACT.telephoneLien.valeur}`}>{CONTACT.telephone.valeur}</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .quatre { min-height: 72svh; display: grid; align-items: center; }
+  .quatre__inner { max-width: 46rem; }
+
+  .quatre__route { width: 12rem; height: 2rem; margin-bottom: var(--e-5); overflow: visible; }
+  .quatre__trait { stroke: var(--acier-sombre); stroke-width: 1.5; }
+  /* Le second tronçon est en pointillés : la route continue, mais pas ici. */
+  .quatre__trait--mort { stroke-dasharray: 4 7; opacity: 0.5; }
+  .quatre__fin { fill: var(--signal); }
+
+  .quatre h1 { margin-bottom: var(--e-4); }
+  .quatre__accent { color: var(--signal); }
+  .quatre__texte { max-width: 46ch; color: var(--texte-faible); margin-bottom: var(--e-7); }
+
+  .quatre__liste { list-style: none; border-top: 1px solid var(--trait); }
+  .quatre__liste li { border-bottom: 1px solid var(--trait); }
+  .quatre__liste a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.15rem var(--e-4);
+    align-items: center;
+    padding: var(--e-4) 0;
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left var(--d-normal) var(--e-sortie);
+  }
+  .quatre__liste a:hover { padding-left: var(--e-3); }
+  .quatre__nom { font-weight: 600; }
+  .quatre__liste a:hover .quatre__nom { color: var(--signal); }
+  .quatre__q { grid-column: 1; color: var(--acier-sombre); text-transform: none; }
+  .quatre__fleche {
+    grid-row: span 2;
+    transition: transform var(--d-normal) var(--e-sortie);
+  }
+  .quatre__liste a:hover .quatre__fleche { transform: translateX(4px); }
+
+  .quatre__aide { margin-top: var(--e-6); font-size: var(--t-petit); color: var(--texte-faible); }
+</style>

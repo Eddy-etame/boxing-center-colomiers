@@ -1,0 +1,367 @@
+---
+/**
+ * Gabarit des quatre pages disciplines.
+ *
+ * Une seule structure, quatre contenus. Il n'y a pas de variante par page :
+ * si une discipline mérite un traitement différent, c'est le contenu qui
+ * change, pas la mise en page — sinon le site perd sa cohérence en trois
+ * modifications.
+ */
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { contenu, type Contenu } from '../data/contenus';
+import { discipline, CLUBS, HORAIRES, DISCIPLINES } from '../data/verite';
+import { route } from '../data/routes';
+
+interface Props { id: Contenu['id'] }
+const { id } = Astro.props;
+
+const c = contenu(id);
+const d = discipline(id);
+const autres = DISCIPLINES.filter((x) => x.id !== id);
+---
+
+<Base page={id} discipline={id} ogPhoto={c.photoHero}>
+  {/* ── Chapeau : la réponse avant tout le reste ── */}
+  <section class="section tete" aria-labelledby="t-page">
+    <div class="enveloppe tete__inner">
+      <nav class="fil mono" aria-label="Fil d’Ariane">
+        <a href="/">Accueil</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{d.nom}</span>
+      </nav>
+
+      <h1 id="t-page">{c.h1}</h1>
+
+      {/* Bloc-réponse : c'est ce que citent Google et les moteurs de réponse. */}
+      <p class="tete__chapeau">{c.chapeau}</p>
+
+      <div class="tete__actions">
+        <a class="bouton bouton--signal" href="#trouver">
+          <span>Quel club pour moi</span>
+          <span class="fleche" aria-hidden="true">↓</span>
+        </a>
+        <a class="bouton" href={route('contact').chemin}>
+          <span>Poser ma question</span>
+          <span class="fleche" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="enveloppe">
+      <Photo slug={c.photoHero} prioritaire sizes="100vw" ratio="21 / 9" class="tete__photo" />
+    </div>
+  </section>
+
+  {/* ── Le corps éditorial ── */}
+  <section class="section clair corps" aria-labelledby="t-corps">
+    <div class="enveloppe">
+      <h2 id="t-corps" class="vh">En détail</h2>
+      <div class="corps__grille">
+        {c.blocs.map((b, i) => (
+          <article class="bloc reveler" style={`--retard:${i * 60}ms`}>
+            <p class="mono bloc__num">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="bloc__titre">{b.titre}</h3>
+            <p class="bloc__texte">{b.texte}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ── Le déroulé d'une séance ── */}
+  <section class="section seance" aria-labelledby="t-seance">
+    <div class="enveloppe seance__inner">
+      <div class="seance__texte">
+        <p class="numero-section mono"><span>Une séance</span></p>
+        <h2 id="t-seance">À quoi ressemble une séance, dans l’ordre.</h2>
+        <p class="lead faible">
+          Le déroulé varie selon le coach et le cycle en cours, mais l’ossature
+          est celle-ci. Rien n’est laissé au hasard, et rien n’est improvisé.
+        </p>
+        <ol class="seance__liste">
+          {c.seance.map((e, i) => (
+            <li>
+              <span class="mono">{String(i + 1).padStart(2, '0')}</span>
+              <span>{e}</span>
+            </li>
+          ))}
+        </ol>
+        <p class="seance__duree mono">
+          Amplitude d’accueil des clubs : {HORAIRES.texte.valeur}
+        </p>
+      </div>
+      <div class="seance__image">
+        <Photo
+          slug={c.photoSecondaire}
+          sizes="(max-width: 60rem) 100vw, 42vw"
+          ratio="3 / 4"
+        />
+      </div>
+    </div>
+  </section>
+
+  {/* ── Où pratiquer, depuis Colomiers ── */}
+  <section class="section papier trouver" id="trouver" aria-labelledby="t-trouver">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>Depuis Colomiers</span></p>
+      <h2 id="t-trouver">Où pratiquer {d.nom.toLowerCase()} près de Colomiers</h2>
+      <p class="lead trouver__intro">
+        Il n’y a pas de salle Boxing Center dans Colomiers même. Les deux clubs
+        du réseau les plus pertinents pour un habitant de Colomiers sont
+        ceux-ci, et ils t’accueillent {HORAIRES.texte.valeur.toLowerCase()}.
+      </p>
+
+      <div class="trouver__clubs">
+        {CLUBS.map((cl) => (
+          <a class="tclub" href={cl.site} rel="noopener">
+            <h3 class="tclub__nom">{cl.nomCourt}</h3>
+            <p class="tclub__angle">{cl.angle}</p>
+            <p class="mono tclub__depuis">{cl.depuisColomiers}</p>
+            <span class="mono tclub__aller">
+              Ouvrir le site du club <span aria-hidden="true">↗</span>
+            </span>
+          </a>
+        ))}
+      </div>
+
+      <p class="trouver__aide">
+        Tu ne sais pas lequel choisir&nbsp;?
+        <a class="lien" href="/#ton-parcours">Réponds à deux questions sur la page d’accueil</a>,
+        ou <a class="lien" href={route('contact').chemin}>écris-nous directement</a>.
+      </p>
+    </div>
+  </section>
+
+  {/* ── FAQ ── */}
+  <section class="section faq" aria-labelledby="t-faq">
+    <div class="enveloppe faq__inner">
+      <div>
+        <p class="numero-section mono"><span>Questions</span></p>
+        <h2 id="t-faq">Ce qu’on nous demande le plus souvent.</h2>
+      </div>
+      <div class="faq__liste">
+        {c.faq.map((q) => (
+          <details class="qr">
+            <summary>
+              <span class="qr__q">{q.titre}</span>
+              <span class="qr__signe" aria-hidden="true"></span>
+            </summary>
+            <p class="qr__r">{q.texte}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ── Les autres disciplines ── */}
+  <section class="section clair suite" aria-labelledby="t-suite">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>Les autres disciplines</span></p>
+      <h2 id="t-suite" class="suite__titre">Ce n’est peut-être pas ça que tu cherches.</h2>
+      <ul class="suite__liste">
+        {autres.map((a) => (
+          <li>
+            <a href={a.route}>
+              <span class="suite__nom">{a.nom}</span>
+              <span class="suite__q mono">«&nbsp;{a.question}&nbsp;»</span>
+              <span class="suite__fleche" aria-hidden="true">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── Chapeau ──────────────────────────────────────────────────────── */
+  .tete { padding-bottom: var(--e-6); }
+  .tete__inner { max-width: 60rem; }
+
+  .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--acier-sombre); text-decoration: none; }
+  .fil a:hover { color: var(--signal); }
+  .fil span[aria-current] { color: var(--acier); }
+
+  .tete h1 { max-width: 18ch; margin-bottom: var(--e-5); }
+
+  /* Le bloc-réponse se distingue visuellement : c'est la phrase que la page
+     doit faire lire en premier, humain comme robot. */
+  .tete__chapeau {
+    max-width: 60ch;
+    padding-left: var(--e-5);
+    border-left: 2px solid var(--signal);
+    font-size: var(--t-lead);
+    line-height: 1.5;
+    color: var(--acier);
+  }
+
+  .tete__actions { display: flex; flex-wrap: wrap; gap: var(--e-3); margin-top: var(--e-6); }
+  .tete__photo { margin-top: var(--e-8); }
+
+  /* ── Corps ────────────────────────────────────────────────────────── */
+  .corps__grille {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-8) var(--e-8);
+  }
+  @media (max-width: 60rem) { .corps__grille { grid-template-columns: 1fr; gap: var(--e-7); } }
+
+  .bloc__num { color: var(--signal-profond); margin-bottom: var(--e-3); }
+  .bloc__titre { font-size: var(--t-h3); margin-bottom: var(--e-3); max-width: 24ch; }
+  .bloc__texte { max-width: 58ch; color: var(--texte-faible); }
+
+  /* ── Séance ───────────────────────────────────────────────────────── */
+  .seance__inner {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: var(--e-8);
+    align-items: start;
+  }
+  @media (max-width: 60rem) {
+    .seance__inner { grid-template-columns: 1fr; }
+    .seance__image { max-width: 24rem; }
+  }
+  .seance h2 { max-width: 20ch; margin-bottom: var(--e-4); }
+  .seance .lead { max-width: 50ch; }
+
+  .seance__liste { list-style: none; margin-top: var(--e-6); }
+  .seance__liste li {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--e-3);
+    padding: var(--e-4) 0;
+    border-top: 1px solid var(--trait);
+    align-items: baseline;
+  }
+  .seance__liste li:last-child { border-bottom: 1px solid var(--trait); }
+  .seance__liste .mono { color: var(--signal); }
+  .seance__duree {
+    margin-top: var(--e-5);
+    color: var(--acier-sombre);
+    text-transform: none;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Trouver ──────────────────────────────────────────────────────── */
+  .trouver h2 { max-width: 22ch; margin-bottom: var(--e-4); }
+  .trouver__intro { max-width: 56ch; color: var(--texte-faible); }
+
+  .trouver__clubs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-5);
+    margin-top: var(--e-7);
+  }
+  @media (max-width: 52rem) { .trouver__clubs { grid-template-columns: 1fr; } }
+
+  .tclub {
+    display: grid;
+    gap: var(--e-2);
+    padding: var(--e-5);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon-1);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color var(--d-rapide) var(--e-mecanique),
+      transform var(--d-normal) var(--e-sortie);
+  }
+  .tclub:hover { border-color: var(--signal); transform: translateY(-2px); }
+  .tclub__nom { font-size: var(--t-h3); }
+  .tclub__angle { margin: 0; color: var(--texte-faible); font-size: var(--t-petit); }
+  .tclub__depuis {
+    margin: 0;
+    padding-top: var(--e-3);
+    border-top: 1px solid var(--trait-faible);
+    text-transform: none;
+    color: var(--texte-faible);
+  }
+  .tclub__aller { color: var(--signal-profond); margin-top: var(--e-2); }
+
+  .trouver__aide { margin-top: var(--e-6); font-size: var(--t-petit); color: var(--texte-faible); }
+
+  /* ── FAQ ──────────────────────────────────────────────────────────── */
+  .faq__inner {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: var(--e-8);
+    align-items: start;
+  }
+  @media (max-width: 60rem) { .faq__inner { grid-template-columns: 1fr; gap: var(--e-6); } }
+  .faq h2 { max-width: 16ch; }
+
+  .qr { border-top: 1px solid var(--trait); }
+  .qr:last-child { border-bottom: 1px solid var(--trait); }
+  .qr summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e-4);
+    padding: var(--e-4) 0;
+    cursor: pointer;
+    list-style: none;
+  }
+  .qr summary::-webkit-details-marker { display: none; }
+  .qr__q { font-weight: 600; font-size: var(--t-base); }
+  .qr summary:hover .qr__q { color: var(--signal); }
+
+  /* Un plus qui devient un moins : la rotation dit l'état sans icône. */
+  .qr__signe {
+    flex: none;
+    position: relative;
+    width: 14px;
+    height: 14px;
+  }
+  .qr__signe::before,
+  .qr__signe::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    background: var(--signal);
+  }
+  .qr__signe::before { width: 14px; height: 1.5px; }
+  .qr__signe::after {
+    width: 1.5px;
+    height: 14px;
+    transition: transform var(--d-normal) var(--e-mecanique);
+  }
+  .qr[open] .qr__signe::after { transform: scaleY(0); }
+
+  .qr__r {
+    max-width: 60ch;
+    padding-bottom: var(--e-5);
+    color: var(--texte-faible);
+    font-size: var(--t-petit);
+  }
+
+  /* ── Suite ────────────────────────────────────────────────────────── */
+  .suite__titre { max-width: 20ch; margin-bottom: var(--e-6); }
+  .suite__liste { list-style: none; border-top: 1px solid var(--trait); }
+  .suite__liste li { border-bottom: 1px solid var(--trait); }
+  .suite__liste a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--e-2) var(--e-4);
+    padding: var(--e-5) 0;
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left var(--d-normal) var(--e-sortie);
+  }
+  .suite__liste a:hover { padding-left: var(--e-4); }
+  .suite__nom {
+    font-family: var(--police-titre);
+    font-size: var(--t-h3);
+    letter-spacing: -0.02em;
+  }
+  .suite__liste a:hover .suite__nom { color: var(--signal-profond); }
+  .suite__q { grid-column: 1; color: var(--texte-faible); text-transform: none; }
+  .suite__fleche {
+    grid-row: span 2;
+    font-size: 1.25rem;
+    transition: transform var(--d-normal) var(--e-sortie);
+  }
+  .suite__liste a:hover .suite__fleche { transform: translateX(5px); }
+</style>
