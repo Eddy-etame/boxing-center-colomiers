@@ -71,7 +71,7 @@ export const ROUTES: readonly Route[] = [
     question: 'Où faire du MMA quand on part de Colomiers, et comment on commence ?',
     titre: 'Club de MMA près de Colomiers | Boxing Center',
     description:
-      'Club de MMA près de Colomiers : frappe, corps à corps et sol, encadrement qui construit les débutants. À Boxing Center Portet-sur-Garonne, avec cage, grappling et JJB.',
+      'Club de MMA près de Colomiers : frappe, corps à corps et sol, encadrement qui construit les débutants. À Portet-sur-Garonne, avec cage, grappling et JJB.',
     menu: true,
     index: true,
   },
