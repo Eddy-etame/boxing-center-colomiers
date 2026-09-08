@@ -1,0 +1,837 @@
+---
+/**
+ * TRANSPORTS EN COMMUN — le trajet complet, arrêt par arrêt.
+ *
+ * Le mécanisme : un sélecteur d'itinéraire qui n'est PAS du JavaScript. Ce sont
+ * de vrais boutons radio, et c'est le CSS qui montre le panneau coché. La page
+ * fonctionne donc entière sans script, chaque onglet est atteignable au
+ * clavier, et le lecteur d'écran annonce un vrai groupe de choix.
+ *
+ * Le dessin : chaque itinéraire est une bande de trajet — le rail, les arrêts,
+ * la correspondance marquée d'un losange, et l'arrivée marquée d'une cible. Le
+ * rail se RETRACE à chaque bascule d'onglet, parce que le passage de
+ * `display:none` à `display:block` redémarre les animations CSS. Le mouvement
+ * est une conséquence de la structure, pas un script de plus.
+ *
+ * Règle d'écriture tenue ici sans exception : on affirme. Chaque phrase dit ce
+ * qui existe, ce qui roule, ce qui dépose devant la porte.
+ *
+ * Piloté par `src/data/transports.ts`. Un autre site de la famille change son
+ * registre, et sa page est faite.
+ */
+
+import { SITE, CLUBS, CONTACT, HORAIRES, club } from '../data/verite';
+import { route } from '../data/routes';
+import {
+  ITINERAIRES,
+  MEILLEUR,
+  DEPARTS,
+  ARRIVEE,
+  TITRE,
+  CHAPEAU,
+  LIBELLE_MODE,
+  RESEAU,
+  AVERTISSEMENT,
+  itineraire as itineraireParId,
+} from '../data/transports';
+
+/** Les nœuds du trajet : le départ, chaque arrivée d'étape, et le club. */
+const noeuds = (it: (typeof ITINERAIRES)[number]) => [
+  { nom: it.etapes[0].de, role: 'depart' as const, code: it.etapes[0].code },
+  ...it.etapes.map((e, i) => ({
+    nom: e.a,
+    role: (i === it.etapes.length - 1 ? 'club' : 'correspondance') as 'club' | 'correspondance',
+    code: it.etapes[i + 1]?.code ?? '',
+  })),
+];
+/* Une règle d'affichage par itinéraire, écrite depuis le registre. Elles
+   partent en <style is:inline> parce qu'une feuille scopée ne peut pas
+   recevoir de contenu calculé. */
+const CSS_PANNEAUX = ITINERAIRES.map(
+  (it) => `.selecteur:has(#trajet-${it.id}:checked) ~ .panneaux .panneau--${it.id} { display: block; }`
+).join('\n');
+
+/* Le nombre de trajets se compte, il ne s'écrit pas. */
+const NOMBRES = ['zéro', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix'];
+const COMBIEN_TRAJETS =
+  ITINERAIRES.length === 1
+    ? 'Un seul trajet.'
+    : `${(NOMBRES[ITINERAIRES.length] ?? String(ITINERAIRES.length)).replace(/^./, (c) => c.toUpperCase())} trajets possibles.`;
+---
+
+<section class="section tete" aria-labelledby="t-page" data-sans-scene>
+  <div class="enveloppe tete__inner">
+    <nav class="fil mono" aria-label="Fil d’Ariane">
+      <a href="/">Accueil</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Transports en commun</span>
+    </nav>
+
+    <p class="cartouche"><span class="cartouche__num">—</span><span>Y aller sans voiture</span></p>
+
+    <h1 id="t-page" class="tete__titre">
+      {TITRE.map((l, i) => (
+        <span class:list={['tete__ligne', i === TITRE.length - 1 && 'tete__ligne--accent']}>{l}</span>
+      ))}
+    </h1>
+
+    <p class="tete__chapeau">{CHAPEAU}</p>
+
+    <div class="tete__actions">
+      <a class="bouton bouton--signal" href={club('minimes').plannings} rel="noopener">
+        <span>Le planning du club</span><span class="fleche" aria-hidden="true">↗</span>
+      </a>
+      <a class="bouton" href={RESEAU.itineraire} rel="noopener">
+        <span>Calculer mon itinéraire</span><span class="fleche" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{/* ─────────── LE SÉLECTEUR ET LES TRAJETS ─────────── */}
+<section class="section creuse modes" aria-labelledby="t-modes">
+  <div class="enveloppe">
+    <h2 id="t-modes" class="modes__titre">Transports en commun</h2>
+    <p class="lead faible modes__intro">
+      {COMBIEN_TRAJETS} Choisis le tien&nbsp;: tu verras les arrêts dans
+      l’ordre, et le lien vers les horaires du jour.
+    </p>
+
+    {/* De vrais boutons radio : les onglets marchent sans une ligne de script. */}
+    <fieldset class="selecteur" data-selecteur>
+      <legend class="vh">Choisir un itinéraire</legend>
+      {ITINERAIRES.map((it) => (
+        <>
+          <input
+            type="radio"
+            name="trajet"
+            id={`trajet-${it.id}`}
+            value={it.id}
+            class="selecteur__radio vh"
+            checked={it.id === MEILLEUR.id}
+          />
+          <label class="selecteur__onglet" for={`trajet-${it.id}`}>
+            <span class="selecteur__pastille" aria-hidden="true"></span>
+            <span>{it.onglet}</span>
+            <span class="mono selecteur__compte">
+              {it.etapes.length === 1 ? 'direct' : `${it.etapes.length} étapes`}
+            </span>
+          </label>
+        </>
+      ))}
+    </fieldset>
+
+    <style is:inline set:html={CSS_PANNEAUX}></style>
+
+    <div class="panneaux">
+      {ITINERAIRES.map((it) => (
+        <div class={`panneau panneau--${it.id}`}>
+          <div class="trajet">
+            <h3 class="trajet__titre">{it.titre}</h3>
+            <p class="trajet__resume">{it.resume}</p>
+
+            {/* La bande de trajet : départ, correspondance, club. */}
+            <ol class="bande" style={`--arrets:${noeuds(it).length}`}>
+              {noeuds(it).map((n, j) => (
+                <li class={`arret arret--${n.role}`} style={`--n:${j}`}>
+                  <span class="arret__point" aria-hidden="true"></span>
+                  <span class="arret__nom">{n.nom}</span>
+                  {n.role === 'correspondance' && (
+                    <span class="mono arret__marque">correspondance {n.code}</span>
+                  )}
+                  {n.role === 'club' && <span class="mono arret__marque">le club</span>}
+                </li>
+              ))}
+            </ol>
+
+            {/* Les étapes, avec leur ligne et leur page d'horaires. */}
+            <ol class="etapes">
+              {it.etapes.map((e, k) => (
+                <li class="etape">
+                  <span class="mono etape__rang">{String(k + 1).padStart(2, '0')}</span>
+                  <span class={`code code--${e.mode}`}>{e.code}</span>
+                  <div class="etape__corps">
+                    <p class="etape__trajet">
+                      <strong>{e.de}</strong>
+                      <span class="etape__fleche" aria-hidden="true">→</span>
+                      <strong>{e.a}</strong>
+                    </p>
+                    <p class="mono etape__meta">
+                      <span>{LIBELLE_MODE[e.mode]}</span>
+                      <span aria-hidden="true">·</span>
+                      <span>{e.jours}</span>
+                      {e.precision && (
+                        <>
+                          <span aria-hidden="true">·</span>
+                          <span>{e.precision}</span>
+                        </>
+                      )}
+                    </p>
+                  </div>
+                  <a class="bouton bouton--mince etape__horaires" href={e.href} rel="noopener">
+                    <span>Horaires</span><span class="fleche" aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+
+            <p class="trajet__arrivee">
+              <span class="mono trajet__arrivee-cle">Arrivée</span>
+              {ARRIVEE.phrase}{' '}
+              <a class="lien" href={club(it.club).site} rel="noopener">
+                {club(it.club).nom} <span aria-hidden="true">↗</span>
+              </a>
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <p class="modes__note">{AVERTISSEMENT}</p>
+  </div>
+</section>
+
+{/* ─────────── DEPUIS CHEZ TOI ─────────── */}
+<section class="section depuis" aria-labelledby="t-depuis">
+  <div class="enveloppe">
+    <p class="cartouche"><span class="cartouche__num">—</span><span>Depuis chez toi</span></p>
+    <h2 id="t-depuis">D’où tu pars, et ce que tu prends.</h2>
+    <ul class="depuis__liste">
+      {DEPARTS.map((d, i) => {
+        const it = itineraireParId(d.itineraire);
+        return (
+          <li class="reveler" style={`--retard:${i * 70}ms`}>
+            <div class="depuis__cle">
+              <span class="mono depuis__ville">{d.depuis}</span>
+              <span class={`code code--${it.etapes[0].mode}`}>{it.etapes[0].code}</span>
+            </div>
+            <p class="depuis__texte">{d.texte}</p>
+            <a class="lien depuis__lien" href={it.etapes[0].href} rel="noopener">
+              Horaires de la {it.etapes[0].code} <span aria-hidden="true">↗</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>
+
+{/* ─────────── ARRIVER AU CLUB ─────────── */}
+{/* Deux clubs au bout des trajets, donc deux cartes. Une seule adresse
+    affichée ici aurait envoyé la moitié des lecteurs au mauvais endroit. */}
+<section class="section encre arriver" aria-labelledby="t-arriver">
+  <div class="enveloppe">
+    <p class="cartouche"><span class="cartouche__num">—</span><span>À l’arrivée</span></p>
+    <h2 id="t-arriver">Les deux adresses, et l’arrêt de chacune.</h2>
+    <p class="lead arriver__intro">
+      Les deux clubs sont ouverts {HORAIRES.court.valeur}. Tu entres, tu dis
+      que c’est ta première fois, et quelqu’un s’occupe de toi.
+    </p>
+
+    <ul class="arriver__clubs">
+      {CLUBS.map((c) => (
+        <li class="reveler club-carte">
+          <p class="mono club-carte__cle">{c.nomCourt}</p>
+          <p class="club-carte__adresse">{c.adresse}</p>
+          <dl class="club-carte__faits">
+            <div>
+              <dt class="mono">Arrêt</dt>
+              <dd>
+                {c.id === 'minimes'
+                  ? `${ARRIVEE.arret}, ${ARRIVEE.rue}`
+                  : 'Jean Jaurès, route d’Espagne'}
+              </dd>
+            </div>
+            <div>
+              <dt class="mono">Téléphone</dt>
+              <dd><a class="lien" href={`tel:${c.telephoneLien}`}>{c.telephone}</a></dd>
+            </div>
+          </dl>
+          <div class="club-carte__actions">
+            <a class="bouton bouton--mince" href={c.plannings} rel="noopener">
+              <span>Le planning</span><span class="fleche" aria-hidden="true">↗</span>
+            </a>
+            <a class="bouton bouton--mince" href={c.site} rel="noopener">
+              <span>Le club</span><span class="fleche" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+{/* ─────────── CONVERGENCE ─────────── */}
+<section class="section convergence" aria-labelledby="t-conv">
+  <div class="enveloppe convergence__inner">
+    <p class="cartouche"><span class="cartouche__num">—</span><span>Décider</span></p>
+    <h2 id="t-conv">
+      Tu sais comment y aller.<br />
+      <span class="convergence__accent">Reste à choisir ton cours.</span>
+    </h2>
+    <p class="lead convergence__texte">
+      Réponds à deux questions et on te dit quelle discipline viser et à quel
+      moment venir. Si tu préfères demander, écris-nous en deux lignes&nbsp;: on
+      te répond avec un créneau.
+    </p>
+    <div class="convergence__actions">
+      <a class="bouton bouton--signal" href={route('quel-club').chemin}>
+        <span>Trouver mon club</span><span class="fleche" aria-hidden="true">→</span>
+      </a>
+      <a class="bouton" href={route('contact').chemin}>
+        <span>Poser ma question</span><span class="fleche" aria-hidden="true">→</span>
+      </a>
+      <a class="bouton" href={`tel:${CONTACT.telephoneLien.valeur}`}>
+        <span>{CONTACT.telephone.valeur}</span><span class="fleche" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+{/* ─────────── L'ENCART ─────────── */}
+{/* Il laisse la page libre : pas de fond noir, pas de piège au clavier, une
+    seule apparition par visite, et Échap le referme. */}
+<aside class="encart" data-encart hidden aria-live="polite">
+  <p class="mono encart__cle">Envie d’en savoir plus&nbsp;?</p>
+  <p class="encart__texte">
+    Les horaires, les tarifs et les cours sont sur le site de chaque club.
+    <strong>Les Minimes</strong> pour la boxe, <strong>Portet</strong> pour la
+    cage et le sol.
+  </p>
+  <div class="encart__actions">
+    <a class="bouton bouton--signal bouton--mince" href={club('minimes').plannings} rel="noopener">
+      <span>Planning Minimes</span><span class="fleche" aria-hidden="true">↗</span>
+    </a>
+    <a class="bouton bouton--mince" href={club('portet').plannings} rel="noopener">
+      <span>Planning Portet</span><span class="fleche" aria-hidden="true">↗</span>
+    </a>
+  </div>
+  <button class="encart__fermer" type="button" data-encart-fermer aria-label="Fermer">
+    <span aria-hidden="true">×</span>
+  </button>
+</aside>
+
+<style>
+  /* ── Les deux clubs à l'arrivée ────────────────────────────────────── */
+  .arriver__intro { max-width: 54ch; margin-bottom: var(--e-7); }
+  .arriver__clubs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--e-5);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .club-carte {
+    padding: var(--e-5);
+    border: 1px solid var(--trait);
+    background: var(--papier-vif);
+  }
+  .club-carte__cle { color: var(--signal-texte); margin-bottom: var(--e-3); }
+  .club-carte__adresse { font-weight: 600; margin-bottom: var(--e-4); }
+  .club-carte__faits { margin: 0 0 var(--e-5); }
+  .club-carte__faits > div {
+    display: grid;
+    grid-template-columns: 7rem 1fr;
+    gap: var(--e-3);
+    padding: var(--e-2) 0;
+    border-top: 1px solid var(--trait-faible);
+    font-size: var(--t-petit);
+  }
+  .club-carte__faits dt { color: var(--graphite); }
+  .club-carte__faits dd { margin: 0; }
+  .club-carte__actions { display: flex; flex-wrap: wrap; gap: var(--e-2); }
+  @media (max-width: 34rem) {
+    .club-carte__faits > div { grid-template-columns: 1fr; gap: 0.2rem; }
+  }
+
+  /* ── Tête ──────────────────────────────────────────────────────────── */
+  .tete__inner { max-width: 62rem; }
+  .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--graphite); text-decoration: none; }
+  .fil a:hover { color: var(--signal-texte); }
+  .fil span[aria-current] { color: var(--encre-pale); }
+
+  .tete__titre { max-width: 20ch; margin: var(--e-4) 0 var(--e-5); }
+  .tete__ligne { display: block; animation: poser 720ms var(--e-sortie) both; }
+  .tete__ligne:nth-child(1) { animation-delay: 40ms; }
+  .tete__ligne:nth-child(2) { animation-delay: 130ms; }
+  .tete__ligne:nth-child(3) { animation-delay: 220ms; }
+  .tete__ligne--accent { color: var(--signal-texte); }
+  @keyframes poser {
+    from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(0.25em); }
+    to { opacity: 1; clip-path: inset(0 0 -12% 0); transform: none; }
+  }
+
+  .tete__chapeau {
+    max-width: 60ch;
+    padding-left: var(--e-5);
+    border-left: 2px solid var(--signal);
+    font-size: var(--t-lead);
+    line-height: 1.5;
+    color: var(--texte-faible);
+    animation: poser 720ms var(--e-sortie) 320ms both;
+  }
+  .tete__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-3);
+    margin-top: var(--e-6);
+    animation: poser 720ms var(--e-sortie) 420ms both;
+  }
+
+  /* ── Le sélecteur ──────────────────────────────────────────────────── */
+  .modes__titre { max-width: 20ch; margin-bottom: var(--e-4); }
+  .modes__intro { max-width: 54ch; margin-bottom: var(--e-6); }
+
+  .selecteur {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+    border: 0;
+    padding: 0;
+    margin: 0 0 var(--e-7);
+  }
+
+  .selecteur__onglet {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e-3);
+    padding: var(--e-3) var(--e-5);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon-1);
+    background: var(--papier-vif);
+    font-family: var(--police-mono);
+    font-size: var(--t-petit);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      border-color var(--d-rapide) var(--e-mecanique),
+      color var(--d-rapide) var(--e-mecanique),
+      transform var(--d-normal) var(--e-sortie);
+  }
+  .selecteur__onglet:hover { transform: translateY(-2px); border-color: var(--signal-texte); }
+
+  .selecteur__pastille {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    border: 1px solid var(--graphite);
+    transition:
+      background var(--d-rapide) var(--e-mecanique),
+      border-color var(--d-rapide) var(--e-mecanique),
+      transform var(--d-normal) var(--e-mecanique);
+  }
+  .selecteur__compte { color: var(--graphite); }
+
+  .selecteur__radio:checked + .selecteur__onglet {
+    border-color: var(--signal-texte);
+    color: var(--signal-texte);
+    background: var(--signal-voile);
+  }
+  .selecteur__radio:checked + .selecteur__onglet .selecteur__pastille {
+    background: var(--signal-texte);
+    border-color: var(--signal-texte);
+    transform: scale(1.35);
+  }
+  .selecteur__radio:checked + .selecteur__onglet .selecteur__compte { color: var(--signal-texte); }
+  .selecteur__radio:focus-visible + .selecteur__onglet {
+    outline: 2px solid var(--signal-texte);
+    outline-offset: 3px;
+  }
+
+  /* ── Les panneaux ──────────────────────────────────────────────────── */
+  .panneau { display: none; }
+  .selecteur:has(.selecteur__radio:checked) ~ .panneaux .panneau { display: none; }
+  /* Le panneau du trajet coché s'affiche par une règle générée depuis le
+     registre, juste sous le sélecteur — écrire ces règles à la main revenait
+     à laisser un onglet muet dès qu'un itinéraire changeait de nom. */
+
+  /* Sans :has (navigateurs anciens) : tout est visible. On ne cache jamais
+     une information derrière une capacité du navigateur. */
+  @supports not selector(:has(*)) {
+    .panneau { display: block; }
+    .selecteur { display: none; }
+  }
+
+  .trajet {
+    padding: var(--e-6);
+    border: 1px solid var(--trait);
+    border-radius: var(--rayon-1);
+    background: var(--papier-vif);
+    animation: entrer-trajet 620ms var(--e-sortie) both;
+  }
+  @keyframes entrer-trajet {
+    from { opacity: 0; transform: translateY(1.5rem); }
+    to { opacity: 1; transform: none; }
+  }
+  .trajet__titre { font-size: var(--t-h3); max-width: 30ch; letter-spacing: -0.015em; }
+  .trajet__resume {
+    margin-top: var(--e-4);
+    max-width: 68ch;
+    font-size: var(--t-petit);
+    color: var(--texte-faible);
+  }
+
+  /* ── La bande de trajet ────────────────────────────────────────────── */
+  .bande {
+    position: relative;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(var(--arrets), 1fr);
+    margin: var(--e-7) 0 var(--e-6);
+    padding-top: var(--e-4);
+  }
+  .bande::before,
+  .bande::after {
+    content: '';
+    position: absolute;
+    top: var(--e-4);
+    left: calc(50% / var(--arrets));
+    right: calc(50% / var(--arrets));
+    height: 2px;
+  }
+  .bande::before { background: var(--trait); }
+  .bande::after {
+    background: var(--signal-texte);
+    transform-origin: left center;
+    animation: tracer-rail 900ms var(--e-resolution) 260ms both;
+  }
+  @keyframes tracer-rail {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  .arret {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.4rem;
+    text-align: center;
+    animation: poser-arret 420ms var(--e-mecanique) both;
+    animation-delay: calc(320ms + var(--n) * 180ms);
+  }
+  @keyframes poser-arret {
+    from { opacity: 0; transform: translateY(0.5rem) scale(0.9); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .arret__point {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 50%;
+    background: var(--papier-vif);
+    border: 2px solid var(--signal-texte);
+    margin-top: -0.42rem;
+  }
+  /* La correspondance : un losange, comme sur un plan de réseau. */
+  .arret--correspondance .arret__point {
+    border-radius: 2px;
+    transform: rotate(45deg);
+    background: var(--papier-vif);
+    border-color: var(--encre);
+  }
+  .arret__nom {
+    font-size: var(--t-micro);
+    line-height: 1.3;
+    color: var(--texte-faible);
+    max-width: 12ch;
+  }
+  .arret--club .arret__point {
+    background: var(--signal-texte);
+    box-shadow: 0 0 0 4px var(--signal-voile);
+    animation: viser 2.6s var(--e-mecanique) 2s infinite;
+  }
+  @keyframes viser {
+    0%, 74%, 100% { box-shadow: 0 0 0 4px var(--signal-voile); }
+    86% { box-shadow: 0 0 0 10px transparent; }
+  }
+  .arret--club .arret__nom { color: var(--encre); font-weight: 700; }
+  .arret__marque { font-size: 0.62rem; color: var(--signal-texte); letter-spacing: 0.12em; }
+  .arret--correspondance .arret__marque { color: var(--graphite); }
+
+  @media (max-width: 44rem) {
+    .bande { grid-template-columns: 1fr; padding-top: 0; padding-left: var(--e-5); }
+    .bande::before,
+    .bande::after {
+      top: calc(50% / var(--arrets));
+      bottom: calc(50% / var(--arrets));
+      left: 0;
+      right: auto;
+      width: 2px;
+      height: auto;
+    }
+    .bande::after { transform-origin: top center; animation-name: tracer-rail-v; }
+    @keyframes tracer-rail-v {
+      from { transform: scaleY(0); }
+      to { transform: scaleY(1); }
+    }
+    .arret {
+      grid-template-columns: auto 1fr auto;
+      justify-items: start;
+      align-items: center;
+      gap: var(--e-3);
+      text-align: left;
+      padding: var(--e-2) 0;
+    }
+    .arret__point { margin: 0 0 0 -1.42rem; }
+    .arret__nom { max-width: none; font-size: var(--t-petit); }
+  }
+
+  /* ── Les étapes ────────────────────────────────────────────────────── */
+  .etapes { list-style: none; display: grid; gap: var(--e-3); }
+  .etape {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: var(--e-4);
+    align-items: center;
+    padding: var(--e-4) 0;
+    border-top: 1px solid var(--trait);
+  }
+  @media (max-width: 48rem) {
+    .etape { grid-template-columns: auto auto 1fr; }
+    .etape__horaires { grid-column: 2 / -1; justify-self: start; }
+  }
+  .etape__rang { color: var(--graphite); }
+  .code {
+    display: grid;
+    place-items: center;
+    min-width: 3.4rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 0.35rem;
+    /* Ici la polarité par défaut est sombre : un numéro en encre sur encre
+       serait illisible. Le badge prend le rouge du site, comme les autres
+       marqueurs d'action. Mesuré : 5,9:1 pour le blanc sur #b20f20. */
+    background: var(--signal-profond);
+    color: var(--blanc);
+    font-family: var(--police-mono);
+    font-size: var(--t-petit);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+  }
+  .code--metro { background: var(--marine-clair); color: var(--os); }
+  .code--train { background: var(--acier-sombre); color: var(--encre); }
+  .etape__trajet {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5em;
+    font-size: var(--t-petit);
+  }
+  .etape__trajet strong { font-weight: 700; }
+  .etape__fleche { color: var(--signal-texte); }
+  .etape__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e-2);
+    margin-top: 0.25rem;
+    color: var(--graphite);
+    text-transform: none;
+    letter-spacing: 0.05em;
+  }
+
+  .trajet__arrivee {
+    margin-top: var(--e-5);
+    padding: var(--e-4) var(--e-5);
+    border-left: 2px solid var(--signal);
+    background: var(--signal-voile);
+    font-size: var(--t-petit);
+    max-width: 70ch;
+  }
+  .trajet__arrivee-cle { display: block; color: var(--signal-texte); margin-bottom: 0.25rem; }
+
+  .modes__note {
+    margin-top: var(--e-6);
+    max-width: 70ch;
+    font-size: var(--t-micro);
+    color: var(--graphite);
+  }
+
+  /* ── Depuis chez toi ───────────────────────────────────────────────── */
+  .depuis h2 { max-width: 20ch; margin-bottom: var(--e-6); }
+  .depuis__liste {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: var(--e-5);
+  }
+  .depuis__liste li {
+    display: grid;
+    gap: var(--e-3);
+    align-content: start;
+    padding: var(--e-5);
+    border-top: 2px solid var(--signal);
+    background: var(--papier-vif);
+  }
+  .depuis__cle { display: flex; align-items: center; justify-content: space-between; gap: var(--e-3); }
+  .depuis__ville { font-weight: 700; color: var(--encre); letter-spacing: 0.1em; }
+  .depuis__texte { font-size: var(--t-petit); color: var(--texte-faible); }
+  .depuis__lien { font-size: var(--t-micro); }
+
+  /* ── Arriver ───────────────────────────────────────────────────────── */
+  .arriver__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: var(--e-8);
+    align-items: center;
+  }
+  @media (max-width: 62rem) { .arriver__inner { grid-template-columns: 1fr; } }
+  .arriver h2 { max-width: 18ch; margin-bottom: var(--e-4); }
+  .arriver .lead { max-width: 50ch; }
+  .arriver__faits { margin: var(--e-6) 0; }
+  .arriver__faits > div {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: var(--e-3);
+    padding: var(--e-3) 0;
+    border-top: 1px solid var(--trait);
+    font-size: var(--t-petit);
+  }
+  .arriver__faits > div:last-child { border-bottom: 1px solid var(--trait); }
+  @media (max-width: 34rem) { .arriver__faits > div { grid-template-columns: 1fr; gap: 0.2rem; } }
+  .arriver__faits dt { color: var(--graphite); }
+  .arriver__faits dd { margin: 0; }
+  .arriver__actions { display: flex; flex-wrap: wrap; gap: var(--e-3); }
+
+  /* ── Convergence ───────────────────────────────────────────────────── */
+  .convergence { background: var(--papier-creuse); }
+  .convergence__inner { max-width: 48rem; }
+  .convergence h2 { margin-bottom: var(--e-5); }
+  .convergence__accent { color: var(--signal-texte); }
+  .convergence__texte { max-width: 52ch; color: var(--texte-faible); }
+  .convergence__actions { display: flex; flex-wrap: wrap; gap: var(--e-3); margin-top: var(--e-7); }
+
+  /* ── L'encart ──────────────────────────────────────────────────────── */
+  .encart {
+    position: fixed;
+    right: var(--marge);
+    bottom: calc(var(--marge) + 3.5rem);
+    z-index: var(--z-encart, 40);
+    width: min(23rem, calc(100vw - 2 * var(--marge)));
+    padding: var(--e-5) var(--e-5) var(--e-4);
+    background: var(--papier-vif);
+    border: 1px solid var(--signal-texte);
+    border-radius: var(--rayon-1);
+    box-shadow: 0 18px 44px rgba(35, 38, 43, 0.16);
+    animation: monter-encart 620ms var(--e-sortie) both;
+  }
+  @keyframes monter-encart {
+    from { opacity: 0; transform: translateY(1.5rem) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+  .encart[data-part] { animation: descendre-encart 380ms var(--e-mecanique) forwards; }
+  @keyframes descendre-encart { to { opacity: 0; transform: translateY(1rem); } }
+  .encart__cle { color: var(--signal-texte); margin-bottom: var(--e-2); }
+  .encart__texte { font-size: var(--t-petit); color: var(--texte-faible); }
+  .encart__texte strong { color: var(--encre); font-weight: 600; }
+  .encart__actions { display: flex; flex-wrap: wrap; gap: var(--e-2); margin-top: var(--e-4); }
+  .encart__fermer {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.35rem;
+    width: 2rem;
+    height: 2rem;
+    display: grid;
+    place-items: center;
+    background: none;
+    border: 0;
+    color: var(--graphite);
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  .encart__fermer:hover { color: var(--signal-texte); background: var(--signal-voile); }
+  @media (max-width: 40rem) { .encart { left: var(--marge); right: var(--marge); width: auto; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tete__ligne,
+    .tete__chapeau,
+    .tete__actions,
+    .trajet,
+    .arret,
+    .encart { animation: none !important; opacity: 1; transform: none; }
+    .bande::after { animation: none; transform: none; }
+    .arret--club .arret__point { animation: none; }
+    .arret--correspondance .arret__point { transform: rotate(45deg); }
+  }
+</style>
+
+<script>
+  /**
+   * L'encart : il arrive une fois par visite, quand la personne a lu la moitié
+   * de la page. Il se referme au clic, à Échap, et reste fermé de la session.
+   */
+  const encart = document.querySelector<HTMLElement>('[data-encart]');
+  const CLE = 'bc-encart-transports';
+
+  if (encart) {
+    let vu = false;
+    try {
+      vu = sessionStorage.getItem(CLE) === '1';
+    } catch {
+      /* navigation privée : on montre l'encart, sans mémoire */
+    }
+
+    const surEchap = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') fermer();
+    };
+
+    function fermer() {
+      if (!encart) return;
+      encart.dataset.part = '';
+      try {
+        sessionStorage.setItem(CLE, '1');
+      } catch {
+        /* rien à retenir, tant pis */
+      }
+      window.setTimeout(() => {
+        encart.hidden = true;
+      }, 380);
+      document.removeEventListener('keydown', surEchap);
+    }
+
+    const montrer = () => {
+      if (!encart.hidden) return;
+      encart.hidden = false;
+      document.addEventListener('keydown', surEchap);
+    };
+
+    if (!vu) {
+      const seuil = () => {
+        const lu = (scrollY + innerHeight) / document.body.scrollHeight;
+        if (lu > 0.45) {
+          montrer();
+          removeEventListener('scroll', seuil);
+        }
+      };
+      addEventListener('scroll', seuil, { passive: true });
+      seuil();
+    }
+
+    encart.querySelector('[data-encart-fermer]')?.addEventListener('click', fermer);
+  }
+
+  /**
+   * Le sélecteur marche sans script — ce sont des radios et du CSS. Le script
+   * n'ajoute qu'une chose : le trajet choisi reste dans l'adresse, pour qu'un
+   * lien partagé ouvre le bon onglet.
+   */
+  const selecteur = document.querySelector<HTMLElement>('[data-selecteur]');
+  if (selecteur) {
+    const demande = new URLSearchParams(location.search).get('trajet');
+    if (demande) {
+      const cible = document.querySelector<HTMLInputElement>(
+        `#trajet-${CSS.escape(demande)}`
+      );
+      if (cible) cible.checked = true;
+    }
+    selecteur.addEventListener('change', (e) => {
+      const cible = e.target as HTMLInputElement;
+      if (cible?.name !== 'trajet') return;
+      const url = new URL(location.href);
+      url.searchParams.set('trajet', cible.value);
+      history.replaceState(null, '', url);
+    });
+  }
+</script>

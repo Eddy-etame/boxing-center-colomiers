@@ -1,5 +1,5 @@
 ---
-import { MENU, type RouteId } from '../data/routes';
+import { MENU, MENU_SIMPLE, PROMO, type RouteId } from '../data/routes';
 import { CONTACT } from '../data/verite';
 
 interface Props { actuelle: RouteId }
@@ -15,7 +15,7 @@ const { actuelle } = Astro.props;
 
     <nav class="nav" aria-label="Navigation principale">
       <ul>
-        {MENU.map((r) => (
+        {MENU_SIMPLE.map((r) => (
           <li>
             <a
               href={r.chemin}
@@ -28,6 +28,17 @@ const { actuelle } = Astro.props;
         ))}
       </ul>
     </nav>
+
+    {PROMO && (
+      <a
+        class="entete__pastille mono"
+        href={PROMO.chemin}
+        aria-current={actuelle === PROMO.id ? 'page' : undefined}
+      >
+        <span class="entete__bus" aria-hidden="true"></span>
+        <span>{PROMO.nav}</span>
+      </a>
+    )}
 
     <a class="tel mono" href={`tel:${CONTACT.telephoneLien.valeur}`}>
       <span class="tel__icone" aria-hidden="true">
@@ -67,9 +78,73 @@ const { actuelle } = Astro.props;
 </div>
 
 <style>
+  /* La pastille Transports : elle répond à l'objection « c'est loin » avant
+     qu'elle soit formulée, donc elle ne se range pas dans la liste. */
+  .entete__pastille {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.95rem;
+    border: 1px solid var(--nav-accent);
+    border-radius: 999px;
+    color: var(--nav-accent);
+    text-decoration: none;
+    font-size: var(--t-micro);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition:
+      background var(--d-rapide) var(--e-mecanique),
+      color var(--d-rapide) var(--e-mecanique);
+  }
+  .entete__pastille:hover,
+  .entete__pastille[aria-current='page'] { background: var(--nav-accent); color: var(--nav-fonce); }
+
+  /* Le fil et le véhicule sont deux couches : poser l'opacité sur le parent
+     pâlirait le point en même temps que le fil. */
+  .entete__bus {
+    position: relative;
+    flex: none;
+    width: 1.75rem;
+    height: 0.5rem;
+  }
+  .entete__bus::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: calc(50% - 1px);
+    height: 2px;
+    border-radius: 1px;
+    background: currentColor;
+    opacity: 0.4;
+  }
+  .entete__bus::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: currentColor;
+    animation: rouler 5.2s var(--e-mecanique) infinite;
+  }
+  /* Le point ne disparaît jamais : au repos comme en mouvement, la pastille
+     doit se lire comme un arrêt posé sur une ligne. */
+  @keyframes rouler {
+    0%, 8% { transform: translateX(0); }
+    46%, 54% { transform: translateX(1.25rem); }
+    92%, 100% { transform: translateX(0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .entete__bus::after { animation: none; } }
+  @media (max-width: 46rem) { .entete__pastille { display: none; } }
+
   .entete {
     position: sticky;
     top: 0;
+    /* Un débordement de barre ne peut jamais faire glisser la page. */
+    overflow-x: clip;
     z-index: var(--z-entete);
     background: color-mix(in srgb, var(--encre) 88%, transparent);
     backdrop-filter: blur(14px) saturate(140%);
@@ -86,7 +161,9 @@ const { actuelle } = Astro.props;
   .entete__inner {
     display: flex;
     align-items: center;
-    gap: var(--e-5);
+    /* L'espacement se resserre avec la largeur : la liste, la pastille et le
+       téléphone tiennent mal dans une grille de 84rem sinon. */
+    gap: clamp(0.75rem, 1.2vw, 1.5rem);
     min-height: 4.5rem;
     transition: min-height var(--d-normal) var(--e-mecanique);
   }
@@ -116,7 +193,14 @@ const { actuelle } = Astro.props;
   }
   @media (max-width: 30rem) { .marque__contexte { display: none; } }
 
-  .nav { margin-left: auto; }
+  .nav { margin-left: auto; min-width: 0; }
+  /* La liste ne s'affiche qu'à partir de la largeur où elle tient en entier.
+     En dessous, le menu prend le relais : mieux vaut un bouton qu'une barre
+     qui déborde de sa grille. */
+  @media (max-width: 78rem) { .nav { display: none; } }
+  @media (min-width: 78.01rem) and (max-width: 86rem) {
+    .marque__contexte { display: none; }
+  }
   .nav ul {
     display: flex;
     align-items: center;
@@ -195,11 +279,19 @@ const { actuelle } = Astro.props;
     transform: translateY(-3.25px) rotate(-45deg);
   }
 
-  @media (max-width: 64rem) {
+  /* Le bouton menu prend le relais exactement là où la liste s'arrête. */
+  @media (max-width: 78rem) {
     .nav { display: none; }
     .burger { display: block; margin-left: auto; }
     .tel__numero { display: none; }
-    .tel { padding: 0.55rem 0.7rem; }
+    /* Réduit au seul pictogramme, le bouton d'appel tombait à 37×32 : trop
+       petit pour un pouce, et c'est l'action la plus directe du site. */
+    .tel {
+      justify-content: center;
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+      padding: 0.55rem;
+    }
   }
 
   /* ── Menu plein écran ─────────────────────────────────────────────── */

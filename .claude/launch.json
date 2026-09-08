@@ -1,6 +1,12 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "colomiers", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev"], "port": 4321 }
+    { "name": "colomiers", "runtimeExecutable": "npm", "runtimeArgs": ["run", "dev"], "port": 4321 },
+    { "name": "muret", "url": "http://localhost:4322", "port": 4322 },
+    { "name": "cugnaux", "url": "http://localhost:4323", "port": 4323 },
+    { "name": "tournefeuille", "url": "http://localhost:4324", "port": 4324 },
+    { "name": "labege", "url": "http://localhost:4325", "port": 4325 },
+    { "name": "lunion", "url": "http://localhost:4326", "port": 4326 },
+    { "name": "castelginest", "url": "http://localhost:4327", "port": 4327 }
   ]
 }

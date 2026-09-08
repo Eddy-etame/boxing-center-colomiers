@@ -20,6 +20,7 @@ export type RouteId =
   | 'tarifs'
   | 'premiere-seance'
   | 'quel-club'
+  | 'transports'
   | 'contact'
   | 'merci'
   | 'introuvable'
@@ -39,6 +40,8 @@ export type Route = {
   menu: boolean;
   /** indexable ? */
   index: boolean;
+  /** page mise en avant dans la barre, hors liste ordinaire */
+  promo?: true;
 };
 
 export const ROUTES: readonly Route[] = [
@@ -142,6 +145,18 @@ export const ROUTES: readonly Route[] = [
     index: true,
   },
   {
+    id: 'transports',
+    chemin: '/transports/',
+    nav: 'Transports',
+    question: 'Comment j’y vais si je n’ai pas de voiture ?',
+    titre: 'Y aller en bus et en métro depuis Colomiers | Boxing Center',
+    description:
+      'La 63 finit à Compans-Caffarelli, sur le métro B : Barrière de Paris pour les Minimes, Empalot et le Linéo L5 pour Portet. Le L2 roule aussi le dimanche.',
+    menu: true,
+    index: true,
+    promo: true,
+  },
+  {
     id: 'contact',
     chemin: '/contact/',
     nav: 'Contact',
@@ -202,3 +217,9 @@ export function route(id: RouteId): Route {
 }
 
 export const MENU = ROUTES.filter((r) => r.menu);
+
+/** Les entrées de navigation ordinaires, hors pages mises en avant. */
+export const MENU_SIMPLE = MENU.filter((r) => !r.promo);
+
+/** La page mise en avant, s'il y en a une. */
+export const PROMO = ROUTES.find((r) => r.promo);

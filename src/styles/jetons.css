@@ -90,6 +90,40 @@
   --signal-clair: #f5323f;
   --signal-texte: var(--signal-clair);
 
+  /* ── Traduction du vocabulaire de la famille ────────────────────────
+     Les six satellites parlent en --papier-vif / --papier-creuse /
+     --graphite. Leurs composants arrivent ici tels quels : on traduit une
+     fois, plutôt que de réécrire chaque composant. Chaque polarité redonne
+     sa valeur plus bas. */
+  --graphite: var(--acier-sombre);
+  --papier-vif: var(--marine-clair);
+  --papier-creuse: var(--marine);
+  --signal-voile: rgba(226, 29, 47, 0.14);
+  /* Le quadrillage du calque posé sur les photos, dans le rouge du site. */
+  --calque-trait: rgba(245, 50, 63, 0.24);
+
+  /* ── Signature de mouvement ─────────────────────────────────────────
+     Colomiers : la coupure. Les blocs arrivent de la gauche, de très peu,
+     et très vite — le décalage entre deux blocs est le plus court de la
+     famille. C'est le seul site qui claque au lieu de se poser, et ça va
+     avec sa graisse de titre et son rouge.
+     Aucun site de la famille n'entre de la même façon. */
+  --mouv-x: -0.9rem;
+  --mouv-y: 0rem;
+  --mouv-echelle: 1;
+  --mouv-duree: 520ms;
+  --mouv-decalage: 45ms;
+  --mouv-courbe: cubic-bezier(0.4, 0, 0.1, 1);
+
+  /* La barre de navigation reste sombre quelle que soit la polarité de la
+     section : elle a donc ses propres jetons. Contrastes mesurés sur
+     --nav-fonce #05070a : accent 6,6:1, gris 7,1:1, faible 12,9:1. */
+  --nav-accent: #f5323f;
+  --nav-gris: #a7adba;
+  --nav-faible: #d7dce4;
+  --nav-fonce: #05070a;
+  --nav-ombre: rgba(7, 9, 13, 0.88);
+
   --trait-sombre: rgba(255, 255, 255, 0.16);
   --trait-clair: rgba(7, 9, 13, 0.16);
   --trait-sombre-faible: rgba(255, 255, 255, 0.08);
@@ -175,6 +209,9 @@
    seuil de contraste : le rouge de texte, et l'acier des petites étiquettes.
    L'acier clair est fait pour se poser sur de l'encre, pas sur du papier. */
 .clair {
+  --papier-vif: var(--blanc);
+  --papier-creuse: #e9e5da;
+  --calque-trait: rgba(178, 15, 32, 0.24);
   --fond: var(--os);
   --texte: var(--encre);
   --texte-faible: #4c5566;
@@ -184,6 +221,9 @@
   --acier-sombre: #59637a;
 }
 .papier {
+  --papier-vif: var(--blanc);
+  --papier-creuse: #e9e5da;
+  --calque-trait: rgba(178, 15, 32, 0.24);
   --fond: var(--papier);
   --texte: var(--encre);
   --texte-faible: #4c5566;
@@ -192,7 +232,31 @@
   --signal-texte: var(--signal-profond);
   --acier-sombre: #59637a;
 }
+/* Les composants venus des satellites demandent .encre et .creuse. Ici la
+   polarité sombre est le défaut, et la plaque s'appelle .marine : on fait
+   répondre les deux vocabulaires au même jeu de valeurs. */
+.encre {
+  --fond: var(--encre);
+  --texte: var(--os);
+  --texte-faible: var(--acier);
+  --trait: var(--trait-sombre);
+  --trait-faible: var(--trait-sombre-faible);
+  --papier-vif: var(--marine-clair);
+  --papier-creuse: var(--marine);
+}
+.creuse {
+  --fond: var(--marine);
+  --texte: var(--os);
+  --texte-faible: var(--acier);
+  --trait: var(--trait-sombre);
+  --trait-faible: var(--trait-sombre-faible);
+  --papier-vif: var(--marine-clair);
+  --papier-creuse: var(--encre);
+}
+
 .marine {
+  --papier-vif: var(--marine-clair);
+  --papier-creuse: var(--encre);
   --fond: var(--marine);
   --texte: var(--os);
   --texte-faible: var(--acier);

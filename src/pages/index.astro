@@ -32,9 +32,9 @@ const QUESTIONS = [
       "Le MMA se pratique à Boxing Center Portet-sur-Garonne, qui publie également le grappling, le jiu-jitsu brésilien et le kick-boxing, et dispose d’une cage. C’est donc la destination à retenir depuis Colomiers pour un club de MMA. Toulouse Minimes, de son côté, est orienté boxe anglaise — loisir et compétition — avec la boxe pieds-poings, le cardio boxing et le Boxing Lady.",
   },
   {
-    titre: 'J’habite Tournefeuille, Blagnac ou Plaisance-du-Touch. Ça marche aussi ?',
+    titre: 'J’habite Blagnac, Cornebarrieu ou Pibrac. Ça marche aussi ?',
     texte:
-      "Oui. Les deux clubs sont dans l’agglomération toulousaine et accueillent tout l’ouest toulousain : Tournefeuille, Blagnac, Plaisance-du-Touch, Cornebarrieu, Pibrac, Léguevin, Cugnaux, Brax, Mondonville, Aussonne. Le raisonnement de cette page vaut pour toutes ces communes : c’est le trajet et le créneau qui départagent les deux clubs, pas la commune de départ.",
+      "Oui. Les deux clubs accueillent tout l’ouest toulousain : Blagnac, Cornebarrieu, Pibrac, Léguevin, Brax, Mondonville, Aussonne. Le raisonnement de cette page vaut pour toutes ces communes — c’est le trajet et le créneau qui départagent les deux clubs, pas la commune de départ. Et la 63 dessert Colomiers avant de finir au métro, quelle que soit celle d’où tu pars.",
   },
   {
     titre: 'Peut-on faire des sports de combat à proximité de Colomiers sans expérience ?',
@@ -182,8 +182,7 @@ const QUESTIONS = [
               <Photo
                 slug={i === 0 ? 'salle-boxing-center-colomiers' : 'ring-boxe-colomiers-boxing-center'}
                 sizes="(max-width: 52rem) 100vw, 44vw"
-                ratio="4 / 3"
-              />
+                ratio="4 / 3" legende />
             </div>
             <div class="club__corps">
               <p class="mono club__index">Club {String(i + 1).padStart(2, '0')}</p>
@@ -246,8 +245,7 @@ const QUESTIONS = [
         <Photo
           slug="bandage-mains-boxe-colomiers-debutant"
           sizes="(max-width: 60rem) 100vw, 40vw"
-          ratio="3 / 4"
-        />
+          ratio="3 / 4" legende />
       </div>
       <div class="premiere__texte">
         <p class="numero-section mono"><span>08</span><span>La première fois</span></p>

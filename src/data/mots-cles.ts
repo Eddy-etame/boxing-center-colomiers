@@ -35,8 +35,12 @@ export type Cluster = {
 /**
  * Le cahier des charges §1 vise « les prospects situés à Colomiers ET dans
  * les communes voisines ». Ces communes sont un territoire de recherche
- * entier — quelqu'un de Tournefeuille ou de Plaisance-du-Touch cherche
- * exactement la même chose, avec le même trajet, et ne tape pas « Colomiers ».
+ * entier — quelqu'un de Cornebarrieu ou de Pibrac cherche exactement la même
+ * chose, avec le même trajet, et ne tape pas « Colomiers ».
+ *
+ * Tournefeuille, Plaisance-du-Touch et Cugnaux en sont sorties le 2026-09-09 :
+ * elles ont chacune leur propre site dans la famille, et deux sites qui visent
+ * la même commune se prennent des places l'un à l'autre.
  *
  * On ne fabrique pas une page par commune : ce serait l'usine à pages-villes.
  * On les nomme dans le contenu de l'accueil, là où c'est utile au lecteur,
@@ -45,13 +49,10 @@ export type Cluster = {
 export type Commune = { nom: string; cp: string; situation: string };
 
 export const COMMUNES_VOISINES: readonly Commune[] = [
-  { nom: 'Tournefeuille', cp: '31170', situation: 'juste au sud de Colomiers' },
   { nom: 'Blagnac', cp: '31700', situation: 'au nord-est, vers l’aéroport' },
-  { nom: 'Plaisance-du-Touch', cp: '31830', situation: 'au sud-ouest' },
   { nom: 'Cornebarrieu', cp: '31700', situation: 'au nord' },
   { nom: 'Pibrac', cp: '31820', situation: 'à l’ouest' },
   { nom: 'Léguevin', cp: '31490', situation: 'à l’ouest, après Pibrac' },
-  { nom: 'Cugnaux', cp: '31270', situation: 'au sud-est' },
   { nom: 'Brax', cp: '31490', situation: 'à l’ouest' },
   { nom: 'Mondonville', cp: '31700', situation: 'au nord' },
   { nom: 'Aussonne', cp: '31840', situation: 'au nord' },
@@ -96,9 +97,9 @@ export const CLUSTERS: readonly Cluster[] = [
       '31770',
       'ouest toulousain',
       'agglomération toulousaine',
-      'Tournefeuille',
       'Blagnac',
-      'Plaisance-du-Touch',
+      'Cornebarrieu',
+      'Pibrac',
     ],
   },
   {

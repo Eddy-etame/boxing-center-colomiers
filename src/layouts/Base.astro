@@ -198,25 +198,10 @@ const donnees = {
 
     <script>
       import { demarrer } from '../scripts/parcours';
-      demarrer();
+      import { demarrerMouvement } from '../scripts/mouvement';
 
-      // Révélations au scroll : une seule fois, puis on cesse d'observer.
-      const cibles = document.querySelectorAll('.reveler');
-      if (cibles.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const obs = new IntersectionObserver(
-          (entrees) => {
-            for (const e of entrees) {
-              if (!e.isIntersecting) continue;
-              e.target.classList.add('vu');
-              obs.unobserve(e.target);
-            }
-          },
-          { rootMargin: '0px 0px -12% 0px', threshold: 0.05 }
-        );
-        cibles.forEach((c) => obs.observe(c));
-      } else {
-        cibles.forEach((c) => c.classList.add('vu'));
-      }
+      demarrer();
+      demarrerMouvement();
     </script>
   </body>
 </html>

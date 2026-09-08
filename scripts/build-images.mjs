@@ -20,7 +20,7 @@ const RACINE = join(ICI, '..');
 const SOURCE = join(RACINE, '..', 'wetransfer_dsc_3218-jpg_2026-09-07_1104');
 const SORTIE = join(RACINE, 'public', 'photos');
 
-const LARGEURS = [480, 900, 1440, 2000];
+const LARGEURS = [480, 768, 900, 1440, 2000];
 const FORCE = process.argv.includes('--force');
 
 /**

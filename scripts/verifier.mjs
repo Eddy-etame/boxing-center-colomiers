@@ -261,6 +261,82 @@ for (const { page, prioritaires } of lireClusters()) {
   }
 }
 
+/* ───────────────  La source : ce qu'elle n'a pas le droit de savoir  ───────────────
+   Les contrôles ci-dessus lisent le HTML produit. Deux défauts leur échappent
+   parce qu'ils vivent dans la source : une heure écrite en dur dans un script
+   qui ne s'exécute qu'au clic, et une règle CSS qui nomme un identifiant du
+   registre — elle compile, elle passe, et elle n'affiche rien.
+   Voir la loi commune §13.9. */
+
+function fichiersSource(dossier) {
+  const out = [];
+  for (const e of readdirSync(dossier, { withFileTypes: true })) {
+    const chemin = join(dossier, e.name);
+    if (e.isDirectory()) out.push(...fichiersSource(chemin));
+    else if (/\.(ts|astro|mjs|js)$/.test(e.name)) out.push(chemin);
+  }
+  return out;
+}
+
+const DOSSIER_SRC = join(RACINE, 'src');
+if (existsSync(DOSSIER_SRC)) {
+  /* Les identifiants que le registre des transports connaît, s'il existe. */
+  const cheminTransports = join(RACINE, 'src', 'data', 'transports.ts');
+  const idsItineraires = existsSync(cheminTransports)
+    ? [...readFileSync(cheminTransports, 'utf8').matchAll(/^\s{4}id:\s*'([^']+)'/gm)].map((m) => m[1])
+    : [];
+
+  for (const fichier of fichiersSource(DOSSIER_SRC)) {
+    const rel = fichier.slice(RACINE.length + 1).replace(/\\/g, '/');
+    const estRegistre = rel.startsWith('src/data/');
+    const src = readFileSync(fichier, 'utf8');
+
+    /* A — une heure en dur hors du registre. Le registre est la seule source
+       d'une heure : un club qui change d'amplitude ne doit pas laisser une
+       phrase fausse dans un script. */
+    if (!estRegistre) {
+      for (const m of src.matchAll(/\b\d{1,2}\s?h\s?\d{2}\b/g)) {
+        const ligne = src.slice(0, m.index).split('\n').length;
+        erreurs.push(`${rel}:${ligne} — heure en dur : « ${m[0]} ». Une heure vit dans src/data/.`);
+      }
+    }
+
+    /* B — une règle CSS qui nomme un identifiant d'itinéraire. Ces règles se
+       génèrent depuis le registre, sinon un identifiant renommé laisse un
+       onglet muet. */
+    for (const m of src.matchAll(/#trajet-([a-z0-9-]+):checked/g)) {
+      if (src.slice(Math.max(0, m.index - 400), m.index).includes('${')) continue;
+      const ligne = src.slice(0, m.index).split('\n').length;
+      erreurs.push(
+        `${rel}:${ligne} — règle CSS écrite à la main pour « ${m[1]} ». ` +
+          `Génère-la depuis ITINERAIRES (loi commune §13.9).`
+      );
+    }
+
+    /* C — un nombre en lettres devant un décompte que le registre connaît. */
+    const NOMBRES_ECRITS =
+      /\b(deux|trois|quatre|cinq|six|sept|huit|neuf|dix|onze|douze|treize|quatorze|quinze|seize|vingt)\s+(intitulés|trajets|itinéraires|disciplines publiées)\b/gi;
+    for (const m of src.matchAll(NOMBRES_ECRITS)) {
+      const ligne = src.slice(0, m.index).split('\n').length;
+      avertissements.push(`${rel}:${ligne} — « ${m[0]} » : ce nombre se compte depuis le registre.`);
+    }
+  }
+
+  /* D — chaque itinéraire du registre doit avoir sa règle d'affichage. */
+  if (idsItineraires.length) {
+    const transportsAstro = join(RACINE, 'src', 'components', 'Transports.astro');
+    if (existsSync(transportsAstro)) {
+      const c = readFileSync(transportsAstro, 'utf8');
+      if (!c.includes('CSS_PANNEAUX')) {
+        erreurs.push(
+          'src/components/Transports.astro — les règles d’affichage des panneaux ne sont pas générées depuis le registre.'
+        );
+      }
+    }
+  }
+}
+
+
 console.log(`\n  ${toutes.length} pages analysées dans ${DIST.replace(RACINE, '.')}\n`);
 for (const a of avertissements) console.log(`  ⚠  ${a}`);
 for (const e of erreurs) console.log(`  ✗  ${e}`);

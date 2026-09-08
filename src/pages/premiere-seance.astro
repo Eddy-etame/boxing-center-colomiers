@@ -23,7 +23,7 @@ const AVANT = [
   { titre: 'Une tenue de sport', texte: 'Short ou legging, t-shirt, chaussures propres pour la salle. Rien de technique.' },
   { titre: 'Une bouteille d’eau', texte: 'Tu vas transpirer plus que tu ne le penses. Une serviette est bienvenue.' },
   { titre: 'Dix minutes d’avance', texte: 'Pour te présenter à l’accueil, dire que c’est ta première fois, et être accueilli comme tel.' },
-  { titre: 'Pas de gants obligatoires', texte: 'Les conditions de prêt de gants et de bandes sont fixées par chaque club : demande-le en arrivant ou par téléphone avant de venir.' },
+  { titre: 'Les gants, on en parle sur place', texte: 'Les conditions de prêt de gants et de bandes sont fixées par chaque club : demande-le en arrivant ou par téléphone avant de venir.' },
 ];
 
 const PENDANT = [
@@ -36,7 +36,7 @@ const PENDANT = [
 const QUESTIONS = [
   {
     titre: 'Est-ce que je vais prendre des coups à la première séance ?',
-    texte: 'Non. L’opposition n’est jamais le point de départ. Une première séance de boxe ou de MMA, c’est de l’échauffement, du geste, du sac et des pattes d’ours. Le sparring arrive bien plus tard, encadré, et uniquement pour celles et ceux qui le souhaitent.',
+    texte: 'Une première séance, c’est de l’échauffement, du geste, du sac et des pattes d’ours. Tu frappes, et c’est tout. Le sparring arrive bien plus tard, encadré, et uniquement pour celles et ceux qui le demandent.',
   },
   {
     titre: 'Je n’ai jamais fait de sport. C’est un problème ?',
@@ -87,7 +87,7 @@ const DEBUTANTS = OFFRES.filter((o) =>
       </div>
     </div>
     <div class="enveloppe">
-      <Photo slug="premiere-seance-boxe-colomiers" prioritaire sizes="100vw" ratio="21 / 9" class="tete__photo" />
+      <Photo slug="premiere-seance-boxe-colomiers" prioritaire sizes="100vw" ratio="21 / 9" class="tete__photo" legende />
     </div>
   </section>
 
@@ -130,7 +130,7 @@ const DEBUTANTS = OFFRES.filter((o) =>
         </ol>
       </div>
       <div class="pendant__image">
-        <Photo slug="bandage-mains-boxe-colomiers-debutant" sizes="(max-width: 60rem) 100vw, 42vw" ratio="3 / 4" />
+        <Photo slug="bandage-mains-boxe-colomiers-debutant" sizes="(max-width: 60rem) 100vw, 42vw" ratio="3 / 4" legende />
       </div>
     </div>
   </section>

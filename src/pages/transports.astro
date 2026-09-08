@@ -1,0 +1,42 @@
+---
+/**
+ * TRANSPORTS EN COMMUN — le trajet complet, de Colomiers aux deux clubs.
+ *
+ * Le corps vit dans `components/Transports.astro`, piloté par
+ * `data/transports.ts`.
+ */
+import Base from '../layouts/Base.astro';
+import Transports from '../components/Transports.astro';
+
+const QUESTIONS = [
+  {
+    titre: 'Quel bus va de Colomiers au club des Minimes ?',
+    texte:
+      'La 63. Elle dessert Colomiers Ramassiers Gare SNCF, Caulet et Fontaine, et finit à Compans-Caffarelli — son terminus est une station du métro B. Tu prends le métro vers le nord et tu descends à Barrière de Paris : le club est au 12 rue de Fenouillet.',
+  },
+  {
+    titre: 'Et pour aller à Portet, où il y a la cage ?',
+    texte:
+      'Même début : la 63 jusqu’à Compans-Caffarelli. Le métro B descend cette fois vers le sud jusqu’à Empalot, où démarre le Linéo L5. Ce Linéo longe la route d’Espagne et marque l’arrêt « Jean Jaurès ». Le club est au 61.',
+  },
+  {
+    titre: 'Ça roule le dimanche ?',
+    texte:
+      'Le Linéo L2 roule tous les jours, avec un bus toutes les neuf à douze minutes aux heures de pointe. Il part de Colomiers Lycée International, passe à la Médiathèque Pavillon Blanc et à Colomiers Gare SNCF, et finit aux Arènes, où le métro A démarre.',
+  },
+  {
+    titre: 'Combien de changements ?',
+    texte:
+      'Un seul pour les Minimes : la 63, puis le métro B. Deux pour Portet : la 63, le métro B, puis le Linéo L5.',
+  },
+  {
+    titre: 'Les horaires sont où ?',
+    texte:
+      'Chez Tisséo, qui les publie et les met à jour à chaque saison. Chaque étape de cette page ouvre la fiche officielle de sa ligne.',
+  },
+];
+---
+
+<Base page="transports" faq={QUESTIONS}>
+  <Transports />
+</Base>

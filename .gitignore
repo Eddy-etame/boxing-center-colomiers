@@ -7,3 +7,6 @@ dist/
 .env
 .env.*
 !.env.example
+
+# Recherche et veille : reste en local, jamais dans le dépôt
+.recherche/

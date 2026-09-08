@@ -11,7 +11,10 @@ html {
   scroll-behavior: smooth;
   /* L'en-tête ET la barre de parcours sont collants : les ancres ne doivent
      pas atterrir dessous. */
-  scroll-padding-top: 8.5rem;
+  /* La marge d'ancre tient compte de l'entête ET du geste d'entrée : un
+     bloc arrive translaté de --mouv-y et se pose. Sans cette marge, la
+     cible d'une ancre finit sous la barre. */
+  scroll-padding-top: calc(8.5rem + var(--mouv-y, 0rem));
   /* `clip` et pas `hidden` : `hidden` sur html ou body fabrique un conteneur
      de défilement imbriqué, ce qui casse position:sticky et fausse scrollY.
      `clip` coupe le débordement sans rien rendre défilable. */
@@ -99,6 +102,27 @@ html:has(.entete[data-compact]) { --haut-parcours: 3.75rem; }
   background: var(--fond);
   color: var(--texte);
   padding-block: var(--section-y);
+}
+
+/* Le cartouche : le numéro de section et son intitulé, avec le filet qui
+   court jusqu'au bord. Les composants venus des satellites l'attendent. */
+.cartouche {
+  display: flex;
+  align-items: center;
+  gap: var(--e-3);
+  margin-bottom: var(--e-6);
+  font-family: var(--police-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texte-faible);
+}
+.cartouche__num { color: var(--signal-texte); font-weight: 700; }
+.cartouche::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--trait);
 }
 
 .lecture {
@@ -213,20 +237,37 @@ html:has(.entete[data-compact]) { --haut-parcours: 3.75rem; }
 
 .bouton--plein { width: 100%; }
 
-/* ── Révélation au scroll ─────────────────────────────────────────────── */
-.reveler {
+/* ── Révélation au scroll ─────────────────────────────────────────────────
+   Le geste est celui du site, pas celui du composant : il vit dans les jetons
+   --mouv-*. `.reveler` se balise à la main sur les listes et les cartes ;
+   `.bloc-scene` est posée par `mouvement.ts` sur chaque bloc de section, avec
+   son rang `--i` — c'est ce qui donne le décalage sans qu'aucune page n'ait à
+   s'en occuper. Les deux se rejouent quand on remonte puis redescend : voir
+   `src/scripts/mouvement.ts`. */
+.reveler,
+.bloc-scene {
   opacity: 0;
-  transform: translateY(1.25rem);
-  transition: opacity var(--d-lent) var(--e-sortie),
-    transform var(--d-lent) var(--e-sortie);
+  transform: translate3d(var(--mouv-x, 0), var(--mouv-y, 1.25rem), 0)
+    scale(var(--mouv-echelle, 1));
+  transition:
+    opacity var(--mouv-duree, var(--d-lent)) var(--mouv-courbe, var(--e-sortie)),
+    transform var(--mouv-duree, var(--d-lent)) var(--mouv-courbe, var(--e-sortie));
   transition-delay: var(--retard, 0ms);
+  will-change: opacity, transform;
 }
-.reveler.vu {
-  opacity: 1;
-  transform: none;
+.bloc-scene {
+  transition-delay: calc(var(--i, 0) * var(--mouv-decalage, 90ms));
 }
+.reveler.vu,
+.bloc-scene.vu { opacity: 1; transform: none; }
 /* Sans JS, rien ne reste caché. */
-.no-js .reveler { opacity: 1; transform: none; }
+.no-js .reveler,
+.no-js .bloc-scene { opacity: 1; transform: none; }
+
+/* Une fois arrivé, le bloc rend la main : plus de couche de composition
+   inutile, et le texte retrouve son rendu sous-pixel. */
+.reveler.vu,
+.bloc-scene.vu { will-change: auto; }
 
 /* ── Lien d'évitement ─────────────────────────────────────────────────── */
 .saut {
@@ -267,7 +308,8 @@ html:has(.entete[data-compact]) { --haut-parcours: 3.75rem; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveler { opacity: 1; transform: none; }
+  .reveler,
+  .bloc-scene { opacity: 1; transform: none; }
 }
 
 /* ── Couleurs forcées (Windows high contrast) ─────────────────────────── */

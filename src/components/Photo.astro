@@ -2,9 +2,20 @@
 /**
  * Photo — la seule façon d'afficher une image du lot.
  *
- * Sert AVIF puis WebP puis JPEG, quatre largeurs, avec un aperçu flou en
- * base64 posé en fond pendant le chargement (aucune requête réseau de plus,
- * aucun trou blanc, aucun décalage de mise en page).
+ * Sert AVIF puis WebP puis JPEG, cinq largeurs, avec un aperçu flou en base64
+ * posé en fond pendant le chargement (aucune requête réseau de plus, aucun
+ * trou blanc, aucun décalage de mise en page).
+ *
+ * LE CALQUE. Le site est une planche technique ; une photo posée dessus sans
+ * transition serait une pièce rapportée. Alors chaque photo arrive comme sur
+ * une table à dessin : d'abord le calque — l'image réduite au trait, en cuivre
+ * sur papier, quadrillée — puis le calque se lève et la vraie salle apparaît
+ * dessous. Le procédé est entièrement CSS : un filtre de contraste extrême et
+ * de teinte cuivre qu'on relâche quand l'image entre à l'écran. Aucune
+ * deuxième image, aucun canvas, aucun octet de plus.
+ *
+ * Il se rejoue : remonter au-dessus d'une photo puis redescendre repose le
+ * calque et le relève. C'est `mouvement.ts` qui pilote la classe `.vu`.
  *
  * Toute photo passe par le manifeste : pas de src en dur, donc pas d'image
  * sans provenance ni texte alternatif.
@@ -23,9 +34,22 @@ interface Props {
   class?: string;
   /** remplace le cadrage par défaut du manifeste */
   focus?: string;
+  /** affiche la légende du manifeste : ce qu'on voit, puis le club */
+  legende?: boolean;
+  /** désactive le calque — pour les vignettes trop petites pour le supporter */
+  calque?: boolean;
 }
 
-const { slug, sizes = '100vw', prioritaire = false, ratio, class: classe = '', focus } = Astro.props;
+const {
+  slug,
+  sizes = '100vw',
+  prioritaire = false,
+  ratio,
+  class: classe = '',
+  focus,
+  legende = false,
+  calque = true,
+} = Astro.props;
 
 const m = media(slug);
 const infos = (photos as Record<string, { lqip: string; w: number; h: number; ratio: number }>)[slug];
@@ -36,13 +60,17 @@ if (!infos) {
   );
 }
 
-const LARGEURS = [480, 900, 1440, 2000].filter((l) => l <= infos.w);
+const LARGEURS = [480, 768, 900, 1440, 2000].filter((l) => l <= infos.w);
 const jeu = (ext: string) => LARGEURS.map((l) => `/photos/${slug}-${l}.${ext} ${l}w`).join(', ');
 const position = focus ?? m.focus ?? '50% 50%';
 const rapport = ratio ?? `${infos.w} / ${infos.h}`;
 ---
 
-<figure class:list={['photo', classe]} style={`--ratio:${rapport}; --lqip:url('${infos.lqip}'); --position:${position}`}>
+<figure
+  class:list={['photo', calque && 'photo--calque', classe]}
+  data-calque={calque ? '' : undefined}
+  style={`--ratio:${rapport}; --lqip:url('${infos.lqip}'); --position:${position}`}
+>
   <picture>
     <source type="image/avif" srcset={jeu('avif')} sizes={sizes} />
     <source type="image/webp" srcset={jeu('webp')} sizes={sizes} />
@@ -59,7 +87,8 @@ const rapport = ratio ?? `${infos.w} / ${infos.h}`;
       onload="this.closest('.photo')?.classList.add('chargee')"
     />
   </picture>
-  {m.caption && <figcaption class="mono">{m.caption}</figcaption>}
+  {calque && <span class="photo__grille" aria-hidden="true"></span>}
+  {legende && m.legende && <figcaption class="mono">{m.legende}</figcaption>}
 </figure>
 
 <style>
@@ -73,7 +102,7 @@ const rapport = ratio ?? `${infos.w} / ${infos.h}`;
     position: relative;
     aspect-ratio: var(--ratio);
     overflow: hidden;
-    background-color: var(--marine);
+    background-color: var(--papier-creuse);
     background-image: var(--lqip);
     background-size: cover;
     background-position: var(--position);
@@ -90,7 +119,65 @@ const rapport = ratio ?? `${infos.w} / ${infos.h}`;
 
   /* Le fondu ne se joue qu'une fois, à l'arrivée du vrai fichier. */
   .chargee img { opacity: 1; }
-  .no-js .photo img { opacity: 1; }
+  :global(.no-js) .photo img { opacity: 1; }
+
+  /* ── Le calque ─────────────────────────────────────────────────────── */
+  .photo--calque { overflow: hidden; }
+
+  .photo--calque picture {
+    filter: grayscale(1) contrast(1.75) brightness(1.08) sepia(0.55) hue-rotate(-8deg)
+      saturate(1.6);
+    transform: scale(1.04);
+    transition:
+      filter 1.4s var(--e-resolution),
+      transform 1.6s var(--e-sortie);
+  }
+  .photo--calque.vu picture {
+    filter: none;
+    transform: none;
+  }
+
+  /* Le quadrillage du calque, qui s'efface avec lui. */
+  .photo__grille {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, var(--calque-trait) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--calque-trait) 1px, transparent 1px);
+    background-size: 2.5rem 2.5rem;
+    opacity: 1;
+    transition: opacity 1s var(--e-sortie);
+  }
+  .photo--calque.vu .photo__grille { opacity: 0; }
+
+  /* Le trait cuivre qui balaie au moment où le calque se lève : la même
+     direction que le tracé du plan, gauche → droite. */
+  .photo--calque::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--signal-texte);
+    left: 0;
+    opacity: 0;
+  }
+  .photo--calque.vu::after { animation: balayer 1.4s var(--e-resolution) forwards; }
+  @keyframes balayer {
+    0% { left: 0; opacity: 1; }
+    92% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+  }
+
+  :global(.no-js) .photo--calque picture { filter: none; transform: none; }
+  :global(.no-js) .photo__grille { opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .photo--calque picture { filter: none; transform: none; transition: none; }
+    .photo__grille { opacity: 0; }
+    .photo--calque::after { display: none; }
+  }
 
   figcaption {
     margin-top: var(--e-3);
