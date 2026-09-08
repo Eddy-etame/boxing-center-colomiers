@@ -9,6 +9,7 @@ import { SITE, CLUBS, CONTACT, HORAIRES } from '../data/verite';
 import { COMMUNES_VOISINES, CONTEXTE_GEO } from '../data/mots-cles';
 import { DOIT_BLOQUER_LES_ROBOTS } from '../lib/environnement';
 import { offresDuClub } from '../data/offres';
+import { derniereModification, fichierDeRoute } from '../lib/dates';
 
 interface Props {
   page: RouteId;
@@ -105,6 +106,7 @@ const donnees = {
       inLanguage: SITE.langue,
       about: { '@id': `${SITE.origine}/#organisation` },
       primaryImageOfPage: og,
+      dateModified: derniereModification(fichierDeRoute(r.chemin)),
     },
     /* Fil d'Ariane : sur l'accueil il n'a pas lieu d'être. */
     ...(page === 'accueil'

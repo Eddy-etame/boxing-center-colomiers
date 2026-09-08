@@ -11,6 +11,7 @@
  */
 
 import type { MediaSlug } from './medias';
+import { HORAIRES } from './verite';
 
 export type Bloc = { titre: string; texte: string };
 
@@ -46,7 +47,7 @@ export const CONTENUS: readonly Contenu[] = [
       "Apprendre à boxer pour de vrai, encadré, sans avoir à prouver quoi que ce soit à personne.",
     h1: 'Cours de boxe anglaise à proximité de Colomiers, débutants et confirmés',
     chapeau:
-      "La boxe anglaise se pratique aux poings, avec des gants, dans un cadre encadré. Aucun niveau n'est demandé pour commencer. Les deux clubs Boxing Center accessibles depuis Colomiers la proposent : Toulouse Minimes distingue un groupe loisir et un groupe compétiteurs et publie aussi la boxe pieds-poings ; Portet-sur-Garonne propose la boxe anglaise et le kick-boxing. Ouverts 6 jours sur 7, de 10h à 21h15.",
+      "La boxe anglaise se pratique aux poings, avec des gants, dans un cadre encadré. Aucun niveau n'est demandé pour commencer. Les deux clubs Boxing Center accessibles depuis Colomiers la proposent : Toulouse Minimes distingue un groupe loisir et un groupe compétiteurs et publie aussi la boxe pieds-poings ; Portet-sur-Garonne propose la boxe anglaise et le kick-boxing. Ouverts " + HORAIRES.texte.valeur.toLowerCase() + ".",
     photoHero: 'boxe-anglaise-colomiers-technique',
     photoSecondaire: 'deplacement-boxe-anglaise-colomiers',
     blocs: [
@@ -104,7 +105,7 @@ export const CONTENUS: readonly Contenu[] = [
       "La discipline la plus complète, construite étape par étape, même en partant de zéro.",
     h1: 'Club de MMA à proximité de Colomiers : cap sur Portet-sur-Garonne',
     chapeau:
-      "Le MMA combine la frappe debout, le corps à corps et le travail au sol. Dans le réseau Boxing Center, c’est à Portet-sur-Garonne que le MMA se pratique, avec le grappling, le jiu-jitsu brésilien et le kick-boxing, dans une salle équipée d’une cage. C’est donc le club de MMA à retenir depuis Colomiers, ouvert 6 jours sur 7 de 10h à 21h15, et il accueille les débutants.",
+      "Le MMA combine la frappe debout, le corps à corps et le travail au sol. Dans le réseau Boxing Center, c’est à Portet-sur-Garonne que le MMA se pratique, avec le grappling, le jiu-jitsu brésilien et le kick-boxing, dans une salle équipée d’une cage. C’est donc le club de MMA à retenir depuis Colomiers, ouvert " + HORAIRES.texte.valeur.toLowerCase() + ", et il accueille les débutants.",
     photoHero: 'mma-colomiers-boxing-center',
     photoSecondaire: 'travail-au-corps-boxe-colomiers',
     blocs: [

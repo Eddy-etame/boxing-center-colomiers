@@ -15,20 +15,16 @@ const portet = CLUBS[1];
  * Les questions que les gens tapent réellement, avec la réponse honnête.
  *
  * Ce bloc porte les requêtes locales du cahier des charges §4 — mais parce
- * qu'il y répond vraiment, pas pour les placer. La première question est la
- * plus recherchée du secteur ET celle dont la réponse est « non » : la traiter
- * franchement vaut mieux que l'esquiver, pour le visiteur comme pour Google.
+ * qu'il y répond vraiment, pas pour les placer. On dit toujours ce qui
+ * existe — deux clubs à proximité, et lequel propose quoi — jamais ce qui
+ * manque. La répartition MMA / boxe entre les deux clubs est la réponse la
+ * plus utile de la page : c'est celle qu'un moteur de réponse peut citer.
  */
 const QUESTIONS = [
   {
     titre: 'Où s’entraîner en boxe ou en MMA quand on habite Colomiers ?',
     texte:
       "Boxing Center accueille les habitants de Colomiers dans deux clubs situés à proximité, dans l’agglomération toulousaine : Toulouse Minimes et Portet-sur-Garonne. Les deux proposent la boxe anglaise, le boxing fitness, la boxe éducative et la Baby Boxe. Le MMA, le grappling et le jiu-jitsu brésilien se pratiquent à Portet-sur-Garonne, qui dispose d’une cage. Ce site sert à déterminer lequel des deux correspond à ce que tu cherches.",
-  },
-  {
-    titre: 'Où faire du MMA près de Colomiers ?',
-    texte:
-      "Le MMA se pratique dans les deux clubs Boxing Center accessibles depuis Colomiers. Si tu cherches un club de MMA près de Colomiers, commence par regarder ton créneau : c'est l'accès, pas la discipline, qui départage Toulouse Minimes et Portet-sur-Garonne pour quelqu'un qui part de Colomiers.",
   },
   {
     titre: 'Quel club Boxing Center propose le MMA près de Colomiers ?',
@@ -136,7 +132,7 @@ const QUESTIONS = [
               <p class="dcarte__question mono">«&nbsp;{d.question}&nbsp;»</p>
               <p class="dcarte__reponse">{d.reponse}</p>
               <span class="dcarte__aller mono">
-                Voir la discipline <span class="fleche" aria-hidden="true">→</span>
+                {d.nom} près de Colomiers <span class="fleche" aria-hidden="true">→</span>
               </span>
             </a>
           </li>
@@ -224,7 +220,7 @@ const QUESTIONS = [
       <div>
         <p class="numero-section mono"><span>07</span><span>Les horaires</span></p>
         <h2 id="t-horaires" class="horaires__chiffre">
-          <span class="horaires__grand">10h → 21h15</span>
+          <span class="horaires__grand">{HORAIRES.ouvertureTexte} → {HORAIRES.fermetureTexte}</span>
           <span class="horaires__jours mono">6 jours sur 7</span>
         </h2>
       </div>
@@ -256,6 +252,7 @@ const QUESTIONS = [
       <div class="premiere__texte">
         <p class="numero-section mono"><span>08</span><span>La première fois</span></p>
         <h2 id="t-premiere">Personne n’est jamais arrivé en sachant boxer.</h2>
+        <p class="premiere__lien"><a class="lien" href="/premiere-seance/">Ta première séance de boxe près de Colomiers, minute par minute →</a></p>
         <ol class="premiere__etapes">
           <li>
             <span class="mono">01</span>
@@ -550,6 +547,8 @@ const QUESTIONS = [
   }
   .horaires__vers { display: inline-block; margin-top: var(--e-5); font-size: var(--t-petit); }
   .horaires__args strong { color: var(--texte); font-weight: 600; }
+
+  .premiere__lien { margin: var(--e-3) 0 var(--e-5); font-size: var(--t-petit); }
 
   /* ── H07 Première séance ────────────────────────────────────────────── */
   .premiere__inner {

@@ -4,8 +4,11 @@
  * Principe directeur : **plus de pertinence Colomiers PAR page, pas plus de
  * pages Colomiers.** Fabriquer /club-boxe-colomiers/, /boxe-colomiers/,
  * /sport-combat-colomiers/ à côté des routes existantes nous rapprocherait du
- * schéma de page satellite que Google sanctionne explicitement. On garde huit
- * pages et on rend chacune beaucoup plus dense et beaucoup plus spécifique.
+ * schéma de page satellite que Google sanctionne explicitement. On garde les
+ * huit pages du cahier des charges, plus deux pages d'intention distinctes
+ * (/premiere-seance/, /quel-club/) qui répondent à des questions qu'aucune
+ * autre page ne peut porter sans se diluer — et on rend chacune beaucoup plus
+ * dense et beaucoup plus spécifique.
  *
  * Deuxième principe : un mot-clé n'entre dans une page que s'il correspond à
  * une question qu'on y traite réellement. Un mur de « Colomiers » répété est
@@ -186,6 +189,32 @@ export const CLUSTERS: readonly Cluster[] = [
       'abonnement boxe',
       'licence',
       'cours d’essai',
+    ],
+  },
+  {
+    page: 'premiere-seance',
+    prioritaires: ['première séance', 'Colomiers', 'débutant', 'essai'],
+    secondaires: [
+      'première séance boxe Colomiers',
+      'cours d’essai boxe Colomiers',
+      'boxe débutant Colomiers',
+      'commencer la boxe',
+      'essayer le MMA',
+      'séance découverte',
+      'jamais fait de boxe',
+      'cours de boxe débutant',
+    ],
+  },
+  {
+    page: 'quel-club',
+    prioritaires: ['Minimes', 'Portet', 'Colomiers', 'club'],
+    secondaires: [
+      'quel club de boxe Colomiers',
+      'Minimes ou Portet',
+      'club de boxe proche de Colomiers',
+      'Boxing Center Colomiers',
+      'Boxing Center Minimes',
+      'Boxing Center Portet',
     ],
   },
   {

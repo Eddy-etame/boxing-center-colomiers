@@ -8,6 +8,8 @@
  * l'architecture de recherche, pas de la mise en page.
  */
 
+import { HORAIRES } from './verite';
+
 export type RouteId =
   | 'accueil'
   | 'boxe-anglaise'
@@ -16,6 +18,8 @@ export type RouteId =
   | 'boxe-enfants'
   | 'plannings'
   | 'tarifs'
+  | 'premiere-seance'
+  | 'quel-club'
   | 'contact'
   | 'merci'
   | 'introuvable'
@@ -45,7 +49,7 @@ export const ROUTES: readonly Route[] = [
     question: 'Où pratiquer la boxe ou le MMA quand on habite à Colomiers ?',
     titre: 'Club de boxe et MMA près de Colomiers | Boxing Center',
     description:
-      "Club de boxe, MMA et sports de combat près de Colomiers : Boxing Center accueille les Columérins à Toulouse Minimes et Portet-sur-Garonne, 6 j/7 de 10h à 21h15.",
+      "Club de boxe, MMA et sports de combat près de Colomiers : Boxing Center accueille les Columérins à Toulouse Minimes et Portet-sur-Garonne, " + HORAIRES.court.valeur + ".",
     menu: true,
     index: true,
   },
@@ -67,7 +71,7 @@ export const ROUTES: readonly Route[] = [
     question: 'Où faire du MMA quand on part de Colomiers, et comment on commence ?',
     titre: 'Club de MMA près de Colomiers | Boxing Center',
     description:
-      'Club de MMA près de Colomiers : frappe, corps à corps et sol, avec un encadrement qui construit les débutants. Toulouse Minimes et Portet-sur-Garonne.',
+      'Club de MMA près de Colomiers : frappe, corps à corps et sol, encadrement qui construit les débutants. À Boxing Center Portet-sur-Garonne, avec cage, grappling et JJB.',
     menu: true,
     index: true,
   },
@@ -100,7 +104,7 @@ export const ROUTES: readonly Route[] = [
     question: 'Quand est-ce que je peux m’entraîner, avec mes horaires à moi ?',
     titre: 'Plannings et horaires près de Colomiers | Boxing Center',
     description:
-      "Les clubs Boxing Center accueillent 6 j/7, de 10h à 21h15. Trouve le créneau qui tient dans ta semaine et accède aux plannings détaillés des deux clubs.",
+      "Les clubs Boxing Center accueillent " + HORAIRES.court.valeur + ". Trouve le créneau qui tient dans ta semaine et accède aux plannings détaillés des deux clubs.",
     menu: true,
     index: true,
   },
@@ -113,6 +117,28 @@ export const ROUTES: readonly Route[] = [
     description:
       "Ce qui est compris dans une adhésion à un club de boxe, et où consulter les tarifs à jour de Boxing Center Toulouse Minimes et Portet-sur-Garonne.",
     menu: true,
+    index: true,
+  },
+  {
+    id: 'premiere-seance',
+    chemin: '/premiere-seance/',
+    nav: 'Première séance',
+    question: 'Je n’ai jamais fait de boxe. Qu’est-ce qui m’attend à la première séance ?',
+    titre: 'Première séance de boxe près de Colomiers | Boxing Center',
+    description:
+      'Ce qu’il faut apporter, ce que tu vas faire, ce que tu ne feras pas : la première séance de boxe ou de MMA d’un débutant, depuis Colomiers, minute par minute.',
+    menu: false,
+    index: true,
+  },
+  {
+    id: 'quel-club',
+    chemin: '/quel-club/',
+    nav: 'Quel club',
+    question: 'Minimes ou Portet : lequel des deux clubs Boxing Center depuis Colomiers ?',
+    titre: 'Quel club Boxing Center depuis Colomiers : Minimes ou Portet ?',
+    description:
+      'Deux clubs de boxe près de Colomiers, pas la même offre : le MMA à Portet, la boxe anglaise dans les deux. Deux réponses et on te dit lequel viser.',
+    menu: false,
     index: true,
   },
   {

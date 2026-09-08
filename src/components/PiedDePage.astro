@@ -58,8 +58,17 @@ const annee = new Date().getFullYear();
         <p class="mono pied__cle">Les disciplines</p>
         <ul>
           {DISCIPLINES.map((d) => (
-            <li><a class="lien" href={d.route}>{d.nom}</a></li>
+            <li><a class="lien" href={d.route}>{d.nom} près de Colomiers</a></li>
           ))}
+        </ul>
+      </nav>
+
+      <nav aria-label="Pour décider">
+        <p class="mono pied__cle">Pour décider</p>
+        <ul>
+          <li><a class="lien" href="/quel-club/">Minimes ou Portet, quel club</a></li>
+          <li><a class="lien" href="/premiere-seance/">Première séance, débutants</a></li>
+          <li><a class="lien" href="/plannings/">Horaires et créneaux</a></li>
         </ul>
       </nav>
 

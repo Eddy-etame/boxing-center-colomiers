@@ -48,23 +48,24 @@ export const CONTACT = {
 /* ─────────────────────────────  HORAIRES  ───────────────────────────── */
 
 /**
- * ⚠ CONFLIT FACTUEL OUVERT — à trancher avant mise en ligne.
+ * 21h30, tranché par Eddy le 08/09/2026 après conflit : le cahier des charges
+ * disait 21h15, les deux sites officiels des clubs affichent 10h–21h30 du
+ * lundi au samedi. La réalité de la salle l'emporte sur le brief.
  *
- * Le cahier des charges (§8 et §10) impose « 6 jours sur 7, de 10h à 21h15 ».
- * Les deux sites officiels des clubs affichent aujourd'hui « lundi au samedi,
- * 10h–21h30 » (relevé le 07/09/2026 sur boxe-toulouse.com et
- * boxing-center-portet.fr).
- *
- * On publie la valeur du cahier des charges, parce que c'est l'instruction
- * écrite du client. Mais quinze minutes d'écart sur une fermeture, c'est un
- * adhérent qui arrive à 21h20 en croyant que c'est fermé — ou l'inverse.
- * À confirmer, puis à corriger ici et nulle part ailleurs.
+ * Aucun composant n'a le droit d'écrire « 21h30 » en dur : tout passe par
+ * `texte`, `court`, `ouvertureTexte` ou `fermetureTexte`. Le contrôle de build
+ * refuse une heure de fermeture écrite ailleurs.
  */
+const SRC = (v: string) => ({ valeur: v, source: 'site-reseau' as const, verifie: '2026-09-08' });
+
 export const HORAIRES = {
-  /** Cahier des charges §8 et §10. */
-  texte: CDC('6 jours sur 7, de 10h à 21h15'),
-  ouverture: CDC('10:00'),
-  fermeture: CDC('21:15'),
+  texte: SRC('6 jours sur 7, de 10h à 21h30'),
+  /** forme courte, pour les meta descriptions */
+  court: SRC('6 j/7, de 10h à 21h30'),
+  ouverture: SRC('10:00'),
+  fermeture: SRC('21:30'),
+  ouvertureTexte: '10h',
+  fermetureTexte: '21h30',
   joursParSemaine: 6,
   /** Les arguments que le cahier des charges §10 demande de porter. */
   arguments: [

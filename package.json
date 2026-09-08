@@ -7,7 +7,8 @@
     "build": "astro build && node scripts/verifier.mjs",
     "preview": "astro preview",
     "images": "node scripts/build-images.mjs",
-    "verifier": "node scripts/verifier.mjs"
+    "verifier": "node scripts/verifier.mjs",
+    "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
     "astro": "^5.13.0",

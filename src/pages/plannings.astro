@@ -33,7 +33,7 @@ const CRENEAUX = [
   {
     id: 'soir',
     nom: 'Le soir',
-    plage: '18h — 21h15',
+    plage: `18h — ${HORAIRES.fermetureTexte}`,
     pour: 'Tu sors du travail et tu passes avant de rentrer',
     note: 'Le plus fréquenté, et le plus vivant. C’est là qu’il y a le plus de monde à qui se mesurer.',
   },
@@ -68,7 +68,7 @@ const CRENEAUX = [
     <div class="enveloppe amplitude__inner">
       <div>
         <p class="numero-section mono"><span>L’amplitude</span></p>
-        <p class="amplitude__grand">10h <span aria-hidden="true">→</span> 21h15</p>
+        <p class="amplitude__grand">{HORAIRES.ouvertureTexte} <span aria-hidden="true">→</span> {HORAIRES.fermetureTexte}</p>
         <p class="amplitude__jours mono">6 jours sur 7</p>
       </div>
       <div class="amplitude__texte">

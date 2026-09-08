@@ -1,0 +1,271 @@
+---
+/**
+ * PREMIÈRE SÉANCE.
+ *
+ * La page qui répond à l'intention la plus chargée d'appréhension du site :
+ * « je n'ai jamais fait de boxe, qu'est-ce qui va m'arriver ? ». Une personne
+ * qui cherche « cours d'essai boxe Colomiers » ou « première séance boxe »
+ * ne compare pas des clubs, elle cherche à être rassurée sur le déroulé exact.
+ *
+ * Elle possède donc ce territoire seule : première séance, cours d'essai,
+ * débutant, commencer. Aucune autre page ne le revendique.
+ *
+ * Rien ici n'invente une condition : les modalités d'essai et de prêt de
+ * matériel appartiennent à chaque club, on renvoie vers lui pour ça.
+ */
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { CLUBS, HORAIRES, CONTACT } from '../data/verite';
+import { OFFRES } from '../data/offres';
+import { route } from '../data/routes';
+
+const AVANT = [
+  { titre: 'Une tenue de sport', texte: 'Short ou legging, t-shirt, chaussures propres pour la salle. Rien de technique.' },
+  { titre: 'Une bouteille d’eau', texte: 'Tu vas transpirer plus que tu ne le penses. Une serviette est bienvenue.' },
+  { titre: 'Dix minutes d’avance', texte: 'Pour te présenter à l’accueil, dire que c’est ta première fois, et être accueilli comme tel.' },
+  { titre: 'Pas de gants obligatoires', texte: 'Les conditions de prêt de gants et de bandes sont fixées par chaque club : demande-le en arrivant ou par téléphone avant de venir.' },
+];
+
+const PENDANT = [
+  { etape: 'Échauffement', duree: '10 à 15 min', texte: 'Corde à sauter, mobilité, déplacements à vide. Le coach te montre la garde et les appuis : c’est là que tout commence.' },
+  { etape: 'Technique', duree: '20 à 30 min', texte: 'Un ou deux gestes, décomposés, répétés lentement puis en rythme. Le coach corrige au geste près — c’est ce que tu es venu chercher.' },
+  { etape: 'Sac ou pattes d’ours', duree: '15 à 20 min', texte: 'Tu appliques le geste sur un sac ou face au coach qui tient les pattes d’ours. Tu frappes, personne ne te frappe.' },
+  { etape: 'Renforcement et retour au calme', duree: '10 min', texte: 'Gainage, abdominaux, étirements. Tu repars essoufflé et content, pas cassé.' },
+];
+
+const QUESTIONS = [
+  {
+    titre: 'Est-ce que je vais prendre des coups à la première séance ?',
+    texte: 'Non. L’opposition n’est jamais le point de départ. Une première séance de boxe ou de MMA, c’est de l’échauffement, du geste, du sac et des pattes d’ours. Le sparring arrive bien plus tard, encadré, et uniquement pour celles et ceux qui le souhaitent.',
+  },
+  {
+    titre: 'Je n’ai jamais fait de sport. C’est un problème ?',
+    texte: 'C’est la situation la plus courante dans un club de boxe. Le coach adapte l’intensité à la personne qu’il a devant lui, et tout le monde dans la salle a été le débutant essoufflé du fond un jour. Personne ne regarde : chacun est occupé à sa propre séance.',
+  },
+  {
+    titre: 'Y a-t-il un cours d’essai ou une séance découverte ?',
+    texte: 'Les modalités d’essai — séance découverte, conditions, prêt de matériel — sont propres à chaque club Boxing Center et peuvent changer avec la saison. Le plus simple : appelle le club que tu vises ou écris-nous, et on te dit exactement comment ça se passe cette semaine.',
+  },
+  {
+    titre: 'Quel club pour une première séance depuis Colomiers ?',
+    texte: `Pour la boxe anglaise, les deux clubs conviennent : Toulouse Minimes a un groupe « Boxe Anglaise Loisir » pensé pour ça, Portet-sur-Garonne accueille aussi les débutants. Pour le MMA ou le grappling, c’est Portet-sur-Garonne. Pour un enfant, les deux clubs proposent la Baby Boxe et la boxe éducative. Ils accueillent ${HORAIRES.texte.valeur.toLowerCase()}.`,
+  },
+  {
+    titre: 'Et le lendemain ?',
+    texte: 'Des courbatures, surtout aux épaules et aux jambes, et l’envie d’y retourner. La deuxième séance est plus facile que la première : les gestes ont commencé à s’installer, et tu sais où tu mets les pieds.',
+  },
+];
+
+const DEBUTANTS = OFFRES.filter((o) =>
+  ['Boxe Anglaise Loisir', 'Boxe anglaise', 'Cardio Boxing', 'Lady Boxing', 'Boxing Lady', 'Baby Boxe', 'Baby boxe'].includes(o.intitule)
+);
+---
+
+<Base page="premiere-seance" ogPhoto="premiere-seance-boxe-colomiers" faq={QUESTIONS}>
+  <section class="section tete" aria-labelledby="t-premiere">
+    <div class="enveloppe tete__inner">
+      <nav class="fil mono" aria-label="Fil d’Ariane">
+        <a href="/">Accueil</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Première séance</span>
+      </nav>
+      <h1 id="t-premiere">Ta première séance de boxe près de Colomiers, minute par minute.</h1>
+      <p class="tete__chapeau">
+        Tu n’as jamais mis de gants et tu veux savoir exactement ce qui t’attend
+        avant de pousser la porte. Voilà le déroulé d’une première séance dans un
+        club Boxing Center accessible depuis Colomiers — ce qu’il faut apporter, ce
+        que tu vas faire, et ce que tu ne feras pas.
+      </p>
+      <div class="tete__actions">
+        <a class="bouton bouton--signal" href={route('contact').chemin}>
+          <span>Dire que je débute</span>
+          <span class="fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="bouton" href={route('quel-club').chemin}>
+          <span>Quel club pour moi</span>
+          <span class="fleche" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="enveloppe">
+      <Photo slug="premiere-seance-boxe-colomiers" prioritaire sizes="100vw" ratio="21 / 9" class="tete__photo" />
+    </div>
+  </section>
+
+  <section class="section clair avant" aria-labelledby="t-avant">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>Avant</span></p>
+      <h2 id="t-avant" class="avant__titre">Ce qu’il faut apporter. C’est court.</h2>
+      <div class="avant__grille">
+        {AVANT.map((a, i) => (
+          <article class="reveler" style={`--retard:${i * 60}ms`}>
+            <p class="mono avant__num">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="avant__nom">{a.titre}</h3>
+            <p class="avant__texte">{a.texte}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section pendant" aria-labelledby="t-pendant">
+    <div class="enveloppe pendant__inner">
+      <div class="pendant__texte">
+        <p class="numero-section mono"><span>Pendant</span></p>
+        <h2 id="t-pendant">Une heure, quatre temps, zéro coup reçu.</h2>
+        <p class="lead faible">
+          Le déroulé varie selon le coach et la discipline, mais l’ossature d’une
+          première séance de boxe est celle-ci, à Toulouse Minimes comme à
+          Portet-sur-Garonne.
+        </p>
+        <ol class="pendant__liste">
+          {PENDANT.map((p, i) => (
+            <li>
+              <span class="mono pendant__num">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <p class="pendant__etape">{p.etape} <span class="mono pendant__duree">{p.duree}</span></p>
+                <p class="pendant__detail">{p.texte}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div class="pendant__image">
+        <Photo slug="bandage-mains-boxe-colomiers-debutant" sizes="(max-width: 60rem) 100vw, 42vw" ratio="3 / 4" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section papier ou" aria-labelledby="t-ou">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>Dans quel club</span></p>
+      <h2 id="t-ou" class="ou__titre">Les créneaux pensés pour débuter, club par club.</h2>
+      <p class="lead ou__intro">
+        Deux clubs Boxing Center à proximité de Colomiers, {HORAIRES.texte.valeur.toLowerCase()}.
+        Voilà les intitulés que chacun publie et qui accueillent les débutants.
+      </p>
+      <div class="ou__clubs">
+        {CLUBS.map((c) => (
+          <a class="oclub" href={c.activites} rel="noopener">
+            <h3 class="oclub__nom">{c.nomCourt}</h3>
+            <ul class="oclub__offres">
+              {DEBUTANTS.filter((o) => o.club === c.id).map((o) => (
+                <li>
+                  <span class="oclub__intitule">{o.intitule}</span>
+                  {o.ages && <span class="oclub__age mono">{o.ages}</span>}
+                  {o.detail && <span class="oclub__detail">{o.detail}</span>}
+                </li>
+              ))}
+            </ul>
+            <p class="mono oclub__depuis">{c.adresse} — {c.depuisColomiers}</p>
+            <span class="mono oclub__aller">Voir les activités du club <span aria-hidden="true">↗</span></span>
+          </a>
+        ))}
+      </div>
+      <p class="ou__note">
+        Pour le MMA et le grappling, la première séance se fait à Portet-sur-Garonne&nbsp;:
+        <a class="lien" href={route('mma').chemin}>voir la page MMA près de Colomiers</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section faq" aria-labelledby="t-faq">
+    <div class="enveloppe faq__inner">
+      <div>
+        <p class="numero-section mono"><span>Questions</span></p>
+        <h2 id="t-faq">Ce que demandent celles et ceux qui débutent.</h2>
+      </div>
+      <div class="faq__liste">
+        {QUESTIONS.map((q, i) => (
+          <details class="qr" open={i === 0}>
+            <summary><span class="qr__q">{q.titre}</span><span class="qr__signe" aria-hidden="true"></span></summary>
+            <p class="qr__r">{q.texte}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section conversion" aria-labelledby="t-conversion">
+    <div class="enveloppe conversion__inner">
+      <p class="numero-section mono"><span>Passer à l’acte</span></p>
+      <h2 id="t-conversion">Dis-nous que tu débutes. On te dit où et quand venir.</h2>
+      <p class="lead conversion__texte">
+        Discipline, créneau, club&nbsp;: en deux lignes on te répond avec le cours de
+        boxe débutant qui te correspond depuis Colomiers, et comment se passe
+        l’essai cette semaine.
+      </p>
+      <div class="conversion__actions">
+        <a class="bouton bouton--signal" href={route('contact').chemin}><span>Poser ma question</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="bouton" href={`tel:${CONTACT.telephoneLien.valeur}`}><span>{CONTACT.telephone.valeur}</span><span class="fleche" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tete { padding-bottom: var(--e-6); }
+  .tete__inner { max-width: 60rem; }
+  .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--acier-sombre); text-decoration: none; }
+  .fil a:hover { color: var(--signal-texte); }
+  .fil span[aria-current] { color: var(--acier); }
+  .tete h1 { max-width: 20ch; margin-bottom: var(--e-5); }
+  .tete__chapeau { max-width: 60ch; padding-left: var(--e-5); border-left: 2px solid var(--signal); font-size: var(--t-lead); line-height: 1.5; color: var(--acier); }
+  .tete__actions { display: flex; flex-wrap: wrap; gap: var(--e-3); margin-top: var(--e-6); }
+  .tete__photo { margin-top: var(--e-8); }
+
+  .avant__titre { max-width: 20ch; margin-bottom: var(--e-7); }
+  .avant__grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--e-7) var(--e-6); }
+  .avant__num { color: var(--signal-texte); margin-bottom: var(--e-3); }
+  .avant__nom { margin-bottom: var(--e-3); }
+  .avant__texte { color: var(--texte-faible); font-size: var(--t-petit); max-width: 32ch; }
+
+  .pendant__inner { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--e-8); align-items: start; }
+  @media (max-width: 60rem) { .pendant__inner { grid-template-columns: 1fr; } }
+  .pendant__texte h2 { max-width: 18ch; margin-bottom: var(--e-4); }
+  .pendant__texte .lead { max-width: 44ch; margin-bottom: var(--e-6); }
+  .pendant__liste { list-style: none; display: grid; }
+  .pendant__liste li { display: grid; grid-template-columns: 2.5rem 1fr; gap: var(--e-4); padding: var(--e-4) 0; border-top: 1px solid var(--trait); }
+  .pendant__num { color: var(--signal-texte); padding-top: 0.3em; }
+  .pendant__etape { font-weight: 600; display: flex; flex-wrap: wrap; gap: var(--e-3); align-items: baseline; margin-bottom: var(--e-2); }
+  .pendant__duree { color: var(--acier-sombre); }
+  .pendant__detail { color: var(--texte-faible); font-size: var(--t-petit); max-width: 48ch; }
+
+  .ou__titre { max-width: 22ch; margin-bottom: var(--e-4); }
+  .ou__intro { max-width: 52ch; margin-bottom: var(--e-7); }
+  .ou__clubs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e-5); }
+  @media (max-width: 52rem) { .ou__clubs { grid-template-columns: 1fr; } }
+  .oclub { display: grid; align-content: start; gap: var(--e-3); padding: var(--e-5); border: 1px solid var(--trait); border-radius: var(--rayon-1); text-decoration: none; color: inherit; transition: border-color var(--d-rapide) var(--e-mecanique); }
+  .oclub:hover { border-color: var(--signal); }
+  .oclub__nom { font-size: var(--t-h3); }
+  .oclub__offres { list-style: none; display: grid; gap: var(--e-2); }
+  .oclub__offres li { display: grid; gap: 0.05rem; }
+  .oclub__intitule { font-size: var(--t-petit); font-weight: 600; border-left: 2px solid var(--signal); padding-left: var(--e-3); }
+  .oclub__age, .oclub__detail { padding-left: calc(var(--e-3) + 2px); font-size: var(--t-micro); color: var(--texte-faible); }
+  .oclub__age { color: var(--signal-texte); text-transform: none; letter-spacing: 0.05em; }
+  .oclub__depuis { text-transform: none; letter-spacing: 0.03em; color: var(--texte-faible); padding-top: var(--e-3); border-top: 1px solid var(--trait-faible); }
+  .oclub__aller { color: var(--signal-texte); }
+  .ou__note { margin-top: var(--e-6); font-size: var(--t-petit); color: var(--texte-faible); }
+
+  .faq__inner { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--e-8); align-items: start; }
+  @media (max-width: 60rem) { .faq__inner { grid-template-columns: 1fr; gap: var(--e-6); } }
+  .faq h2 { max-width: 16ch; }
+  .qr { border-top: 1px solid var(--trait); }
+  .qr:last-child { border-bottom: 1px solid var(--trait); }
+  .qr summary { display: flex; align-items: center; justify-content: space-between; gap: var(--e-4); padding: var(--e-4) 0; cursor: pointer; list-style: none; }
+  .qr summary::-webkit-details-marker { display: none; }
+  .qr__q { font-weight: 600; max-width: 46ch; }
+  .qr summary:hover .qr__q { color: var(--signal-texte); }
+  .qr__signe { flex: none; position: relative; width: 14px; height: 14px; }
+  .qr__signe::before, .qr__signe::after { content: ''; position: absolute; inset: 0; margin: auto; background: var(--signal); }
+  .qr__signe::before { width: 14px; height: 1.5px; }
+  .qr__signe::after { width: 1.5px; height: 14px; transition: transform var(--d-normal) var(--e-mecanique); }
+  .qr[open] .qr__signe::after { transform: scaleY(0); }
+  .qr__r { max-width: 62ch; padding-bottom: var(--e-5); color: var(--texte-faible); font-size: var(--t-petit); }
+
+  .conversion { background: var(--marine); }
+  .conversion__inner { max-width: 46rem; }
+  .conversion h2 { max-width: 22ch; margin-bottom: var(--e-5); }
+  .conversion__texte { max-width: 50ch; color: var(--acier); }
+  .conversion__actions { display: flex; flex-wrap: wrap; gap: var(--e-3); margin-top: var(--e-7); }
+</style>

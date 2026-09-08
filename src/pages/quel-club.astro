@@ -1,0 +1,164 @@
+---
+/**
+ * QUEL CLUB.
+ *
+ * Le moteur de proximité a besoin d'une adresse à lui : sur l'accueil il est
+ * une section, ici il est la page. C'est la page que quelqu'un cherche quand
+ * il tape « Minimes ou Portet », « quel club de boxe Colomiers », « Boxing
+ * Center Colomiers lequel ». Elle réunit ce qui départage réellement les deux
+ * clubs — la discipline d'abord, le trajet ensuite — sans jamais dire que l'un
+ * est meilleur que l'autre.
+ */
+import Base from '../layouts/Base.astro';
+import Decision from '../components/Decision.astro';
+import TableauOffres from '../components/TableauOffres.astro';
+import { CLUBS, HORAIRES, CONTACT } from '../data/verite';
+import { route } from '../data/routes';
+
+const QUESTIONS = [
+  {
+    titre: 'Minimes ou Portet pour la boxe anglaise, depuis Colomiers ?',
+    texte: 'Les deux la proposent. Ce qui départage, c’est ton trajet : Toulouse Minimes est dans Toulouse, sur l’axe nord-est — le plus direct en sortie de journée. Portet-sur-Garonne est au sud, sur la route d’Espagne, plus simple en voiture et pour se garer, surtout hors heures de pointe.',
+  },
+  {
+    titre: 'Minimes ou Portet pour le MMA ?',
+    texte: 'Portet-sur-Garonne, sans hésiter : c’est le club du réseau qui publie le MMA, avec le grappling, le jiu-jitsu brésilien, le kick-boxing et une cage. Toulouse Minimes est orienté boxe anglaise et pieds-poings.',
+  },
+  {
+    titre: 'Et pour un enfant ?',
+    texte: 'Les deux clubs proposent la Baby Boxe et la boxe éducative — Toulouse Minimes publie la Baby Boxe de 3 à 6 ans. Portet-sur-Garonne ajoute un créneau kick-boxing enfants et ados. Pour un enfant, le bon club est surtout celui dont le créneau tombe à une heure où tu peux l’emmener.',
+  },
+  {
+    titre: 'Pour boxer sans combattre, se remettre en forme ?',
+    texte: 'Toulouse Minimes publie le Cardio Boxing, le Cross Training et le Boxing Lady, créneau 100 % féminin. Portet-sur-Garonne publie le Lady Boxing et la préparation physique. Les deux conviennent : regarde lequel est sur ton chemin.',
+  },
+  {
+    titre: 'Je sors du travail à Toulouse et je rentre à Colomiers le soir. Lequel ?',
+    texte: `Toulouse Minimes, sauf pour le MMA. Il est dans Toulouse même, sur le chemin du retour, et ouvert ${HORAIRES.texte.valeur.toLowerCase()} : tu passes avant de rentrer plutôt que de ressortir une fois arrivé.`,
+  },
+];
+---
+
+<Base page="quel-club" ogPhoto="ring-boxe-colomiers-boxing-center" faq={QUESTIONS}>
+  <section class="section tete" aria-labelledby="t-quel">
+    <div class="enveloppe tete__inner">
+      <nav class="fil mono" aria-label="Fil d’Ariane">
+        <a href="/">Accueil</a><span aria-hidden="true">/</span>
+        <span aria-current="page">Quel club</span>
+      </nav>
+      <h1 id="t-quel">Quel club Boxing Center choisir quand on part de Colomiers&nbsp;?</h1>
+      <p class="tete__chapeau">
+        Deux clubs à proximité de Colomiers, Toulouse Minimes et Portet-sur-Garonne.
+        Le bon n’est pas le « meilleur »&nbsp;: c’est celui qui propose ta discipline,
+        et que tu rejoindras encore en novembre. Deux réponses suffisent pour le
+        désigner.
+      </p>
+    </div>
+  </section>
+
+  <Decision />
+
+  <TableauOffres />
+
+  <section class="section deux" aria-labelledby="t-deux">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>Les deux clubs</span></p>
+      <h2 id="t-deux" class="deux__titre">Deux adresses réelles, deux directions.</h2>
+      <div class="deux__clubs">
+        {CLUBS.map((c) => (
+          <article class="dclub">
+            <h3 class="dclub__nom">{c.nom}</h3>
+            <p class="dclub__angle">{c.angle}</p>
+            <dl class="dclub__faits">
+              <div><dt class="mono">Adresse</dt><dd>{c.adresse}</dd></div>
+              <div><dt class="mono">Téléphone</dt><dd><a class="lien" href={`tel:${c.telephoneLien}`}>{c.telephone}</a></dd></div>
+              <div><dt class="mono">Depuis Colomiers</dt><dd>{c.depuisColomiers}</dd></div>
+              <div><dt class="mono">Accueil</dt><dd>{HORAIRES.texte.valeur}</dd></div>
+            </dl>
+            <div class="dclub__liens">
+              <a class="bouton" href={c.site} rel="noopener"><span>Le site du club</span><span class="fleche" aria-hidden="true">↗</span></a>
+              <a class="lien mono" href={c.plannings} rel="noopener">Plannings</a>
+              <a class="lien mono" href={c.tarifs} rel="noopener">Tarifs</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section clair faq" aria-labelledby="t-faq">
+    <div class="enveloppe faq__inner">
+      <div>
+        <p class="numero-section mono"><span>Questions</span></p>
+        <h2 id="t-faq">Minimes ou Portet, cas par cas.</h2>
+      </div>
+      <div class="faq__liste">
+        {QUESTIONS.map((q, i) => (
+          <details class="qr" open={i === 0}>
+            <summary><span class="qr__q">{q.titre}</span><span class="qr__signe" aria-hidden="true"></span></summary>
+            <p class="qr__r">{q.texte}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section conversion" aria-labelledby="t-conversion">
+    <div class="enveloppe conversion__inner">
+      <p class="numero-section mono"><span>Passer à l’acte</span></p>
+      <h2 id="t-conversion">Tu hésites encore&nbsp;? Décris ta semaine, on tranche avec toi.</h2>
+      <p class="lead conversion__texte">
+        Ta discipline, ton créneau, ton point de départ. On te répond avec le club
+        et l’horaire qui tiennent vraiment — pas un argumentaire.
+      </p>
+      <div class="conversion__actions">
+        <a class="bouton bouton--signal" href={route('contact').chemin}><span>Poser ma question</span><span class="fleche" aria-hidden="true">→</span></a>
+        <a class="bouton" href={`tel:${CONTACT.telephoneLien.valeur}`}><span>{CONTACT.telephone.valeur}</span><span class="fleche" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tete__inner { max-width: 60rem; }
+  .fil { display: flex; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--acier-sombre); text-decoration: none; }
+  .fil a:hover { color: var(--signal-texte); }
+  .fil span[aria-current] { color: var(--acier); }
+  .tete h1 { max-width: 18ch; margin-bottom: var(--e-5); }
+  .tete__chapeau { max-width: 60ch; padding-left: var(--e-5); border-left: 2px solid var(--signal); font-size: var(--t-lead); line-height: 1.5; color: var(--acier); }
+
+  .deux__titre { max-width: 20ch; margin-bottom: var(--e-7); }
+  .deux__clubs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e-6); }
+  @media (max-width: 52rem) { .deux__clubs { grid-template-columns: 1fr; } }
+  .dclub { display: grid; align-content: start; gap: var(--e-4); padding: var(--e-6); border: 1px solid var(--trait); border-radius: var(--rayon-1); }
+  .dclub__nom { font-size: var(--t-h3); }
+  .dclub__angle { color: var(--texte-faible); max-width: 40ch; }
+  .dclub__faits > div { display: grid; grid-template-columns: 9rem 1fr; gap: var(--e-3); padding: var(--e-3) 0; border-top: 1px solid var(--trait-faible); font-size: var(--t-petit); }
+  @media (max-width: 30rem) { .dclub__faits > div { grid-template-columns: 1fr; gap: 0.2rem; } }
+  .dclub__faits dt { color: var(--acier-sombre); }
+  .dclub__faits dd { margin: 0; }
+  .dclub__liens { display: flex; flex-wrap: wrap; align-items: center; gap: var(--e-4); padding-top: var(--e-2); }
+
+  .faq__inner { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: var(--e-8); align-items: start; }
+  @media (max-width: 60rem) { .faq__inner { grid-template-columns: 1fr; gap: var(--e-6); } }
+  .faq h2 { max-width: 16ch; }
+  .qr { border-top: 1px solid var(--trait); }
+  .qr:last-child { border-bottom: 1px solid var(--trait); }
+  .qr summary { display: flex; align-items: center; justify-content: space-between; gap: var(--e-4); padding: var(--e-4) 0; cursor: pointer; list-style: none; }
+  .qr summary::-webkit-details-marker { display: none; }
+  .qr__q { font-weight: 600; max-width: 46ch; }
+  .qr summary:hover .qr__q { color: var(--signal-texte); }
+  .qr__signe { flex: none; position: relative; width: 14px; height: 14px; }
+  .qr__signe::before, .qr__signe::after { content: ''; position: absolute; inset: 0; margin: auto; background: var(--signal); }
+  .qr__signe::before { width: 14px; height: 1.5px; }
+  .qr__signe::after { width: 1.5px; height: 14px; transition: transform var(--d-normal) var(--e-mecanique); }
+  .qr[open] .qr__signe::after { transform: scaleY(0); }
+  .qr__r { max-width: 62ch; padding-bottom: var(--e-5); color: var(--texte-faible); font-size: var(--t-petit); }
+
+  .conversion { background: var(--marine); }
+  .conversion__inner { max-width: 46rem; }
+  .conversion h2 { max-width: 24ch; margin-bottom: var(--e-5); }
+  .conversion__texte { max-width: 50ch; color: var(--acier); }
+  .conversion__actions { display: flex; flex-wrap: wrap; gap: var(--e-3); margin-top: var(--e-7); }
+</style>

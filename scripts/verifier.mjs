@@ -61,6 +61,21 @@ const VENTE_NEGATIVE = [
   'ne se trouve dans cette commune',
 ];
 
+/**
+ * FAITS FAUX — des affirmations qui ont déjà été publiées une fois et qui
+ * contredisent les pages activités officielles des clubs. Le MMA, le
+ * grappling et le JJB n'existent qu'à Portet ; les écrire aux deux clubs
+ * envoie quelqu'un dans une salle qui ne propose pas ce qu'il cherche.
+ */
+const FAITS_FAUX = [
+  'mma se pratique dans les deux',
+  'deux clubs proposent le mma',
+  'les deux proposent la boxe anglaise, le mma',
+  'mma à toulouse minimes',
+  'mma à minimes',
+  'grappling à minimes',
+];
+
 /** Liens sortants que le cahier des charges impose, et où. */
 const BACKLINKS = [
   ['/plannings/', 'boxe-toulouse.com'],
@@ -96,6 +111,8 @@ const CHEMIN_PAR_PAGE = {
   'boxe-enfants': '/boxe-enfants/',
   plannings: '/plannings/',
   tarifs: '/tarifs/',
+  'premiere-seance': '/premiere-seance/',
+  'quel-club': '/quel-club/',
   contact: '/contact/',
 };
 
@@ -153,6 +170,16 @@ for (const [route, fichier] of toutes) {
       }
       i = bas.indexOf(f.toLowerCase(), i + 1);
     }
+  }
+
+  // 1 ter — un fait contredit par les sites officiels des clubs
+  for (const f of FAITS_FAUX) {
+    if (plat(bas).includes(plat(f))) erreurs.push(ou(`fait faux : « ${f} » — voir src/data/offres.ts`));
+  }
+
+  // 1 quater — une heure de fermeture écrite ailleurs que dans le registre
+  for (const h of ['21h15', '21h00', '21h45', '22h']) {
+    if (bas.includes(h)) erreurs.push(ou(`heure de fermeture en dur : « ${h} » — le registre dit 21h30`));
   }
 
   // 2 — liens internes
