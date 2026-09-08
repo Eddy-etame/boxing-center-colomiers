@@ -12,6 +12,7 @@ import Photo from '../components/Photo.astro';
 import Bascule from '../components/Bascule.astro';
 import { contenu, type Contenu } from '../data/contenus';
 import { discipline, CLUBS, HORAIRES, DISCIPLINES, CONTACT } from '../data/verite';
+import { FAMILLES_PAR_PAGE, OFFRES } from '../data/offres';
 import { route } from '../data/routes';
 
 interface Props { id: Contenu['id'] }
@@ -20,6 +21,18 @@ const { id } = Astro.props;
 const c = contenu(id);
 const d = discipline(id);
 const autres = DISCIPLINES.filter((x) => x.id !== id);
+
+/**
+ * Les intitulés réellement publiés par chaque club pour cette discipline.
+ * C'est ce qui distingue la page d'une fiche générique : « Boxing Lady »,
+ * « Baby Boxe 3/6 » ou « Grappling & jiu-jitsu brésilien » sont le vocabulaire
+ * que les gens tapent, et personne d'autre ne peut les écrire à notre place.
+ */
+const familles = FAMILLES_PAR_PAGE[id] ?? [];
+const offresParClub = CLUBS.map((c) => ({
+  club: c,
+  offres: OFFRES.filter((o) => o.club === c.id && familles.includes(o.famille)),
+})).filter((x) => x.offres.length > 0);
 ---
 
 <Base page={id} discipline={id} ogPhoto={c.photoHero} faq={c.faq}>
@@ -119,21 +132,30 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
   <section class="section papier trouver" id="trouver" aria-labelledby="t-trouver">
     <div class="enveloppe">
       <p class="numero-section mono"><span>Depuis Colomiers</span></p>
-      <h2 id="t-trouver">Où pratiquer {d.nom.toLowerCase()} près de Colomiers</h2>
+      <h2 id="t-trouver">Où pratiquer {d.nom.toLowerCase()} à proximité de Colomiers</h2>
       <p class="lead trouver__intro">
-        Deux clubs Boxing Center à proximité de Colomiers t’accueillent,
-        {HORAIRES.texte.valeur.toLowerCase()}. Il ne reste qu’à choisir celui qui
-        colle le mieux à tes horaires et à tes trajets.
+        {offresParClub.length === 1
+          ? `Dans le réseau Boxing Center, c’est ${offresParClub[0].club.nom} qui propose cette pratique, ${HORAIRES.texte.valeur.toLowerCase()}. Voilà ce que le club publie exactement.`
+          : `Les deux clubs Boxing Center à proximité de Colomiers la proposent, ${HORAIRES.texte.valeur.toLowerCase()}. Voilà ce que chacun publie exactement.`}
       </p>
 
       <div class="trouver__clubs">
-        {CLUBS.map((cl) => (
-          <a class="tclub" href={cl.site} rel="noopener">
+        {offresParClub.map(({ club: cl, offres }) => (
+          <a class="tclub" href={cl.activites} rel="noopener">
             <h3 class="tclub__nom">{cl.nomCourt}</h3>
+            <ul class="tclub__offres">
+              {offres.map((o) => (
+                <li>
+                  <span class="tclub__intitule">{o.intitule}</span>
+                  {o.ages && <span class="tclub__age mono">{o.ages}</span>}
+                  {o.detail && <span class="tclub__detail">{o.detail}</span>}
+                </li>
+              ))}
+            </ul>
             <p class="tclub__angle">{cl.angle}</p>
-            <p class="mono tclub__depuis">{cl.depuisColomiers}</p>
+            <p class="mono tclub__depuis">{cl.adresse} — {cl.depuisColomiers}</p>
             <span class="mono tclub__aller">
-              Ouvrir le site du club <span aria-hidden="true">↗</span>
+              Voir les activités du club <span aria-hidden="true">↗</span>
             </span>
           </a>
         ))}
@@ -306,6 +328,22 @@ const autres = DISCIPLINES.filter((x) => x.id !== id);
   }
   .tclub:hover { border-color: var(--signal-texte); transform: translateY(-2px); }
   .tclub__nom { font-size: var(--t-h3); }
+  .tclub__offres { list-style: none; display: grid; gap: var(--e-2); margin: var(--e-2) 0 var(--e-3); }
+  .tclub__offres li { display: grid; gap: 0.05rem; }
+  .tclub__intitule {
+    font-size: var(--t-petit);
+    font-weight: 600;
+    border-left: 2px solid var(--signal);
+    padding-left: var(--e-3);
+  }
+  .tclub__age,
+  .tclub__detail {
+    padding-left: calc(var(--e-3) + 2px);
+    font-size: var(--t-micro);
+    color: var(--texte-faible);
+    line-height: 1.5;
+  }
+  .tclub__age { color: var(--signal-texte); text-transform: none; letter-spacing: 0.05em; }
   .tclub__angle { margin: 0; color: var(--texte-faible); font-size: var(--t-petit); }
   .tclub__depuis {
     margin: 0;

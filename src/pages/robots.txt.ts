@@ -1,9 +1,14 @@
 import type { APIRoute } from 'astro';
 import { SITE } from '../data/verite';
+import { DOIT_BLOQUER_LES_ROBOTS } from '../lib/environnement';
 
 /** Généré depuis le registre : jamais de fichier statique à maintenir en double. */
 export const GET: APIRoute = () =>
-  new Response(
+  DOIT_BLOQUER_LES_ROBOTS
+    ? new Response('User-agent: *\nDisallow: /\n', {
+        headers: { 'content-type': 'text/plain; charset=utf-8' },
+      })
+    : new Response(
     `User-agent: *
 Allow: /
 

@@ -6,6 +6,9 @@ import PiedDePage from '../components/PiedDePage.astro';
 import Parcours from '../components/Parcours.astro';
 import { route, type RouteId } from '../data/routes';
 import { SITE, CLUBS, CONTACT, HORAIRES } from '../data/verite';
+import { COMMUNES_VOISINES, CONTEXTE_GEO } from '../data/mots-cles';
+import { DOIT_BLOQUER_LES_ROBOTS } from '../lib/environnement';
+import { offresDuClub } from '../data/offres';
 
 interface Props {
   page: RouteId;
@@ -70,13 +73,27 @@ const donnees = {
           opens: HORAIRES.ouverture.valeur,
           closes: HORAIRES.fermeture.valeur,
         },
-        sport: ['Boxe anglaise', 'MMA', 'Boxing fitness', 'Boxe éducative'],
+        /* Les intitulés réellement publiés par CE club, pas une liste commune :
+           Minimes ne propose pas de MMA, Portet oui. */
+        sport: offresDuClub(c.id).map((o) => o.intitule),
       })),
-      areaServed: {
-        '@type': 'City',
-        name: SITE.villeOrigine,
-        containedInPlace: { '@type': 'AdministrativeArea', name: SITE.departement },
-      },
+      sameAs: CLUBS.map((c) => c.site),
+      /* Le territoire réellement desservi : la commune d'origine et ses
+         voisines, comme le demande le cahier des charges §1. */
+      areaServed: [
+        {
+          '@type': 'City',
+          name: SITE.villeOrigine,
+          postalCode: CONTEXTE_GEO.codePostal,
+          containedInPlace: { '@type': 'AdministrativeArea', name: SITE.departement },
+        },
+        ...COMMUNES_VOISINES.map((c) => ({
+          '@type': 'City',
+          name: c.nom,
+          postalCode: c.cp,
+          containedInPlace: { '@type': 'AdministrativeArea', name: SITE.departement },
+        })),
+      ],
     },
     {
       '@type': 'WebPage',
@@ -129,7 +146,16 @@ const donnees = {
     <title>{r.titre}</title>
     <meta name="description" content={r.description} />
     <link rel="canonical" href={canonique} />
-    {!r.index && <meta name="robots" content="noindex, follow" />}
+    {/* Un aperçu Vercel ne doit jamais concurrencer le domaine réel. */}
+    {DOIT_BLOQUER_LES_ROBOTS ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      !r.index && <meta name="robots" content="noindex, follow" />
+    )}
+
+    {/* Contexte géographique : encore lu par plusieurs moteurs et agrégateurs. */}
+    <meta name="geo.region" content="FR-31" />
+    <meta name="geo.placename" content={`${CONTEXTE_GEO.ville}, ${CONTEXTE_GEO.departement}`} />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={SITE.nom} />

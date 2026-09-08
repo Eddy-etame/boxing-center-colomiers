@@ -44,9 +44,9 @@ export const CONTENUS: readonly Contenu[] = [
     bascule: 'garde',
     promesse:
       "Apprendre à boxer pour de vrai, encadré, sans avoir à prouver quoi que ce soit à personne.",
-    h1: 'Faire de la boxe anglaise quand on part de Colomiers',
+    h1: 'Cours de boxe anglaise à proximité de Colomiers, débutants et confirmés',
     chapeau:
-      "La boxe anglaise se pratique aux poings, avec des gants, dans un cadre encadré. Aucun niveau n'est demandé pour commencer. Depuis Colomiers, deux clubs Boxing Center la proposent : Toulouse Minimes et Portet-sur-Garonne, ouverts 6 jours sur 7 de 10h à 21h15.",
+      "La boxe anglaise se pratique aux poings, avec des gants, dans un cadre encadré. Aucun niveau n'est demandé pour commencer. Les deux clubs Boxing Center accessibles depuis Colomiers la proposent : Toulouse Minimes distingue un groupe loisir et un groupe compétiteurs et publie aussi la boxe pieds-poings ; Portet-sur-Garonne propose la boxe anglaise et le kick-boxing. Ouverts 6 jours sur 7, de 10h à 21h15.",
     photoHero: 'boxe-anglaise-colomiers-technique',
     photoSecondaire: 'deplacement-boxe-anglaise-colomiers',
     blocs: [
@@ -102,9 +102,9 @@ export const CONTENUS: readonly Contenu[] = [
     bascule: 'corps',
     promesse:
       "La discipline la plus complète, construite étape par étape, même en partant de zéro.",
-    h1: 'Où faire du MMA quand on habite à Colomiers',
+    h1: 'Club de MMA à proximité de Colomiers : cap sur Portet-sur-Garonne',
     chapeau:
-      "Le MMA combine la frappe debout, le corps à corps et le travail au sol. Il se pratique avec un encadrement technique, par étapes, et il est accessible aux débutants. Depuis Colomiers, les clubs Boxing Center de Toulouse Minimes et Portet-sur-Garonne accueillent la pratique 6 jours sur 7, de 10h à 21h15.",
+      "Le MMA combine la frappe debout, le corps à corps et le travail au sol. Dans le réseau Boxing Center, c’est à Portet-sur-Garonne que le MMA se pratique, avec le grappling, le jiu-jitsu brésilien et le kick-boxing, dans une salle équipée d’une cage. C’est donc le club de MMA à retenir depuis Colomiers, ouvert 6 jours sur 7 de 10h à 21h15, et il accueille les débutants.",
     photoHero: 'mma-colomiers-boxing-center',
     photoSecondaire: 'travail-au-corps-boxe-colomiers',
     blocs: [
@@ -122,6 +122,16 @@ export const CONTENUS: readonly Contenu[] = [
         titre: 'Ce qu’il faut vraiment pour commencer',
         texte:
           "Pas de niveau, pas de condition physique préalable, pas d’expérience d’un autre sport de combat. Ce qu’il faut, c’est accepter de mal faire pendant plusieurs semaines. Le MMA est la discipline où la sensation d’incompétence dure le plus longtemps, parce qu’il y a le plus de choses à intégrer — et c’est aussi celle où les progrès sont les plus visibles une fois le cap passé.",
+      },
+      {
+        titre: 'Quel club de MMA viser depuis Colomiers',
+        texte:
+          "Boxing Center Portet-sur-Garonne. C’est le club du réseau qui publie le MMA, et il ne le publie pas seul : le grappling, le jiu-jitsu brésilien et le kick-boxing y figurent aussi, avec une cage pour le travail spécifique. Depuis Colomiers, c’est la descente vers le sud de l’agglomération, sur la route d’Espagne, avec du stationnement simple. Toulouse Minimes, l’autre club accessible depuis Colomiers, est orienté boxe anglaise — loisir, compétition et pieds-poings : c’est là qu’il faut aller si c’est la boxe qui t’intéresse.",
+      },
+      {
+        titre: 'MMA, grappling, JJB : quelle différence',
+        texte:
+          "Le grappling, c’est la lutte et les soumissions sans frappe, en short et rashguard. Le jiu-jitsu brésilien travaille le même terrain avec le kimono et un système de ceintures. Le MMA réunit les deux et y ajoute la frappe debout. Beaucoup de pratiquants commencent par le grappling parce qu’on n’y prend aucun coup : c’est une porte d’entrée très sûre vers le MMA, et Portet propose les deux.",
       },
       {
         titre: 'Un club sérieux, ça se reconnaît à quoi',
@@ -160,9 +170,9 @@ export const CONTENUS: readonly Contenu[] = [
     bascule: 'paos',
     promesse:
       "Le cardio et le défoulement de la boxe, sans opposition et sans obligation de combattre.",
-    h1: 'Boxing fitness depuis Colomiers : boxer sans combattre',
+    h1: 'Boxing fitness, cardio boxing et boxe femme à proximité de Colomiers',
     chapeau:
-      "Le boxing fitness reprend les gestes de la boxe — frappe, déplacement, garde — sans aucune opposition. On ne prend pas de coup, on ne combat pas, et il n'y a rien à prouver. C'est une pratique de cardio et de remise en forme, ouverte à toutes et à tous, dans les clubs Boxing Center accessibles depuis Colomiers.",
+      "Le boxing fitness reprend les gestes de la boxe — frappe, déplacement, garde — sans aucune opposition. Les deux clubs Boxing Center accessibles depuis Colomiers le proposent : Cardio Boxing et Boxing Lady, créneau 100 % féminin, à Toulouse Minimes ; Lady Boxing et préparation physique à Portet-sur-Garonne. Une pratique de cardio et de remise en forme, ouverte à toutes et à tous.",
     photoHero: 'boxing-fitness-colomiers',
     photoSecondaire: 'preparation-physique-boxe-colomiers',
     blocs: [
@@ -217,9 +227,9 @@ export const CONTENUS: readonly Contenu[] = [
     id: 'boxe-enfants',
     promesse:
       "Un cadre qui apprend le geste, la maîtrise et le respect — et ça se voit hors de la salle.",
-    h1: 'Quelle boxe pour un enfant qui habite à Colomiers',
+    h1: 'Boxe enfant à proximité de Colomiers : Baby Boxe et boxe éducative',
     chapeau:
-      "La boxe éducative apprend le geste, la distance et le respect de l'adversaire, sans mise en danger. C'est un cadre, pas un ring. Les clubs Boxing Center accessibles depuis Colomiers — Toulouse Minimes et Portet-sur-Garonne — encadrent les enfants avec des coachs diplômés.",
+      "La boxe éducative apprend le geste, la distance et le respect de l'adversaire, sans mise en danger. C'est un cadre, pas un ring. Les deux clubs Boxing Center accessibles depuis Colomiers proposent la Baby Boxe — dès 3 ans à Toulouse Minimes — et la boxe éducative ; Portet-sur-Garonne ajoute un créneau kick-boxing enfants et ados. Encadrement diplômé dans les deux cas.",
     photoHero: 'cours-collectifs-boxe-colomiers',
     photoSecondaire: 'encadrement-coach-boxe-colomiers',
     blocs: [

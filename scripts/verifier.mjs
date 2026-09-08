@@ -16,6 +16,7 @@
  *   5. titles et meta descriptions uniques, présents, de longueur tenable
  *   6. présence du canonique et du JSON-LD, JSON-LD parsable
  *   7. les liens sortants attendus par le cahier des charges sont bien là
+ *   8. chaque page porte ses mots-clés prioritaires (src/data/mots-cles.ts)
  */
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
@@ -67,8 +68,40 @@ const BACKLINKS = [
   ['/', 'boxing-center-portet.fr'],
 ];
 
+/**
+ * Le registre des mots-clés vit dans src/data/mots-cles.ts. On le lit ici
+ * sans compilateur, comme build-images.mjs lit le manifeste média : une seule
+ * source, pas de copie à maintenir dans ce script.
+ */
+function lireClusters() {
+  const src = readFileSync(join(RACINE, 'src', 'data', 'mots-cles.ts'), 'utf8');
+  const clusters = [];
+  const re = /page:\s*'([^']+)',\s*prioritaires:\s*\[([\s\S]*?)\]/g;
+  let m;
+  while ((m = re.exec(src))) {
+    const mots = [...m[2].matchAll(/'([^']+)'/g)].map((x) => x[1]);
+    clusters.push({ page: m[1], prioritaires: mots });
+  }
+  return clusters;
+}
+
+/** Comparaison insensible à la casse et aux accents. */
+const plat = (t) => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+const CHEMIN_PAR_PAGE = {
+  accueil: '/',
+  'boxe-anglaise': '/boxe-anglaise/',
+  mma: '/mma/',
+  'boxing-fitness': '/boxing-fitness/',
+  'boxe-enfants': '/boxe-enfants/',
+  plannings: '/plannings/',
+  tarifs: '/tarifs/',
+  contact: '/contact/',
+};
+
 const erreurs = [];
 const avertissements = [];
+const textesParRoute = new Map();
 
 function pages(dir, base = '') {
   const out = [];
@@ -97,6 +130,7 @@ const descriptions = new Map();
 for (const [route, fichier] of toutes) {
   const html = readFileSync(fichier, 'utf8');
   const txt = texteVisible(html);
+  textesParRoute.set(route, txt);
   const ou = (m) => `${route.padEnd(22)} ${m}`;
 
   // 1 — formulations interdites : ne pas laisser croire à une salle à Colomiers
@@ -181,6 +215,22 @@ for (const [route, hote] of BACKLINKS) {
   }
   if (!readFileSync(f, 'utf8').includes(hote)) {
     erreurs.push(`${route.padEnd(22)} lien sortant manquant vers ${hote} (cahier des charges §9)`);
+  }
+}
+
+// 8 — chaque page porte son territoire de recherche
+for (const { page, prioritaires } of lireClusters()) {
+  const chemin = CHEMIN_PAR_PAGE[page];
+  const txt = textesParRoute.get(chemin);
+  if (!txt) {
+    erreurs.push(`${chemin.padEnd(22)} page absente du build — mots-clés invérifiables`);
+    continue;
+  }
+  const plan = plat(txt);
+  for (const mot of prioritaires) {
+    if (!plan.includes(plat(mot))) {
+      erreurs.push(`${chemin.padEnd(22)} mot-clé prioritaire absent du texte visible : « ${mot} »`);
+    }
   }
 }
 

@@ -4,6 +4,8 @@ import Hero from '../components/Hero.astro';
 import Decision from '../components/Decision.astro';
 import Photo from '../components/Photo.astro';
 import Bascule from '../components/Bascule.astro';
+import TableauOffres from '../components/TableauOffres.astro';
+import { COMMUNES_VOISINES, CONTEXTE_GEO } from '../data/mots-cles';
 import { CLUBS, DISCIPLINES, HORAIRES, CONTACT } from '../data/verite';
 
 const minimes = CLUBS[0];
@@ -21,12 +23,22 @@ const QUESTIONS = [
   {
     titre: 'Où s’entraîner en boxe ou en MMA quand on habite Colomiers ?',
     texte:
-      "Boxing Center accueille les habitants de Colomiers dans deux clubs situés à proximité, dans l’agglomération toulousaine : Toulouse Minimes et Portet-sur-Garonne. Les deux proposent la boxe anglaise, le MMA, le boxing fitness et la boxe enfants, 6 jours sur 7 de 10h à 21h15. Ce site sert à déterminer lequel des deux correspond le mieux à ta semaine et à tes trajets.",
+      "Boxing Center accueille les habitants de Colomiers dans deux clubs situés à proximité, dans l’agglomération toulousaine : Toulouse Minimes et Portet-sur-Garonne. Les deux proposent la boxe anglaise, le boxing fitness, la boxe éducative et la Baby Boxe. Le MMA, le grappling et le jiu-jitsu brésilien se pratiquent à Portet-sur-Garonne, qui dispose d’une cage. Ce site sert à déterminer lequel des deux correspond à ce que tu cherches.",
   },
   {
     titre: 'Où faire du MMA près de Colomiers ?',
     texte:
       "Le MMA se pratique dans les deux clubs Boxing Center accessibles depuis Colomiers. Si tu cherches un club de MMA près de Colomiers, commence par regarder ton créneau : c'est l'accès, pas la discipline, qui départage Toulouse Minimes et Portet-sur-Garonne pour quelqu'un qui part de Colomiers.",
+  },
+  {
+    titre: 'Quel club Boxing Center propose le MMA près de Colomiers ?',
+    texte:
+      "Le MMA se pratique à Boxing Center Portet-sur-Garonne, qui publie également le grappling, le jiu-jitsu brésilien et le kick-boxing, et dispose d’une cage. C’est donc la destination à retenir depuis Colomiers pour un club de MMA. Toulouse Minimes, de son côté, est orienté boxe anglaise — loisir et compétition — avec la boxe pieds-poings, le cardio boxing et le Boxing Lady.",
+  },
+  {
+    titre: 'J’habite Tournefeuille, Blagnac ou Plaisance-du-Touch. Ça marche aussi ?',
+    texte:
+      "Oui. Les deux clubs sont dans l’agglomération toulousaine et accueillent tout l’ouest toulousain : Tournefeuille, Blagnac, Plaisance-du-Touch, Cornebarrieu, Pibrac, Léguevin, Cugnaux, Brax, Mondonville, Aussonne. Le raisonnement de cette page vaut pour toutes ces communes : c’est le trajet et le créneau qui départagent les deux clubs, pas la commune de départ.",
   },
   {
     titre: 'Peut-on faire des sports de combat à proximité de Colomiers sans expérience ?',
@@ -155,6 +167,9 @@ const QUESTIONS = [
       </p>
     </div>
   </section>
+
+  {/* ─────────── H05b — QUELLE DISCIPLINE, DANS QUEL CLUB ─────────── */}
+  <TableauOffres />
 
   {/* ─────────── H06 — LES VRAIES DESTINATIONS ─────────── */}
   <section class="section clair destinations" aria-labelledby="t-destinations">
@@ -291,6 +306,38 @@ const QUESTIONS = [
           </details>
         ))}
       </div>
+    </div>
+  </section>
+
+  {/* ─────────── H09c — LE SECTEUR ─────────── */}
+  <section class="section marine secteur" aria-labelledby="t-secteur">
+    <div class="enveloppe">
+      <p class="numero-section mono"><span>10</span><span>Le secteur</span></p>
+      <div class="secteur__tete">
+        <h2 id="t-secteur">
+          Colomiers, {CONTEXTE_GEO.codePostal},<br />
+          <span class="secteur__accent">et tout l’ouest toulousain.</span>
+        </h2>
+        <p class="lead faible secteur__intro">
+          Le raisonnement de cette page ne s’arrête pas aux limites de la commune.
+          Si tu pars d’une commune voisine, tu prends les mêmes axes et tu arrives
+          dans les mêmes clubs&nbsp;: la question reste la même.
+        </p>
+      </div>
+      <ul class="secteur__liste">
+        {COMMUNES_VOISINES.map((c) => (
+          <li>
+            <span class="secteur__nom">{c.nom}</span>
+            <span class="secteur__cp mono">{c.cp}</span>
+            <span class="secteur__situation">{c.situation}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="secteur__note">
+        Boxing Center accueille les habitants de Colomiers et de l’ensemble de
+        l’{CONTEXTE_GEO.secteur} dans ses clubs de Toulouse Minimes et de
+        Portet-sur-Garonne, en {CONTEXTE_GEO.departement}.
+      </p>
     </div>
   </section>
 
@@ -585,6 +632,46 @@ const QUESTIONS = [
     padding-bottom: var(--e-5);
     color: var(--texte-faible);
     font-size: var(--t-petit);
+  }
+
+  /* ── H09c Secteur ── */
+  .secteur__tete {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-5) var(--e-8);
+    align-items: end;
+    margin-bottom: var(--e-7);
+  }
+  @media (max-width: 60rem) { .secteur__tete { grid-template-columns: 1fr; } }
+  .secteur__accent { color: var(--signal-texte); }
+  .secteur__intro { max-width: 44ch; }
+
+  .secteur__liste {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--trait);
+  }
+  .secteur__liste li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.1rem var(--e-3);
+    padding: var(--e-4) var(--e-4) var(--e-4) 0;
+    border-bottom: 1px solid var(--trait);
+  }
+  .secteur__nom { font-weight: 600; font-size: var(--t-petit); }
+  .secteur__cp { color: var(--signal-texte); }
+  .secteur__situation {
+    grid-column: 1 / -1;
+    font-size: var(--t-micro);
+    color: var(--texte-faible);
+  }
+  .secteur__note {
+    margin-top: var(--e-6);
+    max-width: 62ch;
+    font-size: var(--t-petit);
+    color: var(--texte-faible);
   }
 
   /* ── H10 Convergence ────────────────────────────────────────────────── */

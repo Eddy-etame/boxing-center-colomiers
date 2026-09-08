@@ -14,6 +14,8 @@ export type Discipline = 'boxe-anglaise' | 'mma' | 'boxing-fitness' | 'boxe-enfa
 export type Creneau = 'midi' | 'apres-midi' | 'soir' | 'week-end';
 export type ClubId = 'minimes' | 'portet';
 
+import { FAMILLES_PAR_PAGE, destinationUnique } from '../data/offres';
+
 export type Parcours = {
   discipline?: Discipline;
   creneau?: Creneau;
@@ -90,16 +92,37 @@ export function parcours(): Parcours {
 /* ─────────────────────────  Recommandation  ───────────────────────── */
 
 /**
- * Les deux clubs proposent le même socle. Ce qui les sépare pour quelqu'un
- * qui part de Colomiers, c'est l'accès. On ne prétend donc pas qu'un club est
- * « meilleur » : on dit dans quelle direction il se trouve et à qui ça convient.
+ * Deux niveaux de décision, dans cet ordre.
  *
- * Tant qu'on n'a pas de fait vérifié qui distingue les deux sur une
- * discipline, on ne tranche pas — on affiche les deux. Inventer une
- * différence serait plus grave que ne pas conclure.
+ * 1. Le fait. Si la discipline n'est publiée que par un seul club, la
+ *    réponse est ce club, quel que soit le créneau — le MMA ne se pratique
+ *    qu'à Portet, et aucun horaire ne change ça. Envoyer quelqu'un à Minimes
+ *    pour du MMA parce qu'il s'entraîne le soir serait la pire erreur
+ *    possible : une recommandation confiante vers une salle qui ne propose
+ *    pas ce qu'il cherche.
+ *
+ * 2. L'accès. Quand les deux clubs proposent la discipline, ce qui les
+ *    sépare pour quelqu'un qui part de Colomiers, c'est le trajet. On ne
+ *    prétend pas qu'un club est « meilleur » : on dit dans quelle direction
+ *    il se trouve et à quel moment de la journée c'est tenable.
  */
 export function recommander(p: Parcours): { club?: ClubId; pourquoi: string } | null {
   if (!p.discipline) return null;
+
+  // 1 — le fait : la famille principale de la discipline n'a-t-elle qu'une destination ?
+  const familles = FAMILLES_PAR_PAGE[p.discipline] ?? [];
+  const unique = familles.length ? destinationUnique(familles[0]) : null;
+  if (unique) {
+    return {
+      club: unique,
+      pourquoi:
+        unique === 'portet'
+          ? 'Dans le réseau Boxing Center, cette discipline se pratique à Portet-sur-Garonne — avec le grappling, le JJB et une cage. C’est le club à viser, quel que soit ton créneau.'
+          : 'Dans le réseau Boxing Center, cette discipline se pratique à Toulouse Minimes. C’est le club à viser, quel que soit ton créneau.',
+    };
+  }
+
+  // 2 — l'accès : les deux clubs la proposent, le trajet départage.
 
   if (p.creneau === 'soir') {
     return {

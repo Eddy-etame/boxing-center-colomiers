@@ -1,0 +1,208 @@
+---
+/**
+ * QUELLE DISCIPLINE, DANS QUEL CLUB.
+ *
+ * Le seul tableau du site, et il est ici parce qu'une comparaison est
+ * exactement ce qu'un tableau fait mieux que du texte.
+ *
+ * Valeur pour le visiteur : il voit d'un coup d'œil que le MMA, le grappling
+ * et le JJB ne se pratiquent qu'à Portet, et que la boxe anglaise se pratique
+ * dans les deux. C'est la réponse à la question qu'il se pose vraiment.
+ *
+ * Valeur en recherche : chaque intitulé publié par les clubs apparaît en
+ * toutes lettres — Boxing Lady, Cardio Boxing, Baby Boxe, Boxe Éducative,
+ * Boxe Pieds-Poings, Grappling, Kick-boxing. Ce vocabulaire ne pouvait pas
+ * entrer dans le site tant qu'on parlait de « quatre disciplines » en bloc.
+ * Et une absence assumée est une information : c'est ce qu'un moteur de
+ * réponse peut citer sans se tromper.
+ *
+ * L'absence n'est jamais présentée comme un manque du réseau, seulement
+ * comme une répartition entre deux clubs : chaque ligne a au moins une
+ * destination.
+ */
+import { CLUBS } from '../data/verite';
+import { OFFRES, type Famille } from '../data/offres';
+
+const LIGNES: { famille: Famille; nom: string; route?: string }[] = [
+  { famille: 'boxe-anglaise', nom: 'Boxe anglaise', route: '/boxe-anglaise/' },
+  { famille: 'kick-boxing', nom: 'Kick-boxing / pieds-poings', route: '/boxe-anglaise/' },
+  { famille: 'mma', nom: 'MMA', route: '/mma/' },
+  { famille: 'grappling', nom: 'Grappling & jiu-jitsu brésilien', route: '/mma/' },
+  { famille: 'femme', nom: 'Boxing Lady / boxe femme', route: '/boxing-fitness/' },
+  { famille: 'fitness', nom: 'Cardio boxing & boxing fitness', route: '/boxing-fitness/' },
+  { famille: 'physique', nom: 'Préparation physique & cross training', route: '/boxing-fitness/' },
+  { famille: 'enfants', nom: 'Baby Boxe, boxe éducative, ados', route: '/boxe-enfants/' },
+];
+
+const pour = (famille: Famille, club: string) =>
+  OFFRES.filter((o) => o.famille === famille && o.club === club);
+---
+
+<section class="section clair tableau" id="quelle-discipline" aria-labelledby="t-tableau">
+  <div class="enveloppe">
+    <p class="numero-section mono"><span>06</span><span>Quelle discipline, dans quel club</span></p>
+
+    <div class="tableau__tete">
+      <h2 id="t-tableau">
+        Les deux clubs ne proposent pas<br />exactement la même chose.
+      </h2>
+      <p class="lead faible tableau__intro">
+        C’est une bonne nouvelle&nbsp;: ça veut dire que ta discipline a une
+        destination précise. Voilà ce que chaque club Boxing Center publie
+        aujourd’hui, dans ses propres mots.
+      </p>
+    </div>
+
+    <div class="tableau__cadre">
+      <table class="grille-offres">
+        <caption class="vh">
+          Disciplines proposées par les clubs Boxing Center accessibles depuis Colomiers
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">Discipline</th>
+            {CLUBS.map((c) => (
+              <th scope="col">
+                <span class="grille-offres__club">{c.nomCourt}</span>
+                <span class="grille-offres__ville mono">{c.ville}</span>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {LIGNES.map((l) => (
+            <tr>
+              <th scope="row">
+                {l.route ? <a class="lien" href={l.route}>{l.nom}</a> : l.nom}
+              </th>
+              {CLUBS.map((c) => {
+                const offres = pour(l.famille, c.id);
+                return (
+                  <td class:list={{ 'est-vide': offres.length === 0 }}>
+                    {offres.length > 0 ? (
+                      <ul>
+                        {offres.map((o) => (
+                          <li>
+                            <span class="grille-offres__intitule">{o.intitule}</span>
+                            {o.ages && <span class="grille-offres__age mono">{o.ages}</span>}
+                            {o.detail && <span class="grille-offres__detail">{o.detail}</span>}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <span class="grille-offres__ailleurs mono" aria-label="Proposé dans l’autre club">
+                        Dans l’autre club
+                      </span>
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <p class="tableau__source mono">
+      Relevé le 7 septembre 2026 sur les pages activités des deux clubs.
+      Pour l’offre exacte du jour, consulte le site du club&nbsp;:
+      {CLUBS.map((c, i) => (
+        <>
+          {i > 0 && ' · '}
+          <a class="lien" href={c.activites} rel="noopener">{c.nomCourt}</a>
+        </>
+      ))}
+    </p>
+  </div>
+</section>
+
+<style>
+  .tableau__tete {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--e-5) var(--e-8);
+    align-items: end;
+    margin-bottom: var(--e-7);
+  }
+  @media (max-width: 60rem) { .tableau__tete { grid-template-columns: 1fr; } }
+  .tableau__intro { max-width: 46ch; }
+
+  /* Le tableau défile dans son propre cadre : la page ne défile jamais
+     horizontalement, même sur un téléphone étroit. */
+  .tableau__cadre {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .grille-offres {
+    width: 100%;
+    min-width: 44rem;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .grille-offres th,
+  .grille-offres td {
+    padding: var(--e-4) var(--e-4) var(--e-4) 0;
+    border-bottom: 1px solid var(--trait);
+    vertical-align: top;
+  }
+  .grille-offres thead th {
+    border-bottom: 2px solid var(--texte);
+    padding-bottom: var(--e-3);
+  }
+
+  .grille-offres__club {
+    display: block;
+    font-family: var(--police-titre);
+    font-size: var(--t-h3);
+    letter-spacing: -0.02em;
+  }
+  .grille-offres__ville { display: block; color: var(--acier-sombre); margin-top: 0.2rem; }
+
+  .grille-offres tbody th {
+    width: 30%;
+    font-weight: 600;
+    font-size: var(--t-base);
+    padding-right: var(--e-5);
+  }
+
+  .grille-offres ul { list-style: none; display: grid; gap: var(--e-3); }
+  .grille-offres li { display: grid; gap: 0.1rem; }
+
+  .grille-offres__intitule {
+    font-size: var(--t-petit);
+    font-weight: 600;
+    /* Le trait rouge marque une offre réellement publiée par ce club. */
+    border-left: 2px solid var(--signal);
+    padding-left: var(--e-3);
+  }
+  .grille-offres__age,
+  .grille-offres__detail {
+    padding-left: calc(var(--e-3) + 2px);
+    font-size: var(--t-micro);
+    color: var(--texte-faible);
+    line-height: 1.5;
+  }
+  .grille-offres__age { color: var(--signal-texte); text-transform: none; letter-spacing: 0.05em; }
+  .grille-offres__detail { font-family: var(--police-texte); }
+
+  /* Une case vide n'est pas un manque : c'est une orientation. */
+  .est-vide { color: var(--acier-sombre); }
+  .grille-offres__ailleurs {
+    display: inline-block;
+    padding-left: var(--e-3);
+    border-left: 2px solid var(--trait);
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+
+  .tableau__source {
+    margin-top: var(--e-5);
+    color: var(--acier-sombre);
+    text-transform: none;
+    letter-spacing: 0.03em;
+    line-height: 1.7;
+  }
+</style>
