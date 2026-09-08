@@ -267,7 +267,7 @@ const CRENEAUX = [
 </style>
 
 <script>
-  import { definir, parcours, recommander } from '../scripts/parcours';
+  import { parcours, recommander } from '../scripts/parcours';
 
   const bloc = document.querySelector<HTMLElement>('[data-resultat]');
   const latent = document.querySelector<HTMLElement>('[data-latent]');
@@ -305,8 +305,8 @@ const CRENEAUX = [
       ? `Ouvrir le site de ${club.nom}`
       : 'Préciser mon créneau';
     lien.hidden = !club;
-
-    if (reco.club) definir({ club: reco.club });
+    // Rien n'est écrit dans l'état ici : le club est dérivé par le moteur.
+    // Écrire depuis un écouteur de `parcours:maj` créait une boucle infinie.
   }
 
   // Restaure les choix déjà faits lors d'une visite précédente : le visiteur

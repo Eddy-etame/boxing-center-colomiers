@@ -155,8 +155,8 @@ function peindre() {
   const barre = document.querySelector<HTMLElement>('[data-parcours]');
   if (!barre) return;
 
-  const reco = recommander(etat);
-  const club = etat.club ?? reco?.club;
+  // Le club est déjà dérivé par `definir` / `demarrer` : on ne recalcule pas ici.
+  const club = etat.club;
 
   const valeurs: Record<string, string> = {
     discipline: etat.discipline ? LIBELLE_DISCIPLINE[etat.discipline] : '',
@@ -186,8 +186,25 @@ function peindre() {
 
 /* ─────────────────────────────  API  ───────────────────────────── */
 
+/**
+ * Le club n'est jamais saisi : il est DÉRIVÉ de la discipline et du créneau,
+ * ici et nulle part ailleurs. Un composant qui « écrirait » le club en
+ * réaction à `parcours:maj` provoquerait une boucle infinie — c'est arrivé.
+ * Et rien n'est réécrit ni repeint si rien n'a changé.
+ */
+function deriver(p: Parcours): Parcours {
+  const { club: _ignore, ...reste } = p;
+  const club = recommander(reste)?.club;
+  return club ? { ...reste, club } : reste;
+}
+
+const identique = (a: Parcours, b: Parcours) =>
+  a.discipline === b.discipline && a.creneau === b.creneau && a.club === b.club;
+
 export function definir(partiel: Partial<Parcours>) {
-  etat = { ...etat, ...partiel };
+  const suivant = deriver({ ...etat, ...partiel });
+  if (identique(etat, suivant)) return;
+  etat = suivant;
   ecrire(etat);
   peindre();
 }
@@ -219,8 +236,13 @@ export function demarrer() {
 
   // Une page de discipline EST une décision : la visiter renseigne le parcours.
   const d = document.body.dataset.discipline as Discipline | undefined;
-  if (d && etat.discipline !== d) {
-    etat.discipline = d;
+  if (d && etat.discipline !== d) etat.discipline = d;
+
+  // Ce qui a été lu peut dater d'une version où le club se déduisait autrement :
+  // on le re-dérive toujours, et on n'écrit que si ça a changé quelque chose.
+  const derive = deriver(etat);
+  if (!identique(etat, derive) || d) {
+    etat = derive;
     ecrire(etat);
   }
 
