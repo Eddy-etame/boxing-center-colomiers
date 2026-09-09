@@ -193,14 +193,15 @@ const { actuelle } = Astro.props;
   }
   @media (max-width: 30rem) { .marque__contexte { display: none; } }
 
-  .nav { margin-left: auto; min-width: 0; }
+  .nav { margin-left: auto; }
+  /* Quand la barre a mesuré qu'elle déborde, la liste cède au bouton menu,
+     quelle que soit la largeur. Le seuil en rem est le plancher sans script. */
+  .entete[data-serre] .nav { display: none; }
+  .entete[data-serre] .burger { display: block; margin-left: auto; }
   /* La liste ne s'affiche qu'à partir de la largeur où elle tient en entier.
      En dessous, le menu prend le relais : mieux vaut un bouton qu'une barre
      qui déborde de sa grille. */
-  @media (max-width: 78rem) { .nav { display: none; } }
-  @media (min-width: 78.01rem) and (max-width: 86rem) {
-    .marque__contexte { display: none; }
-  }
+  @media (max-width: 88rem) { .nav { display: none; } }
   .nav ul {
     display: flex;
     align-items: center;
@@ -280,7 +281,7 @@ const { actuelle } = Astro.props;
   }
 
   /* Le bouton menu prend le relais exactement là où la liste s'arrête. */
-  @media (max-width: 78rem) {
+  @media (max-width: 88rem) {
     .nav { display: none; }
     .burger { display: block; margin-left: auto; }
     .tel__numero { display: none; }
@@ -348,6 +349,24 @@ const { actuelle } = Astro.props;
 </style>
 
 <script>
+  // La barre mesure si sa liste tient : montrée le temps d'une mesure, puis
+  // on tranche. Aucun rendu entre les deux, donc pas de clignotement.
+  {
+    const entete = document.querySelector<HTMLElement>('[data-entete]');
+    const inner = entete?.querySelector<HTMLElement>('.entete__inner');
+    const mesurer = () => {
+      if (!entete || !inner) return;
+      entete.removeAttribute('data-serre');
+      if (inner.scrollWidth > inner.clientWidth + 1) entete.setAttribute('data-serre', '');
+    };
+    mesurer();
+    let attente = 0;
+    addEventListener('resize', () => {
+      cancelAnimationFrame(attente);
+      attente = requestAnimationFrame(mesurer);
+    }, { passive: true });
+  }
+
   const entete = document.querySelector<HTMLElement>('[data-entete]');
   const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
   const menu = document.querySelector<HTMLElement>('[data-menu]');

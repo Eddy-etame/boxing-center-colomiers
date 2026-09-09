@@ -16,7 +16,7 @@
  * mécanique de tout le site.
  */
 import Photo from './Photo.astro';
-import { HORAIRES } from '../data/verite';
+import { HORAIRES, club } from '../data/verite';
 ---
 
 <section class="hero" aria-labelledby="t-hero">
@@ -56,9 +56,9 @@ import { HORAIRES } from '../data/verite';
     </p>
 
     <h1 id="t-hero" class="hero__titre">
-      <span class="hero__ligne">Ton club de boxe</span>
-      <span class="hero__ligne">et de MMA</span>
-      <span class="hero__ligne hero__ligne--accent">près de Colomiers</span>
+      <span class="hero__ligne">Boxing Center accueille</span>
+      <span class="hero__ligne">les Columérins</span>
+      <span class="hero__ligne hero__ligne--accent">à Toulouse Minimes et à Portet</span>
     </h1>
 
     <p class="hero__reponse">
@@ -71,6 +71,10 @@ import { HORAIRES } from '../data/verite';
       <a class="bouton bouton--signal" href="#ton-parcours">
         <span>Trouver mon club</span>
         <span class="fleche" aria-hidden="true">↓</span>
+      </a>
+      <a class="bouton" href={club('minimes').tarifs} rel="noopener">
+        <span>Réserver une séance d’essai</span>
+        <span class="fleche" aria-hidden="true">↗</span>
       </a>
       <a class="bouton" href="/boxe-anglaise/">
         <span>Voir les disciplines</span>
