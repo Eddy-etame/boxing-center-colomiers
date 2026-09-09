@@ -311,3 +311,17 @@ Les trois défauts qu'elle a sortis le 2026-09-09, tous invisibles au build :
 3. **Un arrêt de bus faux.** Cugnaux envoyait à « Route d'Espagne », qui est l'arrêt de Toulouse — huit arrêts au nord du club. L'arrêt du 61 route d'Espagne à Portet s'appelle **« Jean Jaurès »**, sur les trois sites qui y mènent. Règle : **un nom d'arrêt se relève sur la fiche de ligne, et il est le même sur tous les sites qui visent le même club.**
 
 Ce que la passe mesure, à chaque livraison : contraste calculé de chaque nœud de texte contre son fond réel · cible de pointage sous 24 px (44 px sur téléphone) · débordement horizontal du document · bloc resté invisible après l'entrée · image sans `alt` ou sans dimensions · lien sans texte ou au libellé opaque · mesure de ligne au-delà de 92 caractères · titre ou `h1` dupliqué entre deux pages · saut de niveau de titre · lien interne mort · figure de style et formule creuse dans le texte visible.
+
+### 13.11 CE QUE LE HATER A SORTI EN LISANT LES PAGES — et les deux règles de barre
+La passe du 2026-09-09 s'est faite **sur l'expérience** — sept accueils lus comme un visiteur venu de Google, sur téléphone — et non sur le code. Ce qu'elle a trouvé, et ce qui est désormais loi :
+
+**Sur le texte**
+1. **Le héros ouvre la porte du club.** Sur les sept sites, le premier lien vers le club arrivait en section 2, après 60 à 316 mots. La séance d'essai est dans le héros, devant le moteur. Un site qui garde sans convertir est à moitié fait.
+2. **Sept H1, cinq formulations du cahier des charges, aucun héros pareil.** *club de boxe proche de X* · *cours de boxe accessibles depuis X* · *club de MMA près de X* · *sports de combat à proximité de X* · *Boxing Center accueille les habitants de X dans ses clubs de…*. Chaque site en porte une dans son H1, le sujet et la formule changent d'un site à l'autre, et les quatre autres descendent dans ses sections. La cinquième nomme les villes des clubs : elle ne va qu'au site dont les deux clubs sont l'argument.
+3. **Répéter, oui — recopier, jamais.** Un fait revient sous une forme nouvelle, attaché à une chose nouvelle : le chiffre dans le héros, la sensation dans « la salle », la preuve dans la FAQ. Six fois la même phrase, c'est du remplissage.
+4. **Un décompte s'écrit depuis le registre ou ne s'écrit pas.** « Les neuf disciplines » vivait sur un site qui en publie quatorze — trente-quatre fois, cinq sites.
+5. **Le bloc « la première fois » affirme.** « Tu frappes, et c'est tout » remplace « Tu ne combats pas ». Planter « humilié » pour dire qu'on ne le sera pas, c'est le planter.
+
+**Sur la barre**
+6. **Un calque fixe ne vit jamais dans un ancêtre filtré ou rogné.** `backdrop-filter` fait du header le bloc conteneur de tout `position: fixed` qu'il contient ; `overflow-x: clip` le rogne alors à la hauteur de la barre. Le panneau du menu est un frère du header, jamais son enfant.
+7. **La barre mesure si elle tient, elle ne le devine pas.** Sept barres, sept longueurs de liste (811 px à Muret, 873 à Castelginest) : aucun seuil en rem ne convient à toutes. Au chargement et au redimensionnement, la barre compare la largeur de son contenu à celle de sa boîte ; si ça déborde, la liste cède au bouton menu. Le seuil CSS reste le plancher sans script. Et `min-width: 0` sur une liste dont les liens ne passent pas à la ligne ne fait que remplacer un débordement par un chevauchement.
