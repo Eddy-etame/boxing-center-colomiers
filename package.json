@@ -11,10 +11,12 @@
     "indexnow": "node scripts/indexnow.mjs"
   },
   "dependencies": {
-    "astro": "^5.13.0",
-    "@astrojs/vercel": "^8.2.0"
+    "@astrojs/vercel": "^8.2.0",
+    "astro": "^5.13.0"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "satori": "^0.33.4",
     "sharp": "^0.34.0"
   }
 }

@@ -1,4 +1,5 @@
 ---
+import { TEINTE } from '../data/teinte';
 import '../styles/jetons.css';
 import '../styles/base.css';
 import Entete from '../components/Entete.astro';
@@ -28,7 +29,10 @@ interface Props {
 const { page, discipline, ogPhoto = 'club-boxe-colomiers-boxing-center', faq } = Astro.props;
 const r = route(page);
 const canonique = new URL(r.chemin, SITE.origine).href;
-const og = new URL(`/photos/${ogPhoto}-1440.jpg`, SITE.origine).href;
+/** La vignette de partage : composée pour cette page au build (voir pages/og/). */
+const og = new URL(`/og/${r.id}.png`, SITE.origine).href;
+/** La photo de la page, pour le JSON-LD. */
+const photo = new URL(`/photos/${ogPhoto}-1440.jpg`, SITE.origine).href;
 
 /**
  * JSON-LD — il confirme le HTML visible, il n'ajoute jamais un fait que la
@@ -105,7 +109,7 @@ const donnees = {
       isPartOf: { '@id': `${SITE.origine}/#site` },
       inLanguage: SITE.langue,
       about: { '@id': `${SITE.origine}/#organisation` },
-      primaryImageOfPage: og,
+      primaryImageOfPage: photo,
       dateModified: derniereModification(fichierDeRoute(r.chemin)),
     },
     /* Fil d'Ariane : sur l'accueil il n'a pas lieu d'être. */
@@ -166,9 +170,13 @@ const donnees = {
     <meta property="og:description" content={r.description} />
     <meta property="og:url" content={canonique} />
     <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={r.titre} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={og} />
 
-    <meta name="theme-color" content="#07090D" />
+    <meta name="theme-color" content={TEINTE.papierCreuse} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/logo.png" sizes="any" />
 
