@@ -8,6 +8,7 @@
  */
 
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -82,6 +83,12 @@ for (const site of SITES) {
   }
   const toutes = pages(dist);
   const constats = [];
+  /* Le favicon : la marque du site dans l'onglet. Sept sites, sept signes. */
+  const favicon = join(dist, 'favicon.svg');
+  const faviconMd5 = existsSync(favicon)
+    ? createHash('md5').update(readFileSync(favicon)).digest('hex').slice(0, 8)
+    : '';
+  const vignettes = new Map();
   const titres = new Map();
   const h1s = new Map();
   let motsTotal = 0;
@@ -151,6 +158,20 @@ for (const site of SITES) {
       constats.push(`${route} — ${mots} mots seulement`);
     }
 
+    // ── Le partage : une vignette composée pour cette page, et pour elle seule ──
+    const ogImage = /<meta property="og:image" content="([^"]*)"/.exec(html)?.[1] ?? '';
+    if (!ogImage) constats.push(`${route} — sans og:image`);
+    else {
+      const chemin = ogImage.replace(/^https?:\/\/[^/]+/, '');
+      if (!chemin.startsWith('/og/')) {
+        constats.push(`${route} — og:image est une photo partagée, pas une vignette de page : ${chemin}`);
+      } else if (!existsSync(join(dist, chemin))) {
+        constats.push(`${route} — vignette absente du build : ${chemin}`);
+      }
+      if (vignettes.has(ogImage)) constats.push(`${route} — même og:image que ${vignettes.get(ogImage)}`);
+      else vignettes.set(ogImage, route);
+    }
+
     // ── Le robot : le lien interne qui ne mène nulle part ──
     for (const m of html.matchAll(/href="(\/[^"#?]*)"/g)) {
       const cible = m[1].endsWith('/') ? m[1] : m[1] + '/';
@@ -162,7 +183,21 @@ for (const site of SITES) {
     }
   }
 
-  rapport.push({ site, pages: toutes.length, mots: motsTotal, constats });
+  rapport.push({ site, pages: toutes.length, mots: motsTotal, constats, faviconMd5 });
+}
+
+/* Un favicon partagé par deux sites est un défaut de barre : la marque de
+   l'onglet doit dire lequel des sept on a ouvert. */
+const parFavicon = new Map();
+for (const r of rapport) {
+  if (!r.faviconMd5) continue;
+  parFavicon.set(r.faviconMd5, [...(parFavicon.get(r.faviconMd5) ?? []), r.site]);
+}
+for (const [md5, sites] of parFavicon) {
+  if (sites.length < 2) continue;
+  for (const r of rapport) {
+    if (sites.includes(r.site)) r.constats.push(`favicon.svg (${md5}) identique à : ${sites.filter((s) => s !== r.site).join(', ')}`);
+  }
 }
 
 /* ─────────────────────────────  Sortie  ───────────────────────────── */
