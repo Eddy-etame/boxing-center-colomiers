@@ -152,6 +152,10 @@ const { actuelle } = Astro.props;
     color: var(--os);
     transition: background var(--d-normal) var(--e-mecanique);
   }
+  /* Menu ouvert : la barre se fixe. Le verrou de défilement posé sur la racine
+     empêche Chrome de coller une barre `sticky` ; `fixed` y est insensible, et
+     la croix reste sous le pouce. */
+  .entete[data-menu-ouvert] { position: fixed; top: 0; inset-inline: 0; }
   /* Une fois passé le premier écran, l'en-tête se densifie : on est en
      lecture, plus en découverte. */
   .entete[data-compact] {
@@ -159,6 +163,10 @@ const { actuelle } = Astro.props;
   }
 
   .entete__inner {
+    /* La barre est la seule chose du site qui ne se replie pas : sa grille
+       va plus large que celle de la page (84rem), pour que la liste tienne
+       dès qu'un écran le permet. En dessous, la barre mesure et tranche. */
+    max-width: 100rem;
     display: flex;
     align-items: center;
     /* L'espacement se resserre avec la largeur : la liste, la pastille et le
@@ -388,6 +396,7 @@ const { actuelle } = Astro.props;
     const basculer = (ouvert: boolean) => {
       burger.setAttribute('aria-expanded', String(ouvert));
       menu.hidden = !ouvert;
+      document.querySelector('[data-entete]')?.toggleAttribute('data-menu-ouvert', ouvert);
       burger.querySelector('.vh')!.textContent = ouvert ? 'Fermer le menu' : 'Ouvrir le menu';
       document.documentElement.style.overflow = ouvert ? 'hidden' : '';
       if (ouvert) menu.querySelector<HTMLAnchorElement>('a')?.focus();
