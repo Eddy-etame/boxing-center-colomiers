@@ -163,7 +163,7 @@ export const ROUTES: readonly Route[] = [
     question: 'Je veux poser ma question à quelqu’un.',
     titre: 'Contact | Boxing Center depuis Colomiers',
     description:
-      "Une question avant de te déplacer depuis Colomiers ? Écris-nous, on te dit quel club et quel créneau correspondent à ce que tu cherches. Téléphone : 05 62 24 46 82.",
+      "Une question avant de te déplacer depuis Colomiers ? Écris-nous, on te dit quel club et quel créneau correspondent à ce que tu cherches. Téléphone : 09 39 03 67 48.",
     menu: true,
     index: true,
   },

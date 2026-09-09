@@ -39,10 +39,10 @@ export const SITE = {
 /* ─────────────────────────────  CONTACT  ───────────────────────────── */
 
 export const CONTACT = {
-  telephone: CDC('05 62 24 46 82'),
+  telephone: CDC('09 39 03 67 48'),
   /** format tel: pour les liens */
-  telephoneLien: CDC('+33562244682'),
-  email: CDC('bc.combat31@gmail.com'),
+  telephoneLien: CDC('+33939036748'),
+  email: CDC('boxingcenter31@gmail.com'),
 } as const;
 
 /* ─────────────────────────────  HORAIRES  ───────────────────────────── */
@@ -113,8 +113,8 @@ export const CLUBS: readonly Club[] = [
     ville: 'Toulouse',
     codePostal: '31200',
     adresse: '12 rue de Fenouillet, 31200 Toulouse',
-    telephone: '05 62 24 46 82',
-    telephoneLien: '+33562244682',
+    telephone: '09 39 03 67 48',
+    telephoneLien: '+33939036748',
     site: 'https://boxe-toulouse.com/',
     tarifs: 'https://boxe-toulouse.com/tarifs/',
     plannings: 'https://boxe-toulouse.com/plannings/',
@@ -129,8 +129,8 @@ export const CLUBS: readonly Club[] = [
     ville: 'Portet-sur-Garonne',
     codePostal: '31120',
     adresse: "61 route d'Espagne, 31120 Portet-sur-Garonne",
-    telephone: '06 87 90 02 16',
-    telephoneLien: '+33687900216',
+    telephone: '09 56 65 37 82',
+    telephoneLien: '+33956653782',
     site: 'https://boxing-center-portet.fr/',
     tarifs: 'https://boxing-center-portet.fr/tarifs/',
     plannings: 'https://boxing-center-portet.fr/plannings/',
