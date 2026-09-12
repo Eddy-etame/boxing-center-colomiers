@@ -11,7 +11,7 @@ BASE = r"C:\Users\Mommy Jayce\Desktop\Boxing Center\Deployment"
 SITES = {'muret': 'Muret', 'cugnaux': 'Cugnaux', 'tournefeuille': 'Tournefeuille', 'labege': 'Labège',
          'lunion': 'L’Union', 'castelginest': 'Castelginest', 'colomiers': 'Colomiers'}
 GENT = ['Muretains', 'Cugnalais', 'Tournefeuillais', 'Labégeois', 'Unionais', 'Castelginestois', 'Columérins']
-CHAINE = re.compile(r"'((?:[^'\\]|\\.)*)'")
+CHAINE = re.compile("'([^']*)'" + '|"([^"]*)"')
 PAGE = re.compile(r"\n    id: '([a-z-]+)',([\s\S]*?)(?=\n    id: '|\n\] as const)")
 
 par = defaultdict(set)
@@ -20,9 +20,10 @@ for s, v in SITES.items():
     for m in PAGE.finditer(t):
         page, corps = m.group(1), m.group(2).replace(v, 'VILLE')
         for g in GENT: corps = corps.replace(g, 'GENTILE')
-        for txt in CHAINE.findall(corps):
+        for g1, g2 in CHAINE.findall(corps):
+            txt = g1 or g2
             for p in re.split(r'(?<=[.!?:;])\s+', txt):
-                p = p.strip().lower()
+                p = p.strip().lower().replace("'", '’')
                 if len(p.split()) >= 6:
                     par[p].add((s, page))
 
