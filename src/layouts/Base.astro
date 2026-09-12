@@ -29,8 +29,9 @@ interface Props {
 const { page, discipline, ogPhoto = 'club-boxe-colomiers-boxing-center', faq } = Astro.props;
 const r = route(page);
 const canonique = new URL(r.chemin, SITE.origine).href;
-/** La vignette de partage : composée pour cette page au build (voir pages/og/). */
-const og = new URL(`/og/${r.id}.png`, SITE.origine).href;
+/** Les vignettes de la page, composées au build (voir pages/og/) : paysage pour les partages, carrée pour Google. */
+const og = new URL(`/og/${r.id}.jpg`, SITE.origine).href;
+const ogCarre = new URL(`/og/${r.id}-carre.jpg`, SITE.origine).href;
 /** La photo de la page, pour le JSON-LD. */
 const photo = new URL(`/photos/${ogPhoto}-1440.jpg`, SITE.origine).href;
 
@@ -109,7 +110,8 @@ const donnees = {
       isPartOf: { '@id': `${SITE.origine}/#site` },
       inLanguage: SITE.langue,
       about: { '@id': `${SITE.origine}/#organisation` },
-      primaryImageOfPage: photo,
+      primaryImageOfPage: { '@type': 'ImageObject', url: ogCarre, width: 1200, height: 1200 },
+      image: [ogCarre, og, photo],
       dateModified: derniereModification(fichierDeRoute(r.chemin)),
     },
     /* Fil d'Ariane : sur l'accueil il n'a pas lieu d'être. */
@@ -156,7 +158,7 @@ const donnees = {
     {DOIT_BLOQUER_LES_ROBOTS ? (
       <meta name="robots" content="noindex, nofollow" />
     ) : (
-      !r.index && <meta name="robots" content="noindex, follow" />
+      <meta name="robots" content={r.index ? 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' : 'noindex, follow'} />
     )}
 
     {/* Contexte géographique : encore lu par plusieurs moteurs et agrégateurs. */}
@@ -172,13 +174,18 @@ const donnees = {
     <meta property="og:image" content={og} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:alt" content={r.titre} />
+    <link rel="image_src" href={ogCarre} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={og} />
 
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+    <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content={TEINTE.papierCreuse} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/logo.png" sizes="any" />
 
     <!-- Les deux fontes du premier écran sont préchargées ; le reste suit. -->
     <link rel="preload" href="/fonts/archivo-black-latin.woff2" as="font" type="font/woff2" crossorigin />

@@ -84,7 +84,7 @@ for (const site of SITES) {
   const toutes = pages(dist);
   const constats = [];
   /* Le favicon : la marque du site dans l'onglet. Sept sites, sept signes. */
-  const favicon = join(dist, 'favicon.svg');
+  const favicon = join(dist, 'favicon-192.png');
   const faviconMd5 = existsSync(favicon)
     ? createHash('md5').update(readFileSync(favicon)).digest('hex').slice(0, 8)
     : '';
@@ -175,7 +175,7 @@ for (const site of SITES) {
     // ── Le robot : le lien interne qui ne mène nulle part ──
     for (const m of html.matchAll(/href="(\/[^"#?]*)"/g)) {
       const cible = m[1].endsWith('/') ? m[1] : m[1] + '/';
-      if (/\.(png|jpe?g|webp|avif|svg|xml|txt|ico|json|woff2?|css|js|mjs|pdf|mp4)$/.test(m[1])) continue;
+      if (/\.(png|jpe?g|webp|avif|svg|xml|txt|ico|json|webmanifest|woff2?|css|js|mjs|pdf|mp4)$/.test(m[1])) continue;
       if (m[1].startsWith('/_astro/') || m[1].startsWith('/photos/') || m[1].startsWith('/fonts/')) continue;
       if (!toutes.some(([r]) => r === cible)) {
         constats.push(`${route} — lien interne mort : ${m[1]}`);
@@ -196,7 +196,7 @@ for (const r of rapport) {
 for (const [md5, sites] of parFavicon) {
   if (sites.length < 2) continue;
   for (const r of rapport) {
-    if (sites.includes(r.site)) r.constats.push(`favicon.svg (${md5}) identique à : ${sites.filter((s) => s !== r.site).join(', ')}`);
+    if (sites.includes(r.site)) r.constats.push(`favicon-192.png (${md5}) identique à : ${sites.filter((s) => s !== r.site).join(', ')}`);
   }
 }
 

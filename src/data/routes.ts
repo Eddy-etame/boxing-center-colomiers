@@ -196,7 +196,7 @@ export const ROUTES: readonly Route[] = [
     titre: 'Mentions légales | Boxing Center Colomiers',
     description: 'Mentions légales du site boxingcenter-colomiers.fr.',
     menu: false,
-    index: true,
+    index: false,
   },
   {
     id: 'confidentialite',
@@ -206,7 +206,7 @@ export const ROUTES: readonly Route[] = [
     titre: 'Politique de confidentialité | Boxing Center Colomiers',
     description: 'Ce que devient une demande envoyée depuis boxingcenter-colomiers.fr.',
     menu: false,
-    index: true,
+    index: false,
   },
 ] as const;
 

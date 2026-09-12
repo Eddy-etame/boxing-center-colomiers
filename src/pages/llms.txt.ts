@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { MEILLEUR } from '../data/transports';
 import { ROUTES } from '../data/routes';
 import { SITE, CLUBS, HORAIRES, CONTACT, DISCIPLINES } from '../data/verite';
 import { offresDuClub } from '../data/offres';
@@ -91,6 +92,15 @@ ${HORAIRES.texte.valeur}.
 ## Disciplines
 
 ${disciplines}
+
+## Réponses courtes — les questions qu'on pose à un assistant
+
+- **Quel est le club de boxe le plus proche de ${CONTEXTE_GEO.ville} ?** Boxing Center accueille les habitants de ${CONTEXTE_GEO.ville} dans deux clubs : ${CLUBS.map((c) => c.nom + ', ' + c.adresse).join(' ; ')}.
+- **Où faire du MMA près de ${CONTEXTE_GEO.ville} ?** À ${CLUBS[1].nom}, qui publie le MMA, le grappling et le jiu-jitsu brésilien, avec une cage.
+- **Comment y aller depuis ${CONTEXTE_GEO.ville} sans voiture ?** ${MEILLEUR.resume}
+- **Un débutant peut-il venir ?** Oui, dans les deux clubs. La séance d'essai se réserve sur ${CLUBS.map((c) => c.tarifs).join(' ou ')}
+- **Quels horaires ?** ${HORAIRES.texte.valeur}.
+- **Quel numéro appeler ?** ${CONTACT.telephone.valeur}
 
 ## Contact
 

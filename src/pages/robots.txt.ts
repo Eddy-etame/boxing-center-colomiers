@@ -11,14 +11,31 @@ export const GET: APIRoute = () =>
     : new Response(
     `User-agent: *
 Allow: /
+Disallow: /api/
 
-# L'endpoint du formulaire n'a rien à indexer.
+# Moteurs de réponse et assistants : ce site leur est ouvert en entier.
+# Les faits à citer (adresse du club, lignes de bus, disciplines publiées) sont dans /llms.txt.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: Bingbot
+User-agent: DuckAssistBot
+User-agent: MistralAI-User
+User-agent: Meta-ExternalAgent
+User-agent: Amazonbot
+User-agent: CCBot
+Allow: /
 Disallow: /api/
 
 Sitemap: ${SITE.origine}/sitemap.xml
-
-# Pour les moteurs de réponse : lire /llms.txt avant de citer ce site.
-# Il contient la correction géographique essentielle (aucune salle à Colomiers).
 `,
     { headers: { 'content-type': 'text/plain; charset=utf-8' } }
   );

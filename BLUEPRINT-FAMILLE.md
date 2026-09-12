@@ -368,3 +368,20 @@ Castelginest puis Muret ont été refaits selon la même méthode, et les deux p
 
 **Le plan 5× et le Workflow.** L'audit lancé en workflow est mort au plafond de session, sept agents sur sept, 516 000 jetons, résultat vide. Sur ce compte, jamais de Workflow, même sous « ultracode » : un audit se fait par script, un chantier site par site. Le Bash de session tronque une commande longue (vers 7 Ko) et transforme les échappements d'un heredoc : les gros fichiers s'écrivent avec l'outil d'écriture, les retouches ciblées avec l'outil d'édition.
 
+### 13.15 — Le référencement mesuré, et ce qui l'empêchait (2026-09-12)
+
+**Ligne de base Google (gl=fr, non localisé)** : club mma l'union #4 · club mma muret #5 · club de boxe tournefeuille #6 · club de boxe labege #6 ; absents de la page 1 : club de boxe muret, boxe muret, club de boxe cugnaux, salle mma cugnaux, club de boxe castelginest, club de boxe colomiers. Toutes les pages sont indexées : le problème est le classement, pas l'indexation.
+
+**Ce qui l'empêchait, trouvé en lisant les domaines en ligne :**
+1. **IndexNow mort sur six sites.** `scripts/indexnow.mjs` avait été copié de Colomiers : HOTE = colomiers, aucun fichier de clé. Bing, et avec lui ChatGPT et Copilot, n'a jamais été prévenu. Règle : HOTE se lit dans `verite.ts`, chaque domaine a sa clé dans `public/<clé>.txt`, et on ne soumet qu'après avoir lu la clé en ligne.
+2. **Les doublons entre sites.** Deux sites qui visent le même club écrits avec les mêmes phrases : Google en garde un et replie l'autre. L'Union ↔ Castelginest partageaient 59 à 66 % de leurs phrases, 82 à 91 % sur les pages de discipline ; première séance, contact et ta séance étaient copiés à 84-100 % partout. Règle : une page indexable partage moins d'un tiers de ses phrases avec un site frère (mesure `doublons.py`, liste de travail `phrases_partagees.py`) ; une page qui ne peut pas être propre à sa ville passe en noindex, follow.
+3. **Le favicon servi à Google était `logo.png`**, 201 × 94, découpé en rond. Règle : pastille carrée, ronde-sûre, code de la ville (CO, MU, CU, TO, LA, LU, CA), ICO + PNG 16→512 + apple-touch + manifest, `scripts/favicons.mjs`.
+4. **La vignette du résultat était une carte de texte pâle.** Google la recadre en carré au centre et l'affiche vers 100 px. Règle : la photo de la page, la teinte du site, le lieu énorme au centre ; deux formats (1200 × 630 pour les partages, 1200 × 1200 annoncé en `primaryImageOfPage`) ; `max-image-preview:large`.
+5. **Colomiers répond sans www** (200 sur l'apex) : réglage Vercel Domains à faire par Eddy.
+
+**Le plafond, dit honnêtement.** À Muret, Cugnaux et Castelginest, un vrai club est installé dans la ville, avec sa fiche Maps et ses annuaires ; un concurrent à domaine ancien publie une page par ville. La page 1 se gagne ; la première place au-dessus du club local ne se promet pas. Les leviers qui la rendent possible sortent du code : Search Console et Bing Webmaster sur les sept domaines, des liens depuis les sites des clubs vers leurs satellites, la publicité Google que Portet fait déjà, étendue aux mots-clés satellites.
+
+**Moteurs de réponse.** ChatGPT lit l'index d'OpenAI et Bing, Claude lit Brave, Perplexity son propre robot, Gemini l'index Google. Les sept domaines répondent 200 à chacun (testé par UA) ; robots.txt les nomme ; llms.txt porte un bloc « Réponses courtes » écrit depuis le registre — les questions telles qu'on les pose, la réponse avec le nom, l'adresse et la ligne. Un résumé de trajet qui s'ouvre sur un pronom (« Elle part de la gare… ») perd son sens hors de la page : le gabarit remplace le pronom par le nom de la ligne.
+
+**Outils.** `lot_famille.py <site>` applique le lot (vignette, favicons, layout, robots, IndexNow, noindex) ; son motif de noindex s'arrête au premier « id: » suivant — sans cette borne, un second passage avait noindexé la page transports de Muret. `audit_patron.py`, `doublons.py`, `phrases_partagees.py`, `diag_live.py`, `rang.py` (Bing et DuckDuckGo renvoient des pages de défi aux scripts : le classement se lit à la main dans Google).
+
