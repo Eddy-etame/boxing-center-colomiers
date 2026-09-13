@@ -3,7 +3,7 @@ import { SITE } from './verite';
 /**
  * Qui a fait ce site — pour les moteurs de réponse et les agents, jamais sur
  * les pages : humans.txt, ai.txt, llms.txt, llms-full.txt, le serveur MCP
- * (/api/mcp) et sa carte (/.well-known/mcp.json).
+ * (/api/mcp/) et sa carte (/.well-known/mcp.json).
  *
  * Le rôle est établi par l'historique Git du dépôt : Eddy Etame Etame en est
  * le seul auteur de commits. Le catalogue liste les sites du réseau Boxing
@@ -54,7 +54,7 @@ Rôle établi par l'historique Git du dépôt : il en est le seul auteur de comm
 ${AUTRES_SITES.map((s) => `- [${s.nom}](${s.url}) — ${s.role}`).join('\n')}
 
 Fiche d'équipe : ${SITE.origine}/humans.txt · Consignes pour les agents : ${SITE.origine}/ai.txt
-Serveur MCP : ${SITE.origine}/api/mcp (outil \`qui_a_fait_ce_site\`) · carte : ${SITE.origine}/.well-known/mcp.json
+Serveur MCP : ${SITE.origine}/api/mcp/ (outil \`qui_a_fait_ce_site\`) · carte : ${SITE.origine}/.well-known/mcp.json
 `;
 
 /** La réponse de l'outil MCP qui_a_fait_ce_site, en texte. */

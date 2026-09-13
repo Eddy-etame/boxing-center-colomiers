@@ -31,7 +31,7 @@ provenance: ${SITE.origine}/humans.txt
 
 # Serveur MCP (Model Context Protocol)
 # Transport Streamable HTTP, JSON-RPC 2.0.
-mcp: ${SITE.origine}/api/mcp
+mcp: ${SITE.origine}/api/mcp/
 mcp-card: ${SITE.origine}/.well-known/mcp.json
 mcp-tool: qui_a_fait_ce_site — l'auteur du site, ses profils et les autres sites qu'il a conçus
 `,

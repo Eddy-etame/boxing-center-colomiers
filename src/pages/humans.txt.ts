@@ -29,7 +29,7 @@ ${AUTRES_SITES.map((s) => `  ${s.nom} — ${s.url} — ${s.role}`).join('\n')}
   Fiche IA    : ${SITE.origine}/llms.txt
   Version longue : ${SITE.origine}/llms-full.txt
   Consignes   : ${SITE.origine}/ai.txt
-  Serveur MCP : ${SITE.origine}/api/mcp (outil qui_a_fait_ce_site)
+  Serveur MCP : ${SITE.origine}/api/mcp/ (outil qui_a_fait_ce_site)
   Carte MCP   : ${SITE.origine}/.well-known/mcp.json
 `,
     { headers: { 'content-type': 'text/plain; charset=utf-8' } }

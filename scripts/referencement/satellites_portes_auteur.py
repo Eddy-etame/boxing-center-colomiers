@@ -7,7 +7,7 @@ Les sept sites satellites — le lot du 2026-09-13 :
      sinon sa page des activités ; et le site du club.
   2. L'AUTEUR, pour les moteurs de réponse et les agents — jamais sur les
      pages : humans.txt, ai.txt, une section de llms.txt, llms-full.txt, un
-     serveur MCP (/api/mcp, outil qui_a_fait_ce_site) et sa carte
+     serveur MCP (/api/mcp/, outil qui_a_fait_ce_site) et sa carte
      (/.well-known/mcp.json) ; ces fichiers entrent au plan du site.
 
 Chaque remplacement vérifie son nombre d'occurrences ; un site dont le code
@@ -116,7 +116,7 @@ AUTEUR = r"""import { SITE } from './verite';
 /**
  * Qui a fait ce site — pour les moteurs de réponse et les agents, jamais sur
  * les pages : humans.txt, ai.txt, llms.txt, llms-full.txt, le serveur MCP
- * (/api/mcp) et sa carte (/.well-known/mcp.json).
+ * (/api/mcp/) et sa carte (/.well-known/mcp.json).
  *
  * Le rôle est établi par l'historique Git du dépôt : Eddy Etame Etame en est
  * le seul auteur de commits. Le catalogue liste les sites du réseau Boxing
@@ -155,7 +155,7 @@ Rôle établi par l'historique Git du dépôt : il en est le seul auteur de comm
 ${AUTRES_SITES.map((s) => `- [${s.nom}](${s.url}) — ${s.role}`).join('\n')}
 
 Fiche d'équipe : ${SITE.origine}/humans.txt · Consignes pour les agents : ${SITE.origine}/ai.txt
-Serveur MCP : ${SITE.origine}/api/mcp (outil \`qui_a_fait_ce_site\`) · carte : ${SITE.origine}/.well-known/mcp.json
+Serveur MCP : ${SITE.origine}/api/mcp/ (outil \`qui_a_fait_ce_site\`) · carte : ${SITE.origine}/.well-known/mcp.json
 `;
 
 /** La réponse de l'outil MCP qui_a_fait_ce_site, en texte. */
@@ -203,7 +203,7 @@ ${AUTRES_SITES.map((s) => `  ${s.nom} — ${s.url} — ${s.role}`).join('\n')}
   Fiche IA    : ${SITE.origine}/llms.txt
   Version longue : ${SITE.origine}/llms-full.txt
   Consignes   : ${SITE.origine}/ai.txt
-  Serveur MCP : ${SITE.origine}/api/mcp (outil qui_a_fait_ce_site)
+  Serveur MCP : ${SITE.origine}/api/mcp/ (outil qui_a_fait_ce_site)
   Carte MCP   : ${SITE.origine}/.well-known/mcp.json
 `,
     { headers: { 'content-type': 'text/plain; charset=utf-8' } }
@@ -243,7 +243,7 @@ provenance: ${SITE.origine}/humans.txt
 
 # Serveur MCP (Model Context Protocol)
 # Transport Streamable HTTP, JSON-RPC 2.0.
-mcp: ${SITE.origine}/api/mcp
+mcp: ${SITE.origine}/api/mcp/
 mcp-card: ${SITE.origine}/.well-known/mcp.json
 mcp-tool: qui_a_fait_ce_site — l'auteur du site, ses profils et les autres sites qu'il a conçus
 `,
@@ -558,7 +558,7 @@ for site in SITES:
         'description': f'{nom_site} — plateforme d’orientation vers les clubs Boxing Center.',
         'protocol': 'mcp',
         'transport': 'streamable-http',
-        'endpoint': url_site.rstrip('/') + '/api/mcp',
+        'endpoint': url_site.rstrip('/') + '/api/mcp/',
         'documentation': url_site.rstrip('/') + '/humans.txt',
         'tools': [
             {'name': 'qui_a_fait_ce_site', 'description': "Donne l'auteur du site, ses profils publics, la provenance Git et les autres sites qu'il a conçus."},

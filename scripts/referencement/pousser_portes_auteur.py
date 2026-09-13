@@ -12,12 +12,14 @@ import io, os, re, sys, time, subprocess, urllib.request, ssl
 sys.stdout.reconfigure(encoding='utf-8')
 BASE = os.path.join('C:' + os.sep, 'Users', 'Mommy Jayce', 'Desktop', 'Boxing Center', 'Deployment')
 SITES = sys.argv[1:] or ['colomiers', 'muret', 'cugnaux', 'tournefeuille', 'labege', 'lunion', 'castelginest']
-MESSAGE = (
+MESSAGE = os.environ.get('MESSAGE_LOT') or (
     "seo(satellites): chaque page de discipline mène au club par deux boutons — la page de la discipline chez le club "
     "(Portet, Ramonville), sinon ses activités, et le site du club ; l’auteur du site déclaré pour les moteurs de réponse "
-    "et les agents, jamais sur les pages : humans.txt, ai.txt, llms.txt, llms-full.txt, serveur MCP /api/mcp "
+    "et les agents, jamais sur les pages : humans.txt, ai.txt, llms.txt, llms-full.txt, serveur MCP /api/mcp/ "
     "(outil qui_a_fait_ce_site) et sa carte /.well-known/mcp.json, ces fichiers au plan du site"
 )
+# Le texte qui prouve que le NOUVEAU déploiement est en ligne (cherché dans /humans.txt).
+MARQUEUR = os.environ.get('MARQUEUR_LOT') or 'Eddy Etame Etame'
 ctx = ssl.create_default_context()
 
 
@@ -50,7 +52,7 @@ for s in pousses:
     while time.time() - debut < 900:
         try:
             with urllib.request.urlopen(urllib.request.Request(f'https://{hote}/humans.txt', headers={'User-Agent': 'verif-deploiement'}), timeout=20, context=ctx) as r:
-                if r.status == 200 and 'Eddy Etame Etame' in r.read().decode('utf-8', 'ignore'):
+                if r.status == 200 and MARQUEUR in r.read().decode('utf-8', 'ignore'):
                     ok = True
                     break
         except Exception:
