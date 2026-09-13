@@ -32,11 +32,13 @@ pousses = []
 for s in SITES:
     R = os.path.join(BASE, f'boxing-center-{s}')
     git(R, 'add', '-A', '--', '.', ':!.claude')
-    if not git(R, 'diff', '--cached', '--name-only').stdout.strip():
+    if git(R, 'diff', '--cached', '--name-only').stdout.strip():
+        git(R, 'commit', '-q', '-m', MESSAGE)
+    elif git(R, 'rev-list', '--count', '@{u}..HEAD').stdout.strip() == '0':
         print(f'{s:13s} rien à pousser')
         continue
-    git(R, 'commit', '-q', '-m', MESSAGE)
-    git(R, 'pull', '--rebase', '-q')
+    # --autostash : un fichier local hors lot (.claude/launch.json) ne bloque pas le pull.
+    git(R, 'pull', '--rebase', '--autostash', '-q')
     git(R, 'push', '-q')
     print(f'{s:13s} poussé {git(R, "rev-parse", "--short", "HEAD").stdout.strip()}')
     pousses.append(s)

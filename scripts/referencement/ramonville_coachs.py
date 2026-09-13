@@ -21,22 +21,24 @@ R = os.path.join('C:' + os.sep, 'Users', 'Mommy Jayce', 'Desktop', 'Boxing Cente
 
 
 def lire(chemin):
-    t = io.open(chemin, encoding='utf-8', newline='').read()
-    return t.replace('\r\n', '\n'), '\r\n' in t
+    """Le texte tel quel. On ne normalise pas les fins de ligne : sur un fichier
+    mixte (home.css), la normalisation faisait un diff de 54 lignes pour 20."""
+    return io.open(chemin, encoding='utf-8', newline='').read(), None
 
 
-def ecrire(chemin, t, crlf):
-    io.open(chemin, 'w', encoding='utf-8', newline='').write(t.replace('\n', '\r\n') if crlf else t)
+def ecrire(chemin, t, _=None):
+    io.open(chemin, 'w', encoding='utf-8', newline='').write(t)
 
 
 def rem(t, avant, apres, nom, n=1):
-    k = t.count(avant)
-    assert k == n, f'{nom} : {k} occurrence(s) au lieu de {n} pour {avant[:90]!r}'
-    return t.replace(avant, apres)
+    for a, b in ((avant, apres), (avant.replace('\n', '\r\n'), apres.replace('\n', '\r\n'))):
+        if t.count(a) == n:
+            return t.replace(a, b)
+    raise AssertionError(f'{nom} : {t.count(avant)} occurrence(s) au lieu de {n} pour {avant[:90]!r}')
 
 
 def sub(t, motif, apres, nom, n=1):
-    t2, k = re.subn(motif, apres, t, flags=re.M)
+    t2, k = re.subn(motif.replace(r'\n', r'\r?\n'), apres, t, flags=re.M)
     assert k == n, f'{nom} : {k} remplacement(s) au lieu de {n} pour {motif[:90]!r}'
     return t2
 
@@ -117,7 +119,7 @@ patch(f('src', 'pages', 'coachs', 'index.astro'),
       lambda t: rem(t, '            ${c.devise ? `<blockquote class="coach__devise">${c.devise}</blockquote>` : ""}\n',
                     '            ${c.devise ? `<blockquote class="coach__devise">${c.devise}</blockquote>` : ""}\n'
                     '            ${lienCoach(c.name) ? `<a class="coach__page" href="${lienCoach(c.name)}">La page de ${c.name} <span aria-hidden="true">→</span></a>` : ""}\n', 'roster lien'),
-      lambda t: sub(t, r'^(\s*)("@id": "https://mmatoulouse\.com/coachs/#([a-z-]+)",\n)',
+      lambda t: sub(t, r'^(\s*)("@id": "https://mmatoulouse\.com/coachs/#(jerome|sonia|hicham|farouk|valentin-guth)",\n)',
                     r'\1\2\1"url": "https://mmatoulouse.com/coachs/\3/",\n', 'jsonld url', 5),
       lambda t: rem(t, '2ᵉ français chez les super-coqs', '3ᵉ français chez les super-coqs', 'guth rang'))
 patch(f('public', 'assets', 'css', 'coachs.css'), lambda t: t.rstrip('\n') + '''
