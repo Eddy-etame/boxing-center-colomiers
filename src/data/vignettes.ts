@@ -27,6 +27,7 @@ const SUJETS: Record<string, string> = {
   'ta-seance': 'Ta séance',
   'quel-club': 'Quel club',
   transports: 'Y aller en bus',
+  'nos-clubs': 'Nos 5 clubs',
   contact: 'Contact',
   plannings: 'Plannings',
   tarifs: 'Tarifs',
