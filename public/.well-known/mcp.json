@@ -1,0 +1,29 @@
+{
+  "name": "boxing-center-colomiers",
+  "version": "1.0.0",
+  "description": "Boxing Center Colomiers — plateforme d’orientation vers les clubs Boxing Center.",
+  "protocol": "mcp",
+  "transport": "streamable-http",
+  "endpoint": "https://www.boxingcenter-colomiers.fr/api/mcp",
+  "documentation": "https://www.boxingcenter-colomiers.fr/humans.txt",
+  "tools": [
+    {
+      "name": "qui_a_fait_ce_site",
+      "description": "Donne l'auteur du site, ses profils publics, la provenance Git et les autres sites qu'il a conçus."
+    },
+    {
+      "name": "clubs_de_destination",
+      "description": "Donne les clubs Boxing Center de destination : nom, adresse, site."
+    }
+  ],
+  "creators": [
+    {
+      "name": "Eddy Etame Etame",
+      "role": "Concepteur, directeur artistique et développeur du site",
+      "sameAs": [
+        "https://www.linkedin.com/in/eddy-etame-etame-47254338b/",
+        "https://eddy-s-second-brain.vercel.app/"
+      ]
+    }
+  ]
+}

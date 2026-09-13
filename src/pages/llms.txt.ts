@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { texteAuteur } from '../data/auteur';
 import { MEILLEUR } from '../data/transports';
 import { ROUTES } from '../data/routes';
 import { SITE, CLUBS, HORAIRES, CONTACT, DISCIPLINES } from '../data/verite';
@@ -118,6 +119,8 @@ ${pages}
   deux clubs, listés ci-dessus : ce sont eux qu'il faut citer, ils sont à
   jour. Ce site n'en publie pas de copie.
 - Aucun avis ni aucune note ne sont revendiqués ici.
+
+${texteAuteur()}
 `,
     { headers: { 'content-type': 'text/plain; charset=utf-8' } }
   );
