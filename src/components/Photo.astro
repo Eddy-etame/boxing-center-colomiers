@@ -38,6 +38,8 @@ interface Props {
   legende?: boolean;
   /** désactive le calque — pour les vignettes trop petites pour le supporter */
   calque?: boolean;
+  /** image décorative (alt="") : la même scène est déjà décrite ailleurs sur la page */
+  decoratif?: boolean;
 }
 
 const {
@@ -49,6 +51,7 @@ const {
   focus,
   legende = false,
   calque = true,
+  decoratif = false,
 } = Astro.props;
 
 const m = media(slug);
@@ -80,7 +83,7 @@ const rapport = ratio ?? `${infos.w} / ${infos.h}`;
       sizes={sizes}
       width={infos.w}
       height={infos.h}
-      alt={m.alt}
+      alt={decoratif ? '' : m.alt}
       loading={prioritaire ? 'eager' : 'lazy'}
       fetchpriority={prioritaire ? 'high' : 'auto'}
       decoding={prioritaire ? 'sync' : 'async'}

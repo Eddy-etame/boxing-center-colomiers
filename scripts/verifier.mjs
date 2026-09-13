@@ -205,7 +205,7 @@ for (const [route, fichier] of toutes) {
 
   // 4 — images sans alt (alt="" est légitime : image décorative)
   for (const m of html.matchAll(/<img\b[^>]*>/g)) {
-    if (!/\salt=/.test(m[0])) erreurs.push(ou(`<img> sans attribut alt : ${m[0].slice(0, 70)}…`));
+    if (!/\salt(?:=|[\s/>])/.test(m[0]))  /* `alt` nu = alt="" pour HTML : image décorative (Astro écrit ainsi une chaîne vide) */ erreurs.push(ou(`<img> sans attribut alt : ${m[0].slice(0, 70)}…`));
   }
 
   // 5 — title et description

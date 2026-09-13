@@ -31,7 +31,11 @@ const { nb, couleur } = paire(nom);
     <Photo slug={nb.slug as any} sizes={sizes} ratio={ratio} />
   </div>
   <div class="bascule__couche bascule__couche--couleur" data-couleur>
-    <Photo slug={couleur.slug as any} sizes={sizes} ratio={ratio} />
+    <!-- La couleur est le MÊME instant que le noir et blanc, déjà décrit juste
+         au-dessus — et sur les pages de discipline, c'est aussi la photo du
+         haut de page. Décrite une seconde fois, la page portait deux alt
+         identiques (audit du 13/09) : elle est donc décorative (alt=""). -->
+    <Photo slug={couleur.slug as any} sizes={sizes} ratio={ratio} decoratif />
   </div>
 </div>
 
