@@ -85,7 +85,8 @@ for site, racine in SITES.items():
         if 'JSON-LD INVALIDE' in P.ld: pb.append('JSON-LD invalide')
         sans_alt = [i.get('src', '')[-40:] for i in P.imgs if 'alt' not in i]
         gen = [i.get('alt') for i in P.imgs if i.get('alt') and GENERIQUE.match(i['alt'].strip())]
-        alts = [i.get('alt', '').strip() for i in P.imgs if i.get('alt', '').strip()]
+        # un `alt` nu (Astro l'écrit ainsi pour une chaîne vide) arrive à None : c'est un alt vide, décoratif
+        alts = [(i.get('alt') or '').strip() for i in P.imgs if (i.get('alt') or '').strip()]
         doublons = [a for a, n in collections.Counter(alts).items() if n > 1]
         sans_dim = [i.get('src', '')[-40:] for i in P.imgs if not (i.get('width') and i.get('height'))]
         if sans_alt: pb.append(f'{len(sans_alt)} img sans alt {sans_alt[:3]}')

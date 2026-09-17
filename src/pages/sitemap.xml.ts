@@ -18,17 +18,14 @@ export const GET: APIRoute = () => {
     )
     .join('\n');
 
-  /* Les fichiers pour les moteurs de réponse : la fiche du site, sa version
-     complète, l'équipe et les consignes aux agents. */
-  const fichiers = ['/llms.txt', '/llms-full.txt', '/humans.txt', '/ai.txt']
-    .map((c) => `  <url>\n    <loc>${SITE.origine}${c}</loc>\n    <priority>0.3</priority>\n  </url>`)
-    .join('\n');
+  /* Les fichiers pour les IA (llms, humans, ai) ne sont PAS dans le plan du
+     site : Google les explorait comme des pages et les rangeait en « non
+     indexée ». Ils reçoivent X-Robots-Tag: noindex (vercel.json). */
 
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls}
-${fichiers}
 </urlset>
 `,
     { headers: { 'content-type': 'application/xml; charset=utf-8' } }
