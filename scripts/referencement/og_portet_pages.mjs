@@ -23,6 +23,7 @@ const PAGES = [
   { slug: "about", photo: "img/gym-11.jpg", sur: "LE CLUB · PORTET-SUR-GARONNE", titre: "La salle phare du groupe", puces: ["600 m² de combat", "Depuis 2016"] },
   { slug: "boxeurs", photo: "img/gym-10.jpg", sur: "TEAM TAPIA · PORTET-SUR-GARONNE", titre: "Nos boxeurs", puces: ["De l’école de boxe", "à l’Équipe de France"] },
   { slug: "partenaires", photo: "img/gym-16.jpg", sur: "PARTENAIRES · PORTET-SUR-GARONNE", titre: "Ils font grandir le club", puces: ["KFC", "O2 Portet-sur-Garonne", "Karting 2 Muret"] },
+  { slug: "club-de-boxe-portet", photo: "img/gym-01.jpg", sur: "LE CLUB DE BOXE · PORTET-SUR-GARONNE", titre: "600 m² depuis 2016", puces: ["Ring · cage · tatamis", "9 disciplines"] },
   { slug: "privacy", photo: "img/gym-18.jpg", sur: "CONFIDENTIALITÉ · PORTET", titre: "Vos données", puces: ["Pas de compte", "Pas de pisteur"] },
 ];
 
@@ -41,7 +42,9 @@ const logo = await sharp(`${PORTET}/public/logo-1100.png`).resize({ width: 250 }
 const logoMeta = await sharp(logo).metadata();
 mkdirSync(`${PORTET}/public/og/pages`, { recursive: true });
 
-for (const p of PAGES) {
+/* « node og_portet_pages.mjs club-de-boxe-portet » ne refait que cette vignette */
+const SEULES = process.argv.slice(2);
+for (const p of PAGES.filter((q) => !SEULES.length || SEULES.includes(q.slug))) {
   const fond = await sharp(`${PORTET}/public/${p.photo}`)
     .resize(W, H, { fit: "cover", position: sharp.strategy.attention })
     .modulate({ saturation: 0.85 })
