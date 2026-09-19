@@ -337,6 +337,33 @@ if (existsSync(DOSSIER_SRC)) {
 }
 
 
+/* ────────  EN PRODUCTION, UNE PAGE SE RANGE DANS GOOGLE (19/09)  ────────
+   Le 12/09, six pages par site étaient passées en noindex le temps de lever
+   des doublons entre les sept sites. Les domaines sont partis en production
+   sans que personne ne les rouvre : 42 pages du réseau sont restées hors de
+   Google une semaine, et le build n'a rien dit. Il le dit maintenant.
+
+   Deux exceptions, et il en faut une raison pour en ajouter une troisième :
+   « introuvable » est la page 404 (la ranger serait un défaut) et « merci »
+   est la confirmation d'envoi du formulaire (aucun contenu propre, atteinte
+   par personne d'autre que celui qui vient d'écrire). */
+{
+  const SOURCE_ROUTES = readFileSync(join(RACINE, 'src', 'data', 'routes.ts'), 'utf8');
+  const SANS_INDEX_LEGITIME = new Set(['introuvable', 'merci']);
+  for (const bloc of SOURCE_ROUTES.split(/\n\s{2}\{\n/).slice(1)) {
+    if (!/index:\s*false/.test(bloc)) continue;
+    const idRoute = (bloc.match(/id:\s*'([^']+)'/) || [])[1];
+    const cheminRoute = (bloc.match(/chemin:\s*'([^']+)'/) || [])[1] || '?';
+    if (!idRoute || SANS_INDEX_LEGITIME.has(idRoute)) continue;
+    erreurs.push(
+      `src/data/routes.ts — la page « ${idRoute} » (${cheminRoute}) est en noindex. ` +
+        `En production, une page de contenu se range dans Google : passe-la en ` +
+        `index: true, ou déclare-la comme exception dans scripts/verifier.mjs ` +
+        `avec sa raison.`
+    );
+  }
+}
+
 console.log(`\n  ${toutes.length} pages analysées dans ${DIST.replace(RACINE, '.')}\n`);
 for (const a of avertissements) console.log(`  ⚠  ${a}`);
 for (const e of erreurs) console.log(`  ✗  ${e}`);
