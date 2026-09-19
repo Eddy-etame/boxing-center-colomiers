@@ -258,3 +258,19 @@ export const FORMULATIONS = [
   'club de MMA près de Colomiers',
   'sports de combat à proximité de Colomiers',
 ] as const;
+
+/* ─────────────────────────  LES SITES DE PROXIMITÉ  ───────────────────────── */
+/**
+ * Les sept sites Boxing Center « depuis ta commune ». Le pied de page relie
+ * chacun aux six autres : le visiteur qui part d'une autre commune trouve le
+ * site écrit pour lui, et les moteurs vont de l'un à l'autre.
+ */
+export const RESEAU_PROXIMITE: readonly { ville: string; url: string }[] = [
+  { ville: 'Colomiers', url: 'https://www.boxingcenter-colomiers.fr/' },
+  { ville: 'Tournefeuille', url: 'https://www.boxingcenter-tournefeuille.fr/' },
+  { ville: 'Cugnaux', url: 'https://www.boxingcenter-cugnaux.fr/' },
+  { ville: 'Muret', url: 'https://www.boxingcenter-muret.fr/' },
+  { ville: 'Labège', url: 'https://www.boxingcenter-labege.fr/' },
+  { ville: 'L’Union', url: 'https://www.boxingcenter-lunion.fr/' },
+  { ville: 'Castelginest', url: 'https://www.boxingcenter-castelginest.fr/' },
+];

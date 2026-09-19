@@ -5,7 +5,7 @@
  * comment joindre quelqu'un.
  */
 import { MENU, route } from '../data/routes';
-import { CLUBS, CONTACT, HORAIRES, DISCIPLINES, SITE } from '../data/verite';
+import { CLUBS, CONTACT, HORAIRES, DISCIPLINES, SITE, RESEAU_PROXIMITE } from '../data/verite';
 
 const annee = new Date().getFullYear();
 ---
@@ -96,6 +96,14 @@ const annee = new Date().getFullYear();
           <li><a class="lien" href={route('confidentialite').chemin}>Confidentialité</a></li>
         </ul>
       </div>
+      <nav aria-label="Les autres sites de proximité">
+        <p class="mono pied__cle">Tu pars d’une autre commune</p>
+        <ul>
+          {RESEAU_PROXIMITE.filter((s) => !s.url.startsWith(SITE.origine)).map((s) => (
+            <li><a class="lien" href={s.url}>Boxing Center près de {s.ville}</a></li>
+          ))}
+        </ul>
+      </nav>
     </div>
 
     <div class="pied__bas">
@@ -187,7 +195,7 @@ const annee = new Date().getFullYear();
 
   .pied__grille {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--e-6);
     padding-block: var(--e-8);
   }
