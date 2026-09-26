@@ -288,6 +288,7 @@ export const FORMULATIONS = [
  */
 export const RESEAU_PROXIMITE: readonly { ville: string; url: string }[] = [
   { ville: 'Colomiers', url: 'https://www.boxingcenter-colomiers.fr/' },
+  { ville: 'Blagnac', url: 'https://www.club-boxe-blagnac.fr/' },
   { ville: 'Tournefeuille', url: 'https://www.boxingcenter-tournefeuille.fr/' },
   { ville: 'Cugnaux', url: 'https://www.boxingcenter-cugnaux.fr/' },
   { ville: 'Muret', url: 'https://www.boxingcenter-muret.fr/' },
