@@ -19,6 +19,8 @@ R = r"C:/Users/Mommy Jayce/Desktop/Boxing Center/Portet/boxing-center-portet/"
 
 REMPLACEMENTS = {
     "src/disciplines.json": [
+        ('amateurs et pros, avec Valentin Tapia. Gants prêtés.',
+         'amateurs et pros, avec Valentin Tapia.'),
         ('Les gants sont prêtés, et personne ne t’impose de sparring.',
          'Personne ne t’impose de sparring.'),
         ('le coach t’apprend la garde et les premiers coups dès la première séance, et les gants sont prêtés.',
@@ -63,6 +65,8 @@ REMPLACEMENTS = {
          'Accueil coach, visite, échauffement, '),
     ],
     "premiere-seance/index.html": [
+        ('Boxing Center Portet : accueil, tenue, gants prêtés, échauffement',
+         'Boxing Center Portet : accueil, tenue, échauffement'),
         ('Minute par minute : l’accueil, les gants prêtés, l’échauffement et le sac.',
          'Minute par minute : l’accueil, l’échauffement et le sac.'),
         ('Un coach t’accueille, te prête une paire de gants et te fait le tour de la salle.',
@@ -74,7 +78,14 @@ REMPLACEMENTS = {
         ('Aucun équipement à acheter avant de venir. Les gants du club sont prêtés — c’est la même paire que celle des autres, et elle t’attend au vestiaire.',
          'Aucun équipement à acheter avant de venir. Tu arrives en tenue de sport, le coach s’occupe du reste.'),
     ],
+    "contact/index.html": [
+        # manqué le 19/09 : le grep de vérification était cassé par la locale sur « ê »
+        ('l’accueil, les gants prêtés, et ce qu’on ne te demandera pas',
+         'l’accueil, l’échauffement, et ce qu’on ne te demandera pas'),
+    ],
     "api/chat.js": [
+        ('première séance : accueil, gants prêtés, tenue, créneaux débutants',
+         'première séance : accueil, tenue, créneaux débutants'),
         ('aucun niveau demandé, gants prêtés, et la saison donne le temps ',
          'aucun niveau demandé, et la saison donne le temps '),
     ],
