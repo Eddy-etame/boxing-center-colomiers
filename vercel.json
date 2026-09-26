@@ -2,14 +2,14 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/((?!sitemap\\.xml$).*)",
       "has": [
         {
           "type": "host",
           "value": "boxingcenter-colomiers.fr"
         }
       ],
-      "destination": "https://www.boxingcenter-colomiers.fr/:path*",
+      "destination": "https://www.boxingcenter-colomiers.fr/$1",
       "permanent": true
     },
     {
