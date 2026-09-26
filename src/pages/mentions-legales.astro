@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { CONTACT, SITE, CLUBS, HORAIRES } from '../data/verite';
+import { CONTACT, SITE, CLUBS, HORAIRES, EDITEUR } from '../data/verite';
 ---
 
 <Base page="mentions-legales">
@@ -13,15 +13,6 @@ import { CONTACT, SITE, CLUBS, HORAIRES } from '../data/verite';
 
       <h1 id="t-legal">Mentions légales</h1>
 
-      {/* Le SIRET et le RCS ne figurent sur aucun des deux sites officiels du
-          réseau ni dans les sources dont on dispose. On ne les invente pas :
-          un numéro d'identification erroné dans des mentions légales est pire
-          que son absence. Deux champs restent donc à renseigner. */}
-      <div class="avis mono" role="note">
-        Deux champs restent à renseigner avant la mise en ligne&nbsp;: le numéro
-        SIRET et le nom du directeur de la publication. Ils ne figurent sur aucune
-        source publique du réseau et ne peuvent pas être déduits.
-      </div>
 
       <h2>Éditeur du site</h2>
       <p>
@@ -30,15 +21,14 @@ import { CONTACT, SITE, CLUBS, HORAIRES } from '../data/verite';
         Portet-sur-Garonne.
       </p>
       <dl class="fiche">
-        <div><dt>Dénomination</dt><dd>Boxing Center</dd></div>
-        <div>
-          <dt>Établissement principal</dt>
-          <dd>{CLUBS[0].adresse}</dd>
-        </div>
+        <div><dt>Dénomination</dt><dd>{EDITEUR.denomination.valeur}</dd></div>
+        <div><dt>Forme juridique</dt><dd>{EDITEUR.forme.valeur}</dd></div>
+        <div><dt>Siège social</dt><dd>{EDITEUR.siege.valeur}</dd></div>
         <div><dt>Téléphone</dt><dd><a class="lien" href={`tel:${CONTACT.telephoneLien.valeur}`}>{CONTACT.telephone.valeur}</a></dd></div>
         <div><dt>Courriel</dt><dd><a class="lien" href={`mailto:${CONTACT.email.valeur}`}>{CONTACT.email.valeur}</a></dd></div>
-        <div><dt>SIRET</dt><dd class="attente">à renseigner</dd></div>
-        <div><dt>Directeur de la publication</dt><dd class="attente">à renseigner</dd></div>
+        <div><dt>SIRET du siège</dt><dd>{EDITEUR.siret.valeur}</dd></div>
+        <div><dt>Immatriculation</dt><dd>{EDITEUR.rcs.valeur}</dd></div>
+        <div><dt>Directeur de la publication</dt><dd>{EDITEUR.directeurPublication.valeur}</dd></div>
       </dl>
 
       <h2>Établissements</h2>
@@ -108,17 +98,6 @@ import { CONTACT, SITE, CLUBS, HORAIRES } from '../data/verite';
   .legal p { color: var(--texte-faible); max-width: 62ch; }
   .legal strong { color: var(--texte); font-weight: 600; }
 
-  /* Ce qui manque est signalé, pas masqué. */
-  .avis {
-    padding: var(--e-4);
-    margin-bottom: var(--e-6);
-    border-left: 3px solid var(--signal);
-    background: color-mix(in srgb, var(--signal) 8%, transparent);
-    color: var(--os);
-    text-transform: none;
-    letter-spacing: 0.03em;
-    line-height: 1.6;
-  }
 
   .fiche { display: grid; gap: 0; margin: var(--e-4) 0 0; }
   .fiche > div {
@@ -132,7 +111,6 @@ import { CONTACT, SITE, CLUBS, HORAIRES } from '../data/verite';
   @media (max-width: 40rem) { .fiche > div { grid-template-columns: 1fr; gap: 0.25rem; } }
   .fiche dt { color: var(--acier-sombre); }
   .fiche dd { margin: 0; }
-  .attente { color: var(--signal-texte); font-style: italic; }
 
   .liste { list-style: none; display: grid; gap: var(--e-2); margin-top: var(--e-3); font-size: var(--t-petit); color: var(--texte-faible); }
 </style>

@@ -11,6 +11,17 @@
       ],
       "destination": "https://www.boxingcenter-colomiers.fr/:path*",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "boxing-center-colomiers.vercel.app"
+        }
+      ],
+      "destination": "https://www.boxingcenter-colomiers.fr/:path*",
+      "permanent": true
     }
   ],
   "headers": [

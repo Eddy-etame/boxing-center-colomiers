@@ -30,6 +30,9 @@ const DIST = existsSync(join(RACINE, '.vercel/output/static'))
 
 /** Laisser croire qu'une salle est DANS Colomiers — cahier des charges §2. */
 const INTERDIT = [
+  'avant la mise en ligne',
+  'à renseigner',
+  'ne peuvent pas être déduits',
   'salle de Colomiers',
   'notre salle à Colomiers',
   'notre club à Colomiers',

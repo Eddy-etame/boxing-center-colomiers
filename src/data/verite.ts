@@ -9,7 +9,7 @@
  * `source` dit d'où vient le fait. Rien n'est publié sans source.
  */
 
-export type Source = 'cahier-des-charges' | 'site-reseau' | 'a-verifier';
+export type Source = 'cahier-des-charges' | 'site-reseau' | 'registre-entreprises' | 'a-verifier';
 
 export type Fait<T> = {
   valeur: T;
@@ -43,6 +43,27 @@ export const CONTACT = {
   /** format tel: pour les liens */
   telephoneLien: CDC('+33939036748'),
   email: CDC('boxingcenter31@gmail.com'),
+} as const;
+
+/* ─────────────────────────────  ÉDITEUR  ───────────────────────────── */
+
+/**
+ * L'éditeur légal du site, tel que boxingcenter.fr/mentions-legales/ l'imprime,
+ * recoupé le 13/09/2026 au registre des entreprises
+ * (recherche-entreprises.api.gouv.fr, SIREN 821 817 889). Le SIRET est celui
+ * du siège. Le directeur de la publication est le directeur général de la
+ * société : la présidence est tenue par une personne morale (DISTRIB 31),
+ * Sébastien Dutilh n'est donc jamais « président ».
+ */
+const REG = (v: string): Fait<string> => ({ valeur: v, source: 'registre-entreprises', verifie: '2026-09-13' });
+
+export const EDITEUR = {
+  denomination: REG('SAS Boxing Center'),
+  forme: REG('Société par actions simplifiée au capital de 1 500 €'),
+  siret: REG('821 817 889 00016'),
+  rcs: REG('RCS Toulouse B 821 817 889'),
+  siege: REG('12 rue de Fenouillet, 31200 Toulouse'),
+  directeurPublication: REG('Sébastien Dutilh, directeur général de SAS Boxing Center'),
 } as const;
 
 /* ─────────────────────────────  HORAIRES  ───────────────────────────── */
