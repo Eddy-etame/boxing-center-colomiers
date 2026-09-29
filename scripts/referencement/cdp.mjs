@@ -76,6 +76,17 @@ export async function ouvrir({ w = 1440, h = 900, mobile = false, dpr = 1 } = {}
       writeFileSync(fichier, Buffer.from(r.data, "base64"));
       return fichier;
     },
+    /** la page entière, pied de page compris (29/09 : les mots collés du pied) */
+    async captureEntiere(fichier) {
+      const m = await cmd("Page.getLayoutMetrics");
+      const c = m.cssContentSize || m.contentSize;
+      const r = await cmd("Page.captureScreenshot", {
+        format: "png", captureBeyondViewport: true,
+        clip: { x: 0, y: 0, width: Math.ceil(c.width), height: Math.ceil(c.height), scale: 1 },
+      });
+      writeFileSync(fichier, Buffer.from(r.data, "base64"));
+      return fichier;
+    },
     async fermer() { try { ws.close(); } catch {} proc.kill(); await pause(400); try { rmSync(profil, { recursive: true, force: true }); } catch {} },
   };
 }

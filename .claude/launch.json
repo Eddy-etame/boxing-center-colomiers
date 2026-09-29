@@ -99,6 +99,15 @@
         "C:\\Users\\Mommy Jayce\\Desktop\\Boxing Center\\Deployment\\_ramonville-avant\\dist"
       ],
       "port": 4332
+    },
+    {
+      "name": "boutique-build",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "process.chdir('C:/Users/Mommy Jayce/Desktop/Boxing Center/Deployment/boutique-de-boxe/site'); process.argv=[process.argv[0],'next','start','-p','4340']; require('C:/Users/Mommy Jayce/Desktop/Boxing Center/Deployment/boutique-de-boxe/site/node_modules/next/dist/bin/next')"
+      ],
+      "port": 4340
     }
   ]
 }
