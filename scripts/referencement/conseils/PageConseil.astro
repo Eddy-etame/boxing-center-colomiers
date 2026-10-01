@@ -1,0 +1,248 @@
+---
+/**
+ * Gabarit d'un conseil (/conseils/<slug>/).
+ *
+ * Une question de matériel, une réponse en tête, puis le détail : le sommaire
+ * suit la lecture, le tableau se cite tel quel, et les liens sortent du texte
+ * — vers la boutique de matériel, vers les pages du site, vers le club. Tout
+ * le texte vit dans src/data/conseils.ts ; le titre et la description, dans
+ * le registre des routes.
+ */
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { CONSEILS, LIBELLES, conseil, dateFr, type ConseilId } from '../data/conseils';
+import { route } from '../data/routes';
+
+interface Props { id: ConseilId }
+const { id } = Astro.props;
+
+const c = conseil(id);
+const r = route(id);
+const autres = CONSEILS.filter((x) => x.id !== id);
+const L = LIBELLES;
+const etapes = [
+  ...c.sections.map((s, i) => ({ ancre: `etape-${i + 1}`, nom: s.sur })),
+  ...(c.tableau ? [{ ancre: 'tableau', nom: c.tableau.sur }] : []),
+  { ancre: 'questions', nom: L.questionsSur },
+];
+---
+
+<Base page={id} ogPhoto={c.photo as any} faq={c.faq} article={{ publie: c.publie, maj: c.maj }}>
+  <section class="section tete" aria-labelledby="t-page">
+    <div class="enveloppe tete__inner">
+      <nav class="fil mono" aria-label="Fil d’Ariane">
+        <a href="/">Accueil</a><span aria-hidden="true">/</span>
+        <a href={route('conseils').chemin}>{route('conseils').nav}</a><span aria-hidden="true">/</span>
+        <span aria-current="page">{r.nav}</span>
+      </nav>
+      <h1 id="t-page">{c.h1}</h1>
+      <p class="tete__chapeau">{c.chapeau}</p>
+      <p class="mono tete__maj">{L.maj} <time datetime={c.maj}>{dateFr(c.maj)}</time></p>
+    </div>
+    <div class="enveloppe">
+      <Photo slug={c.photo as any} prioritaire sizes="100vw" ratio="21 / 9" class="tete__photo" />
+    </div>
+  </section>
+
+  <section class="section creuse corps" aria-label={r.nav}>
+    <div class="enveloppe corps__grille">
+      <nav class="sommaire" aria-label={L.sommaire}>
+        <p class="mono sommaire__cle">{L.sommaire}</p>
+        <ol>
+          {etapes.map((e, i) => (
+            <li><a href={`#${e.ancre}`}><span class="mono">{String(i + 1).padStart(2, '0')}</span><span>{e.nom}</span></a></li>
+          ))}
+        </ol>
+      </nav>
+      <div class="article">
+        {c.sections.map((s, i) => (
+          <article class="bloc reveler" id={`etape-${i + 1}`}>
+            <p class="mono bloc__sur">{s.sur}</p>
+            <h2 class="bloc__titre">{s.h2}</h2>
+            {s.paras.map((p) => <p class="bloc__texte" set:html={p} />)}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {c.tableau && (
+    <section class="section releve" id="tableau" aria-labelledby="t-tableau">
+      <div class="enveloppe">
+        <p class="cartouche"><span>{c.tableau.sur}</span></p>
+        <h2 id="t-tableau" class="releve__titre">{c.tableau.h2}</h2>
+        <div class="releve__cadre reveler">
+          <table>
+            <thead><tr>{c.tableau.entetes.map((x) => <th scope="col">{x}</th>)}</tr></thead>
+            <tbody>
+              {c.tableau.lignes.map((l) => (
+                <tr>
+                  <th scope="row" set:html={l[0]} />
+                  {l.slice(1).map((x, j) => <td data-label={c.tableau!.entetes[j + 1]} set:html={x} />)}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="releve__note" set:html={c.tableau.note} />
+      </div>
+    </section>
+  )}
+
+  <section class={`section faq${c.tableau ? ' creuse' : ''}`} id="questions" aria-labelledby="t-faq">
+    <div class="enveloppe faq__inner">
+      <div>
+        <p class="cartouche"><span>{L.questionsSur}</span></p>
+        <h2 id="t-faq">{L.questionsH2}</h2>
+      </div>
+      <div class="faq__liste">
+        {c.faq.map((q) => (
+          <details class="qr">
+            <summary>
+              <span class="qr__q">{q.titre}</span>
+              <span class="qr__signe" aria-hidden="true"></span>
+            </summary>
+            <p class="qr__r">{q.texte}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class={`section suite${c.tableau ? '' : ' creuse'}`} aria-labelledby="t-suite">
+    <div class="enveloppe">
+      <p class="cartouche"><span>{L.autresSur}</span></p>
+      <h2 id="t-suite" class="suite__titre">{L.autresH2}</h2>
+      <div class={`cartes${autres.length === 1 ? ' cartes--large' : ''}`}>
+        {autres.map((a) => (
+          <a class="carte" href={route(a.id).chemin}>
+            <Photo slug={a.photo as any} sizes="(max-width: 52rem) 100vw, 46vw" ratio="16 / 9" class="carte__photo" calque={false} decoratif />
+            <span class="carte__texte">
+              <span class="mono carte__cle">{a.carte}</span>
+              <span class="carte__titre">{a.h1}</span>
+              <span class="carte__resume">{a.resume}</span>
+              <span class="mono carte__lire">{L.lire} <span aria-hidden="true">→</span></span>
+            </span>
+          </a>
+        ))}
+      </div>
+      <p class="suite__tous"><a class="lien" href={route('conseils').chemin}>{L.tous}</a></p>
+    </div>
+  </section>
+
+  <section class="section fin" aria-labelledby="t-fin">
+    <div class="enveloppe fin__inner">
+      <h2 id="t-fin" class="fin__titre">{L.finH2}</h2>
+      <p class="lead fin__texte">{L.finTexte}</p>
+      <div class="fin__actions">
+        <a class="bouton bouton--signal" href={route(L.finBouton.route as any).chemin}>
+          <span>{L.finBouton.texte}</span><span class="fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="bouton" href={route('contact').chemin}>
+          <span>{L.finContact}</span><span class="fleche" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tete { padding-bottom: var(--e-6); }
+  .tete__inner { max-width: 60rem; }
+  .fil { display: flex; flex-wrap: wrap; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--texte-faible); text-decoration: none; }
+  .fil a:hover { color: var(--signal-texte); }
+  .fil span[aria-current] { color: var(--texte); }
+  .tete h1 { max-width: 20ch; margin-bottom: var(--e-5); }
+  .tete__chapeau {
+    max-width: 62ch;
+    padding-left: var(--e-5);
+    border-left: 2px solid var(--signal);
+    font-size: var(--t-lead);
+    line-height: 1.5;
+    color: var(--texte-faible);
+  }
+  .tete__maj { margin-top: var(--e-5); }
+  .tete__photo { margin-top: var(--e-7); }
+
+  /* Le sommaire suit la lecture ; le texte tient en colonne lisible. */
+  .corps__grille { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: var(--e-8); align-items: start; }
+  .sommaire { position: sticky; top: 6rem; }
+  .sommaire__cle { margin-bottom: var(--e-4); }
+  .sommaire ol { list-style: none; border-top: 1px solid var(--trait); }
+  .sommaire li { border-bottom: 1px solid var(--trait); }
+  .sommaire a { display: grid; grid-template-columns: 2rem 1fr; gap: var(--e-2); align-items: baseline; padding: var(--e-3) 0; color: var(--texte); text-decoration: none; font-size: var(--t-petit); transition: padding-left var(--d-normal) var(--e-sortie); }
+  .sommaire a .mono { color: var(--signal-texte); font-weight: 700; }
+  .sommaire a:hover { padding-left: var(--e-2); color: var(--signal-texte); }
+  .article { display: grid; gap: var(--e-8); max-width: 44rem; }
+  .bloc { scroll-margin-top: 6rem; }
+  .bloc__sur { color: var(--signal-texte); font-weight: 700; margin-bottom: var(--e-3); }
+  .bloc__titre { font-size: var(--t-h2); max-width: 22ch; margin-bottom: var(--e-5); }
+  .bloc__texte { max-width: 62ch; color: var(--texte-faible); line-height: 1.7; }
+  .bloc__texte + .bloc__texte { margin-top: var(--e-4); }
+  @media (max-width: 60rem) {
+    .corps__grille { grid-template-columns: 1fr; gap: var(--e-7); }
+    .sommaire { position: static; }
+  }
+
+  /* Le tableau se lit en entier sur grand écran, en fiches sur téléphone. */
+  .releve__titre { max-width: 22ch; margin-bottom: var(--e-6); }
+  .releve__cadre { border: 1px solid var(--trait); border-radius: var(--rayon-1); overflow-x: auto; }
+  .releve table { width: 100%; border-collapse: collapse; min-width: 38rem; }
+  .releve th, .releve td { padding: var(--e-4) var(--e-5); text-align: left; vertical-align: top; border-bottom: 1px solid var(--trait-faible); line-height: 1.5; }
+  .releve thead th { font-family: var(--police-mono); font-size: var(--t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--texte-faible); font-weight: 500; border-bottom-color: var(--trait); }
+  .releve tbody tr:last-child > * { border-bottom: 0; }
+  .releve tbody th { font-weight: 600; }
+  .releve td { color: var(--texte-faible); font-variant-numeric: tabular-nums; }
+  .releve__note { max-width: 62ch; margin-top: var(--e-5); font-size: var(--t-petit); color: var(--texte-faible); }
+  #tableau, #questions { scroll-margin-top: 5rem; }
+  @media (max-width: 44rem) {
+    .releve__cadre { overflow-x: visible; }
+    .releve table { min-width: 0; }
+    .releve thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    .releve tbody tr { display: block; padding: var(--e-4) var(--e-5); border-bottom: 1px solid var(--trait-faible); }
+    .releve tbody tr:last-child { border-bottom: 0; }
+    .releve tbody th, .releve tbody td { display: block; padding: 0.15rem 0; border: 0; }
+    .releve tbody td::before { content: attr(data-label) ' · '; font-family: var(--police-mono); font-size: var(--t-micro); letter-spacing: 0.1em; text-transform: uppercase; }
+  }
+
+  .faq__inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: var(--e-8); align-items: start; }
+  @media (max-width: 60rem) { .faq__inner { grid-template-columns: 1fr; gap: var(--e-6); } }
+  .faq h2 { max-width: 16ch; }
+  .qr { border-top: 1px solid var(--trait); }
+  .qr:last-child { border-bottom: 1px solid var(--trait); }
+  .qr summary { display: flex; align-items: center; justify-content: space-between; gap: var(--e-4); padding: var(--e-4) 0; cursor: pointer; list-style: none; }
+  .qr summary::-webkit-details-marker { display: none; }
+  .qr__q { font-weight: 600; max-width: 46ch; }
+  .qr summary:hover .qr__q { color: var(--signal-texte); }
+  .qr__signe { flex: none; position: relative; width: 14px; height: 14px; }
+  .qr__signe::before, .qr__signe::after { content: ''; position: absolute; inset: 0; margin: auto; background: var(--signal); }
+  .qr__signe::before { width: 14px; height: 1.5px; }
+  .qr__signe::after { width: 1.5px; height: 14px; transition: transform var(--d-normal) var(--e-mecanique); }
+  .qr[open] .qr__signe::after { transform: scaleY(0); }
+  .qr__r { max-width: 60ch; padding-bottom: var(--e-5); color: var(--texte-faible); font-size: var(--t-petit); }
+
+  .suite__titre { max-width: 20ch; margin-bottom: var(--e-6); }
+  .cartes { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e-5); }
+  .carte { display: grid; grid-template-rows: auto 1fr; border: 1px solid var(--trait); border-radius: var(--rayon-1); overflow: hidden; color: inherit; text-decoration: none; transition: border-color var(--d-rapide) var(--e-mecanique); }
+  .carte:hover { border-color: var(--signal-texte); }
+  .carte__texte { display: grid; align-content: start; gap: var(--e-3); padding: var(--e-5); }
+  .carte__cle { color: var(--signal-texte); font-weight: 700; }
+  .carte__titre { font-family: var(--police-titre); font-size: var(--t-h3); line-height: 1.15; letter-spacing: -0.02em; }
+  .carte__resume { color: var(--texte-faible); font-size: var(--t-petit); }
+  .carte__lire { color: var(--signal-texte); }
+  /* une seule carte : elle prend la rangée, photo d'un côté, texte de l'autre */
+  .cartes--large { grid-template-columns: 1fr; }
+  .cartes--large .carte { grid-template-rows: none; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; }
+  .cartes--large .carte__texte { padding: var(--e-6); }
+  @media (max-width: 52rem) {
+    .cartes { grid-template-columns: 1fr; }
+    .cartes--large .carte { grid-template-columns: 1fr; }
+  }
+  .suite__tous { margin-top: var(--e-6); font-size: var(--t-petit); }
+
+  .fin__inner { max-width: 46rem; }
+  .fin__titre { max-width: 22ch; margin-bottom: var(--e-5); }
+  .fin__texte { max-width: 52ch; color: var(--texte-faible); }
+  .fin__actions { display: flex; flex-wrap: wrap; gap: var(--e-3); margin-top: var(--e-6); }
+</style>

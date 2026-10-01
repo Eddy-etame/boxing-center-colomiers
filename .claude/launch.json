@@ -105,9 +105,26 @@
       "runtimeExecutable": "node",
       "runtimeArgs": [
         "-e",
-        "process.chdir('C:/Users/Mommy Jayce/Desktop/Boxing Center/Deployment/boutique-de-boxe/site'); process.argv=[process.argv[0],'next','start','-p','4340']; require('C:/Users/Mommy Jayce/Desktop/Boxing Center/Deployment/boutique-de-boxe/site/node_modules/next/dist/bin/next')"
+        "process.chdir('C:/Users/Mommy Jayce/Desktop/Boxing Center/Deployment/boutique-de-boxe/site'); process.env.ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'proprietaire@boutique.test'; process.env.RESEND_API_KEY = 'cle-de-test-locale'; process.env.RESEND_API_URL = 'http://127.0.0.1:4399/emails'; process.argv=[process.argv[0],'next','start','-p','4340']; require('C:/Users/Mommy Jayce/Desktop/Boxing Center/Deployment/boutique-de-boxe/site/node_modules/next/dist/bin/next')"
       ],
       "port": 4340
+    },
+    {
+      "name": "boutique-db",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "process.chdir('C:/Users/Mommy Jayce/Desktop/Boxing Center/Deployment/boutique-de-boxe/site'); import('file:///C:/Users/Mommy Jayce/Desktop/Boxing Center/Deployment/boutique-de-boxe/site/scripts/dev-postgres.mjs')"
+      ],
+      "port": 54329
+    },
+    {
+      "name": "faux-resend",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "C:/Users/MOMMYJ~1/AppData/Local/Temp/claude/C--Users-Mommy-Jayce-Desktop-Boxing-Center-Deployment-boxing-center-colomiers/ff527aed-8a52-4039-82c5-a3f2dc040b1c/scratchpad/faux_resend.cjs"
+      ],
+      "port": 4399
     }
   ]
 }
