@@ -1,0 +1,95 @@
+---
+/**
+ * LES CONSEILS — l'index des articles sur le matériel.
+ *
+ * Chaque carte mène à un conseil ; chaque conseil répond à une question de
+ * matériel et renvoie, depuis son texte, vers la boutique et vers le club.
+ * Le contenu vit dans src/data/conseils.ts.
+ */
+import Base from '../layouts/Base.astro';
+import Photo from '../components/Photo.astro';
+import { CONSEILS, INDEX_CONSEILS, LIBELLES } from '../data/conseils';
+import { route } from '../data/routes';
+
+const I = INDEX_CONSEILS;
+const L = LIBELLES;
+---
+
+<Base page="conseils" ogPhoto={I.photo as any}>
+  <section class="section tete" aria-labelledby="t-page">
+    <div class="enveloppe tete__inner">
+      <nav class="fil mono" aria-label="Fil d’Ariane">
+        <a href="/">Accueil</a><span aria-hidden="true">/</span>
+        <span aria-current="page">{route('conseils').nav}</span>
+      </nav>
+      <h1 id="t-page">{I.h1}</h1>
+      <p class="tete__chapeau">{I.chapeau}</p>
+    </div>
+  </section>
+
+  <section class="section creuse liste" aria-label={route('conseils').nav}>
+    <div class="enveloppe">
+      <div class="cartes">
+        {CONSEILS.map((a, i) => (
+          <a class="carte reveler" href={route(a.id).chemin} style={`--retard:${i * 60}ms`}>
+            <Photo slug={a.photo as any} prioritaire={i < 2} sizes="(max-width: 52rem) 100vw, 46vw" ratio="16 / 9" class="carte__photo" calque={false} />
+            <div class="carte__texte">
+              <p class="mono carte__cle">{a.carte}</p>
+              <h2 class="carte__titre">{a.h1}</h2>
+              <p class="carte__resume">{a.resume}</p>
+              <p class="mono carte__lire">{L.lire} <span aria-hidden="true">→</span></p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section fin" aria-labelledby="t-fin">
+    <div class="enveloppe fin__inner">
+      <h2 id="t-fin" class="fin__titre">{I.finH2}</h2>
+      <p class="lead fin__texte">{I.finTexte}</p>
+      <div class="fin__actions">
+        <a class="bouton bouton--signal" href={route(L.finBouton.route as any).chemin}>
+          <span>{L.finBouton.texte}</span><span class="fleche" aria-hidden="true">→</span>
+        </a>
+        <a class="bouton" href={route('contact').chemin}>
+          <span>{L.finContact}</span><span class="fleche" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .tete__inner { max-width: 60rem; }
+  .fil { display: flex; flex-wrap: wrap; gap: var(--e-2); margin-bottom: var(--e-5); }
+  .fil a { color: var(--texte-faible); text-decoration: none; }
+  .fil a:hover { color: var(--signal-texte); }
+  .fil span[aria-current] { color: var(--texte); }
+  .tete h1 { max-width: 20ch; margin-bottom: var(--e-5); }
+  .tete__chapeau {
+    max-width: 62ch;
+    padding-left: var(--e-5);
+    border-left: 2px solid var(--signal);
+    font-size: var(--t-lead);
+    line-height: 1.5;
+    color: var(--texte-faible);
+  }
+
+  /* Deux cartes par rangée : jamais une carte seule sur sa ligne. */
+  .cartes { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e-5); }
+  @media (max-width: 52rem) { .cartes { grid-template-columns: 1fr; } }
+  .carte { display: grid; grid-template-rows: auto 1fr; border: 1px solid var(--trait); border-radius: var(--rayon-1); overflow: hidden; color: inherit; text-decoration: none; transition: border-color var(--d-rapide) var(--e-mecanique); }
+  .carte:hover { border-color: var(--signal-texte); }
+  .carte__texte { display: grid; align-content: start; gap: var(--e-3); padding: var(--e-5); }
+  .carte__cle { color: var(--signal-texte); font-weight: 700; }
+  .carte__titre { font-size: var(--t-h3); line-height: 1.15; }
+  .carte__resume { color: var(--texte-faible); font-size: var(--t-petit); }
+  .carte__lire { color: var(--signal-texte); }
+
+  .fin__inner { max-width: 46rem; }
+  .fin__titre { max-width: 22ch; margin-bottom: var(--e-5); }
+  .fin__texte { max-width: 52ch; color: var(--texte-faible); }
+  .fin__actions { display: flex; flex-wrap: wrap; gap: var(--e-3); margin-top: var(--e-6); }
+</style>

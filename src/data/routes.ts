@@ -22,6 +22,11 @@ export type RouteId =
   | 'quel-club'
   | 'transports'
   | 'nos-clubs'
+  /* conseils:début */
+  | 'conseils'
+  | 'poids-gants-de-boxe'
+  | 'materiel-cardio-boxing'
+  /* conseils:fin */
   | 'contact'
   | 'merci'
   | 'introuvable'
@@ -169,6 +174,41 @@ export const ROUTES: readonly Route[] = [
     // hors index : mêmes adresses sur les sept sites de proximité ; liens suivis
     index: true,
   },
+  /* conseils:routes */
+  {
+    id: 'conseils',
+    chemin: '/conseils/',
+    nav: 'Conseils matériel',
+    question: 'Quel matériel de boxe acheter, et à quel moment ?',
+    titre: 'Conseils matériel de boxe depuis Colomiers | Boxing Center',
+    description:
+      'Poids des gants, matériel du cardio boxing : les conseils de Boxing Center pour s’équiper quand on part de Colomiers s’entraîner à Minimes ou à Portet.',
+    menu: false,
+    index: true,
+  },
+  {
+    id: 'poids-gants-de-boxe',
+    chemin: '/conseils/poids-gants-de-boxe/',
+    nav: 'Poids des gants',
+    question: 'Quel poids de gants de boxe choisir : 10, 12, 14 ou 16 oz ?',
+    titre: 'Gants de boxe : 10, 12, 14 ou 16 oz ? Le bon poids',
+    description:
+      '10 oz pour le sac, 12 oz pour la technique, 14 à 16 oz face à un partenaire : choisir le poids de ses gants de boxe quand on s’entraîne depuis Colomiers.',
+    menu: false,
+    index: true,
+  },
+  {
+    id: 'materiel-cardio-boxing',
+    chemin: '/conseils/materiel-cardio-boxing/',
+    nav: 'Matériel cardio boxing',
+    question: 'Quel matériel pour un cours de cardio boxing ou de pattes d’ours ?',
+    titre: 'Cardio boxing : quel matériel pour commencer ?',
+    description:
+      'Cardio Boxing, Boxing Lady, pattes d’ours : ce qu’il faut vraiment pour un cours de boxe sans opposition quand on vient de Colomiers. Bandes, gants, corde.',
+    menu: false,
+    index: true,
+  },
+  /* conseils:routes:fin */
   {
     id: 'contact',
     chemin: '/contact/',

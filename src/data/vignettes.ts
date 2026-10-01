@@ -5,6 +5,7 @@
  */
 import { CLUBS } from './verite';
 import { CONTEXTE_GEO } from './mots-cles';
+import { vignetteDuConseil } from './conseils';
 import { CONTENUS } from './contenus';
 import { MEILLEUR } from './transports';
 
@@ -36,10 +37,15 @@ const DEPUIS = new Set(['transports', 'contact', 'quel-club', 'ta-seance']);
 
 /** « BOXE ANGLAISE · PRÈS DE », « Y ALLER EN BUS · DEPUIS » : la ligne au-dessus du lieu. */
 export function etiquetteDeLaRoute(id: string): string {
+  /* un conseil porte son sujet tel quel : « Conseil · Poids des gants » */
+  const conseil = vignetteDuConseil(id);
+  if (conseil) return conseil.sujet;
   return `${SUJETS[id] ?? 'Club de boxe · MMA'} · ${DEPUIS.has(id) ? 'depuis' : 'près de'}`;
 }
 
 export function photoDeLaRoute(id: string): string {
+  const conseil = vignetteDuConseil(id);
+  if (conseil) return conseil.photo;
   const c = CONTENUS.find((x) => x.id === id);
   if (c) return c.photoHero;
   if (id === 'premiere-seance' || id === 'contact') return 'premiere-seance-boxe-colomiers';

@@ -24,9 +24,11 @@ interface Props {
    * exactement ce que Google sanctionne.
    */
   faq?: readonly { titre: string; texte: string }[];
+  /** un conseil : sa date de publication et sa date de relecture — la page devient un Article */
+  article?: { publie: string; maj: string };
 }
 
-const { page, discipline, ogPhoto = 'club-boxe-colomiers-boxing-center', faq } = Astro.props;
+const { page, discipline, ogPhoto = 'club-boxe-colomiers-boxing-center', faq, article } = Astro.props;
 const r = route(page);
 const canonique = new URL(r.chemin, SITE.origine).href;
 /** Les vignettes de la page, composées au build (voir pages/og/) : paysage pour les partages, carrée pour Google. */
@@ -123,10 +125,34 @@ const donnees = {
             '@id': `${canonique}#fil`,
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE.origine}/` },
-              { '@type': 'ListItem', position: 2, name: r.nav, item: canonique },
+              /* un conseil se range sous /conseils/ : trois niveaux */
+              ...(article
+                ? [
+                    { '@type': 'ListItem', position: 2, name: route('conseils').nav, item: new URL(route('conseils').chemin, SITE.origine).href },
+                    { '@type': 'ListItem', position: 3, name: r.nav, item: canonique },
+                  ]
+                : [{ '@type': 'ListItem', position: 2, name: r.nav, item: canonique }]),
             ],
           },
         ]),
+    /* Article — uniquement pour un conseil : ses dates sont celles de la page. */
+    ...(article
+      ? [
+          {
+            '@type': 'Article',
+            '@id': `${canonique}#article`,
+            headline: r.titre,
+            description: r.description,
+            inLanguage: SITE.langue,
+            datePublished: article.publie,
+            dateModified: article.maj,
+            image: [og, ogCarre],
+            mainEntityOfPage: { '@id': `${canonique}#page` },
+            author: { '@id': `${SITE.origine}/#organisation` },
+            publisher: { '@id': `${SITE.origine}/#organisation` },
+          },
+        ]
+      : []),
     /* FAQPage — uniquement si les questions sont visibles sur la page. */
     ...(faq?.length
       ? [
@@ -165,7 +191,7 @@ const donnees = {
     <meta name="geo.region" content="FR-31" />
     <meta name="geo.placename" content={`${CONTEXTE_GEO.ville}, ${CONTEXTE_GEO.departement}`} />
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
     <meta property="og:site_name" content={SITE.nom} />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:title" content={r.titre} />
