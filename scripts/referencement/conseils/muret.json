@@ -1,0 +1,178 @@
+{
+  "publie": "2026-10-02",
+  "index": {
+    "nav": "Conseils matériel",
+    "pied": "Conseils : budget, kimono de JJB",
+    "question": "Combien coûte l’équipement de boxe, et quel kimono de JJB choisir ?",
+    "titre": "Budget boxe, kimono de JJB : conseils matériel | Muret",
+    "description": "Combien coûte l’équipement de boxe, comment choisir un kimono de JJB : les conseils de Boxing Center pour les Muretains, club à Portet-sur-Garonne.",
+    "h1": "Ce que coûte l’équipement, et comment choisir son kimono.",
+    "chapeau": "Les Muretains s’entraînent à Portet-sur-Garonne. Deux conseils chiffrés : le budget du premier équipement de boxe, prix relevés et datés, et le kimono de jiu-jitsu brésilien, taille par taille.",
+    "photo": "entrainement-boxe-muret",
+    "sujet": "Conseils matériel · depuis",
+    "finH2": "Le premier cours ne demande aucun achat.",
+    "finTexte": "À Portet-sur-Garonne, tu arrives en tenue de sport. Le sac se remplit après, pièce par pièce, quand tu sais quel cours tu gardes."
+  },
+  "libelles": {
+    "sommaire": "Dans ce conseil",
+    "maj": "Mis à jour le",
+    "questionsSur": "Questions",
+    "questionsH2": "Les questions qui reviennent à Muret.",
+    "autresSur": "À lire aussi",
+    "autresH2": "Un autre conseil, chiffres compris.",
+    "lire": "Lire le conseil",
+    "tous": "Tous nos conseils matériel",
+    "finH2": "Essaie d’abord, achète ensuite.",
+    "finTexte": "Une séance à Portet-sur-Garonne répond à la moitié des questions de matériel. Pour l’autre moitié, écris-nous.",
+    "finBouton": { "texte": "Trouver ma séance", "route": "ta-seance" },
+    "finContact": "Nous écrire"
+  },
+  "articles": [
+    {
+      "id": "budget-equipement-boxe",
+      "nav": "Budget équipement",
+      "sujet": "Conseil · Le budget",
+      "carte": "Budget",
+      "question": "Combien coûte l’équipement pour débuter la boxe ?",
+      "titre": "Équipement de boxe : quel budget pour débuter ?",
+      "description": "Gants dès 17,90 €, bandes à 6,90 €, protège-dents à 5,90 € : le budget du premier équipement de boxe, prix relevés le 1er octobre 2026, depuis Muret.",
+      "h1": "Débuter la boxe : le budget de l’équipement, chiffré.",
+      "chapeau": "Le premier équipement de boxe — gants, bandes, protège-dents — coûte 30,70 € à la boutique du club, prix relevés le 1er octobre 2026. Il ne s’achète pas avant la première séance : à Portet-sur-Garonne, on commence en tenue de sport.",
+      "resume": "30,70 € pour les trois premières pièces, et ce que coûte la suite : les prix, relevés et datés.",
+      "photo": "club-boxe-muret-2",
+      "sections": [
+        {
+          "sur": "Le minimum",
+          "h2": "Trois pièces, une trentaine d’euros.",
+          "paras": [
+            "Des gants à 17,90 €, des bandes de 4 m à 6,90 €, un protège-dents adulte à 5,90 € : ce sont les prix de <a class=\"lien\" href=\"https://boutique.boxingcenter.fr/materiel\" rel=\"noopener\">la boutique Boxing Center</a> au 1er octobre 2026, commande en ligne et retrait en salle.",
+            "C’est l’entrée de gamme, et elle suffit pour apprendre. Tu n’as besoin de rien de plus tant que tu travailles au sac et en technique."
+          ]
+        },
+        {
+          "sur": "Le marché",
+          "h2": "Ce que coûtent des gants, du premier prix au cuir.",
+          "paras": [
+            "Sur les 183 paires suivies par <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/observatoire-des-prix/\" rel=\"noopener\">l’Observatoire des prix de Boutique de Boxe</a>, la boutique de matériel du groupe, les gants de boxe vont de 17,80 € à 287,90 €, avec un prix médian de 117,90 € (relevé du 1er octobre 2026).",
+            "L’écart tient à la matière et à la marque : dans ce même relevé, le prix médian d’une paire Metal Boxe est de 24,90 €, celui d’une paire Cleto Reyes de 185,90 €. Pour une première année, un gant synthétique d’entrée de gamme fait le travail."
+          ]
+        },
+        {
+          "sur": "La suite",
+          "h2": "Les protections viennent au fil des mois.",
+          "paras": [
+            "Les protections de boxe vont de 5,90 € à 244,90 € dans le relevé, prix médian 45 €. En <a class=\"lien\" href=\"/kick-boxing/\">kick-boxing</a>, compte des protège-tibias — 14,90 € à la boutique du club — et, plus tard, un casque pour le sparring.",
+            "Rien ne presse : chaque protection s’achète quand le cours la demande. <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/guides/choisir-protections/\" rel=\"noopener\">Le guide pour choisir ses protections</a> explique l’usage de chacune."
+          ]
+        },
+        {
+          "sur": "Le textile",
+          "h2": "Ce que tu as déjà dans ton placard.",
+          "paras": [
+            "Short, t-shirt, baskets propres : pour la <a class=\"lien\" href=\"/boxe-anglaise/\">boxe anglaise</a> comme pour le Lady Boxing, la tenue de sport suffit pendant des mois. Les chaussures de boxe — prix médian 66,90 € dans le relevé — ne servent qu’à celles et ceux qui montent souvent sur le ring."
+          ]
+        },
+        {
+          "sur": "Les économies",
+          "h2": "Là où il ne faut pas rogner.",
+          "paras": [
+            "Sur le protège-dents et les bandes, jamais : ce sont les deux pièces les moins chères, et celles qui évitent les blessures les plus bêtes. Sur les gants, méfie-toi d’une paire d’occasion dont la mousse est tassée.",
+            "Le club de Portet a détaillé l’ordre des achats dans <a class=\"lien\" href=\"https://boxing-center-portet.fr/conseils/equipement-boxe-debutant/\" rel=\"noopener\">son conseil pour débuter</a>."
+          ]
+        }
+      ],
+      "tableau": {
+        "sur": "Le relevé",
+        "h2": "Le premier équipement, ligne par ligne.",
+        "entetes": ["Pièce", "Prix relevé", "Où"],
+        "lignes": [
+          ["Gants de boxe", "17,90 €", "Boutique Boxing Center"],
+          ["Bandes de 4 m", "6,90 €", "Boutique Boxing Center"],
+          ["Protège-dents adulte", "5,90 €", "Boutique Boxing Center"],
+          ["Total des trois pièces", "30,70 €", "—"],
+          ["Protège-tibias, pour le kick-boxing", "14,90 €", "Boutique Boxing Center"]
+        ],
+        "note": "Prix relevés le 1er octobre 2026 ; ils peuvent avoir changé depuis. Chiffres du marché : Observatoire des prix, Boutique de Boxe, 1er octobre 2026."
+      },
+      "faq": [
+        { "titre": "Combien coûte l’équipement pour débuter la boxe ?", "texte": "30,70 € pour des gants, des bandes et un protège-dents à la boutique Boxing Center, au 1er octobre 2026. La première séance, elle, ne demande aucun achat." },
+        { "titre": "Quel est le prix d’une paire de gants de boxe ?", "texte": "De 17,80 € à 287,90 €, avec un prix médian de 117,90 € sur 183 modèles, selon l’Observatoire des prix de Boutique de Boxe au 1er octobre 2026." },
+        { "titre": "Faut-il acheter des gants en cuir pour commencer ?", "texte": "Non. Un gant synthétique d’entrée de gamme suffit la première année ; le cuir devient intéressant quand on s’entraîne plusieurs fois par semaine." },
+        { "titre": "Peut-on acheter des gants de boxe d’occasion ?", "texte": "Oui, si la mousse n’est pas tassée : en appuyant sur les jointures, tu ne dois pas sentir tes doigts à travers. Les bandes et le protège-dents, eux, s’achètent neufs." }
+      ]
+    },
+    {
+      "id": "kimono-jjb-debutant",
+      "nav": "Kimono de JJB",
+      "sujet": "Conseil · Kimono de JJB",
+      "carte": "Jiu-jitsu brésilien",
+      "question": "Quel kimono choisir pour débuter le jiu-jitsu brésilien ?",
+      "titre": "Kimono de JJB : lequel choisir pour débuter ?",
+      "description": "Tailles A0 à A4, tissage, couleur, ceinture blanche : choisir son premier kimono de jiu-jitsu brésilien quand on s’entraîne à Portet depuis Muret.",
+      "h1": "Premier kimono de JJB : la taille, le tissage, la ceinture.",
+      "chapeau": "Un kimono de jiu-jitsu brésilien se choisit par sa taille — de A0 à A4, selon ta stature et ton poids — et par son tissage, serré pour résister aux saisies. Pour débuter, un modèle simple et une ceinture blanche suffisent.",
+      "resume": "A0 à A4, tissage serré, ceinture blanche : le premier kimono de jiu-jitsu brésilien, sans se tromper de taille.",
+      "photo": "cage-mma-muret",
+      "sections": [
+        {
+          "sur": "Le cours",
+          "h2": "À Portet, le sol se travaille sans frappe.",
+          "paras": [
+            "Portet-sur-Garonne publie un cours « Grappling & jiu-jitsu brésilien » : le contrôle, les projections et les soumissions, sans aucune frappe. Il appartient à <a class=\"lien\" href=\"/mma/\">la famille MMA et grappling</a> du club.",
+            "Le grappling se pratique en short et t-shirt près du corps ; le jiu-jitsu brésilien, en kimono. Pour un premier cours, viens en tenue de sport et demande au coach lequel des deux a lieu ce soir-là."
+          ]
+        },
+        {
+          "sur": "La taille",
+          "h2": "A0 à A4 : la stature et le poids, ensemble.",
+          "paras": [
+            "Les tailles adultes vont de A0 à A4. Elles suivent ta stature et ton poids à la fois : deux personnes d’1,75 m ne portent pas le même kimono si l’une pèse 65 kg et l’autre 85 kg. Certaines marques ajoutent des tailles longues, notées L, pour les gabarits grands et fins.",
+            "Un kimono neuf en coton rétrécit au premier lavage : lave-le à froid, et ne le passe pas au sèche-linge. <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/kimonos/\" rel=\"noopener\">Les kimonos de Boutique de Boxe</a>, la boutique de matériel du groupe, donnent le tissage et le poids du tissu sur chaque fiche."
+          ]
+        },
+        {
+          "sur": "Le tissu",
+          "h2": "Tissé serré, parce qu’on va te saisir.",
+          "paras": [
+            "En JJB, on attrape les manches, le col et le pantalon : le tissu doit résister. C’est ce qui distingue un kimono de jiu-jitsu d’un kimono de karaté, plus léger et plus ample, qui n’est pas fait pour cela.",
+            "Le grammage, noté en g/m², dit l’épaisseur de la veste : autour de 350, elle est légère et agréable pour débuter ; au-delà de 450, elle est plus difficile à saisir, et plus chaude."
+          ]
+        },
+        {
+          "sur": "La couleur, la ceinture",
+          "h2": "Blanc, bleu ou noir — et une ceinture blanche.",
+          "paras": [
+            "Blanc, bleu et noir sont les trois couleurs admises en compétition. Tout le monde commence ceinture blanche : vérifie si elle est vendue avec le kimono, sinon ajoute-la. <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/ceintures/\" rel=\"noopener\">Les ceintures</a> se choisissent par taille, comme la veste."
+          ]
+        },
+        {
+          "sur": "Sous le kimono",
+          "h2": "Un rashguard, et des ongles courts.",
+          "paras": [
+            "Sous la veste, un <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/rashguards/\" rel=\"noopener\">rashguard</a> évite les frottements du col sur la peau. Coupe tes ongles, retire tes bijoux et lave le kimono après chaque séance : c’est la règle d’hygiène de tous les tapis.",
+            "Le protège-dents, utile dès les premiers combats au sol, se commande à <a class=\"lien\" href=\"https://boutique.boxingcenter.fr/materiel\" rel=\"noopener\">la boutique Boxing Center</a> et se retire au club."
+          ]
+        }
+      ],
+      "tableau": {
+        "sur": "Les tailles",
+        "h2": "A0 à A4 : le repère habituel.",
+        "entetes": ["Taille", "Stature", "Poids"],
+        "lignes": [
+          ["A0", "1,55 à 1,65 m", "50 à 60 kg"],
+          ["A1", "1,60 à 1,70 m", "58 à 70 kg"],
+          ["A2", "1,70 à 1,80 m", "68 à 82 kg"],
+          ["A3", "1,78 à 1,88 m", "80 à 95 kg"],
+          ["A4", "1,85 à 1,95 m", "92 à 110 kg"]
+        ],
+        "note": "Repères courants : chaque marque publie sa propre grille, à vérifier sur la fiche du modèle avant d’acheter."
+      },
+      "faq": [
+        { "titre": "Quelle taille de kimono de JJB choisir ?", "texte": "De A0 à A4 selon ta stature et ton poids : A2 autour d’1,75 m et 75 kg, par exemple. Chaque marque a sa grille, à vérifier sur la fiche du modèle." },
+        { "titre": "Faut-il un kimono pour un premier cours de jiu-jitsu ?", "texte": "Non : une tenue de sport près du corps suffit pour essayer. Le kimono s’achète quand tu sais que tu continues." },
+        { "titre": "Quelle différence entre grappling et jiu-jitsu brésilien ?", "texte": "Le grappling se pratique sans kimono, en short et t-shirt moulant ; le jiu-jitsu brésilien se pratique en kimono, avec des saisies sur le tissu. Aucun des deux n’autorise les frappes." },
+        { "titre": "Comment laver un kimono de JJB ?", "texte": "À froid ou à 30 °C, après chaque séance, puis séché à l’air libre. Le sèche-linge le fait rétrécir." }
+      ]
+    }
+  ]
+}

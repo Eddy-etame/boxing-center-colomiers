@@ -45,6 +45,10 @@ vues = {}
 total = {}
 for site, dossier in SITES.items():
     fichiers = glob.glob(os.path.join(dossier, '**', 'index.html'), recursive=True)
+    if site == 'blagnac':
+        # Blagnac n'a pas de dossier /conseils/ : ses deux pages de conseil sont à la racine
+        dossier = os.path.join(BC, 'Deployment', 'club-de-boxe-blagnac', 'dist')
+        fichiers = [os.path.join(dossier, p, 'index.html') for p in ('gants-de-boxe-enfant', 'sac-de-sport-boxe') if os.path.exists(os.path.join(dossier, p, 'index.html'))]
     if not fichiers:
         continue
     total[site] = 0

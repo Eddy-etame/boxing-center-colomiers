@@ -1,0 +1,174 @@
+{
+  "publie": "2026-10-02",
+  "index": {
+    "nav": "Conseils matériel",
+    "pied": "Conseils matériel : thaï, bandes",
+    "question": "Quel équipement pour la boxe thaï, et comment poser ses bandes ?",
+    "titre": "Boxe thaï, bandes : les conseils matériel | Tournefeuille",
+    "description": "Équipement de boxe thaï, pose des bandes : les conseils de Boxing Center pour les Tournefeuillais qui s’entraînent à Saint-Cyprien ou à Portet-sur-Garonne.",
+    "h1": "S’équiper pour la boxe thaï, et bander ses mains.",
+    "chapeau": "Les Tournefeuillais s’entraînent à Saint-Cyprien ou à Portet-sur-Garonne. Deux conseils pour arriver équipé : la liste de la boxe thaï, protection par protection, et la pose des bandes, tour par tour.",
+    "photo": "salle-de-boxe-tournefeuille",
+    "sujet": "Conseils matériel · depuis",
+    "finH2": "Avant les protections, un premier cours.",
+    "finTexte": "À Saint-Cyprien comme à Portet-sur-Garonne, tu commences en tenue de sport. Tu demandes sur place ce que le club met à disposition, et tu achètes le reste ensuite."
+  },
+  "libelles": {
+    "sommaire": "Dans ce conseil",
+    "maj": "Mis à jour le",
+    "questionsSur": "Questions",
+    "questionsH2": "Les questions des Tournefeuillais.",
+    "autresSur": "À lire ensuite",
+    "autresH2": "Un second conseil avant de remplir ton sac.",
+    "lire": "Lire le conseil",
+    "tous": "Les conseils matériel du site",
+    "finH2": "Le matériel se décide au bord du ring.",
+    "finTexte": "Fais une première séance à Saint-Cyprien ou à Portet-sur-Garonne : tu verras ce que le cours demande vraiment, et tu achèteras une seule fois.",
+    "finBouton": { "texte": "Ta première séance", "route": "premiere-seance" },
+    "finContact": "Poser une question"
+  },
+  "articles": [
+    {
+      "id": "equipement-boxe-thai",
+      "nav": "Équipement boxe thaï",
+      "sujet": "Conseil · Boxe thaï",
+      "carte": "Boxe thaï",
+      "question": "Quel équipement faut-il pour commencer la boxe thaï ?",
+      "titre": "Équipement de boxe thaï : la liste pour débuter",
+      "description": "Gants, protège-tibias, protège-dents, coquille : l’équipement de boxe thaï et de K1 dans l’ordre des achats, pour s’entraîner depuis Tournefeuille.",
+      "h1": "Boxe thaï : l’équipement, protection par protection.",
+      "chapeau": "En boxe thaï, on frappe avec les poings, les jambes et les genoux : aux gants s’ajoutent des protège-tibias, un protège-dents et une coquille. Rien de tout cela ne s’achète avant le premier cours, et tout s’achète dans cet ordre.",
+      "resume": "Gants, protège-tibias, protège-dents, coquille : la liste de la boxe thaï et du K1, dans l’ordre.",
+      "photo": "boxe-thai-tournefeuille",
+      "sections": [
+        {
+          "sur": "La discipline",
+          "h2": "Poings, jambes, genoux : plus de surfaces à protéger.",
+          "paras": [
+            "À Saint-Cyprien, le cours s’appelle Boxe Thaï / K1 — la discipline la plus complète de la salle. Le même club publie aussi un cours de Kick Boxing ; à Portet-sur-Garonne, c’est le kick-boxing qui ajoute les jambes aux poings.",
+            "Plus on frappe de façons différentes, plus la liste s’allonge. <a class=\"lien\" href=\"/boxe-thai/\">La page boxe thaï</a> décrit le cours ; ici, on parle de ce qu’on met dans le sac."
+          ]
+        },
+        {
+          "sur": "Les gants",
+          "h2": "Des gants de boxe fermés, pas des gants de MMA.",
+          "paras": [
+            "La boxe thaï se pratique avec des gants fermés, comme la boxe anglaise : 10 ou 12 oz pour le sac et les paos, 14 à 16 oz pour l’opposition. Les modèles dits « thaï » ont une paume plus souple, qui aide à saisir pendant le clinch.",
+            "Scratch ou lacets, cuir ou synthétique : Boutique de Boxe, la boutique en ligne du groupe, compare tout cela dans <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/guides/choisir-gants-boxe/\" rel=\"noopener\">son guide des gants de boxe</a>."
+          ]
+        },
+        {
+          "sur": "Les jambes",
+          "h2": "Les protège-tibias : le premier achat propre au thaï.",
+          "paras": [
+            "Dès que le cours passe aux coups de pied à deux, les protège-tibias deviennent obligatoires — pour toi, et pour le partenaire qui bloque. Prends-les avec le pied couvert : c’est le modèle du pieds-poings.",
+            "La taille suit la longueur de ton tibia, du dessous du genou au cou-de-pied. Trop long, il remonte dans le genou quand tu fléchis ; trop court, il découvre le bas de la jambe. <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/protege-tibias/\" rel=\"noopener\">Les protège-tibias</a> indiquent leur taille sur chaque fiche."
+          ]
+        },
+        {
+          "sur": "Les protections",
+          "h2": "Protège-dents et coquille, avant la première opposition.",
+          "paras": [
+            "Le <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/protege-dents/\" rel=\"noopener\">protège-dents</a> se moule à l’eau chaude, chez toi, la veille : pas au vestiaire cinq minutes avant le cours. La <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/coquilles/\" rel=\"noopener\">coquille</a> protège le bas-ventre des coups de genou et des low-kicks qui dévient ; il existe des protections pelviennes pour les femmes.",
+            "Le casque n’arrive qu’avec le sparring. À Saint-Cyprien, il a son créneau — l’Open Sparring, encadré : attends que le coach t’y invite pour en acheter un."
+          ]
+        },
+        {
+          "sur": "Le short",
+          "h2": "Un short thaï, court et large.",
+          "paras": [
+            "Le short de boxe thaï est court et large, pour lever le genou et frapper du pied sans que le tissu retienne la jambe. Un short de sport classique fait l’affaire les premières semaines ; ensuite, <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/shorts-de-boxe/\" rel=\"noopener\">les shorts de boxe</a> existent en coupe anglaise et en coupe thaï — ne te trompe pas de rayon.",
+            "Pour repartir du club avec l’essentiel, <a class=\"lien\" href=\"https://boutique.boxingcenter.fr/materiel\" rel=\"noopener\">la boutique Boxing Center</a> vend gants, protège-dents et protège-tibias en ligne, à retirer en salle."
+          ]
+        }
+      ],
+      "tableau": {
+        "sur": "Dans l’ordre",
+        "h2": "Quoi acheter, de la première semaine au sparring.",
+        "entetes": ["Quand", "Pièce", "Pourquoi"],
+        "lignes": [
+          ["Premier cours", "Tenue de sport, bouteille d’eau", "On découvre le cours avant d’acheter"],
+          ["Premières semaines", "Bandes, gants de 10 ou 12 oz", "Le sac et les paos"],
+          ["Travail à deux", "Protège-tibias avec pied, protège-dents", "Donner et bloquer les coups de pied"],
+          ["Opposition", "Coquille, gants de 14 à 16 oz", "Protéger le partenaire autant que soi"],
+          ["Sparring", "Casque", "Seulement sur avis du coach"]
+        ],
+        "note": "Chaque club fixe ses conditions de prêt de gants et de bandes : demande-les avant ta <a class=\"lien\" href=\"/premiere-seance/\">première séance</a>."
+      },
+      "faq": [
+        { "titre": "Que faut-il pour un premier cours de boxe thaï ?", "texte": "Une tenue de sport et une bouteille d’eau. Les gants, les protège-tibias et le protège-dents s’achètent après, quand le coach t’a dit ce que le cours demande." },
+        { "titre": "Protège-tibias avec ou sans pied pour la boxe thaï ?", "texte": "Avec le pied couvert : il protège le cou-de-pied quand tu frappes et quand tu bloques. Les modèles sans pied sont ceux du karaté." },
+        { "titre": "Boxe thaï ou kick-boxing : le matériel change-t-il ?", "texte": "Presque pas : gants, protège-tibias, protège-dents et coquille dans les deux cas. La boxe thaï ajoute les genoux et le clinch, d’où des gants à paume souple et un short plus court." },
+        { "titre": "Où faire de la boxe thaï près de Tournefeuille ?", "texte": "À Boxing Center Saint-Cyprien, 11 rue Sainte-Lucie à Toulouse, qui publie un cours Boxe Thaï / K1. Portet-sur-Garonne propose le kick-boxing." }
+      ]
+    },
+    {
+      "id": "mettre-ses-bandes-de-boxe",
+      "nav": "Mettre ses bandes",
+      "sujet": "Conseil · Les bandes",
+      "carte": "Bandes",
+      "question": "Comment mettre ses bandes de boxe ?",
+      "titre": "Comment mettre ses bandes de boxe, tour par tour",
+      "description": "Poignet, jointures, pouce : la pose des bandes de boxe expliquée étape par étape, la bonne longueur, et le signe qu’elles sont trop serrées.",
+      "h1": "Mettre ses bandes de boxe : la pose, tour par tour.",
+      "chapeau": "Une bande de boxe se pose en partant du pouce : trois tours de poignet, trois tours de jointures, un passage entre chaque doigt, et retour au poignet. Elle doit tenir le poing fermé sans faire blanchir les doigts.",
+      "resume": "Du pouce au poignet en quelques gestes : la pose des bandes, la bonne longueur, et l’erreur à éviter.",
+      "photo": "boxe-femme-tournefeuille",
+      "sections": [
+        {
+          "sur": "Avant de commencer",
+          "h2": "La bonne longueur, et le bon sens.",
+          "paras": [
+            "Prends des bandes de 4,50 m pour une main d’adulte, de 2,50 m pour une petite main : trop courtes, elles ne couvrent pas les jointures ; trop longues, elles font une boule dans le gant. <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/bandes-de-boxe/\" rel=\"noopener\">Les bandes de boxe</a> de Boutique de Boxe, la boutique de matériel du groupe, affichent leur longueur dans le nom du modèle.",
+            "Déroule la bande en entier et repère la boucle du pouce. Vérifie le sens avant de commencer : posée à l’envers, elle laisse le scratch du mauvais côté à la fin."
+          ]
+        },
+        {
+          "sur": "Le poignet",
+          "h2": "Trois tours de poignet, main ouverte.",
+          "paras": [
+            "Passe la boucle autour du pouce et pars vers le dos de la main, jamais vers la paume : c’est ce qui empêche la bande de se desserrer quand tu fermes le poing. Doigts écartés, fais trois tours autour du poignet.",
+            "Garde la bande bien à plat. Un pli sous le gant devient une ampoule au deuxième round."
+          ]
+        },
+        {
+          "sur": "Les jointures",
+          "h2": "Trois tours sur les jointures, puis un croisé.",
+          "paras": [
+            "Remonte en diagonale sur le dos de la main et couvre les jointures de trois tours, toujours doigts écartés. Redescends ensuite vers le poignet en croisant sur le dos de la main : ce X relie les deux zones."
+          ]
+        },
+        {
+          "sur": "Les doigts",
+          "h2": "Un passage entre chaque doigt.",
+          "paras": [
+            "Depuis le poignet, passe la bande entre l’auriculaire et l’annulaire, reviens au poignet, puis entre l’annulaire et le majeur, puis entre le majeur et l’index. Ces trois passages empêchent le rembourrage des jointures de glisser.",
+            "Fais ensuite un tour autour du pouce, et bloque-le par un demi-tour de poignet."
+          ]
+        },
+        {
+          "sur": "La fin",
+          "h2": "Finir au poignet, puis tester.",
+          "paras": [
+            "Utilise ce qui reste pour un dernier tour sur les jointures, termine au poignet et ferme le scratch. Serre le poing : la bande se tend sans faire mal. Ouvre la main : les doigts gardent leur couleur.",
+            "Si le bout des doigts blanchit ou fourmille, c’est trop serré. Défais et recommence, cela prend deux minutes."
+          ]
+        },
+        {
+          "sur": "Au club",
+          "h2": "Le premier soir, demande à voir le geste.",
+          "paras": [
+            "À Saint-Cyprien, le créneau PAOS se travaille aux pattes avec un coach, round par round : montre-lui tes mains avant d’enfiler les gants, il corrige une pose en dix secondes. Le club de Portet-sur-Garonne, lui, a écrit <a class=\"lien\" href=\"https://boxing-center-portet.fr/conseils/equipement-boxe-debutant/\" rel=\"noopener\">son propre conseil sur l’équipement du débutant</a>.",
+            "Pas envie de bander à chaque séance ? <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/sous-gants/\" rel=\"noopener\">Les sous-gants</a> s’enfilent comme une mitaine ; ils tiennent moins bien le poignet, mais dépannent. Bandes et gants se trouvent aussi à <a class=\"lien\" href=\"https://boutique.boxingcenter.fr/materiel\" rel=\"noopener\">la boutique Boxing Center</a>, avec retrait au club."
+          ]
+        }
+      ],
+      "faq": [
+        { "titre": "Quelle longueur de bandes de boxe choisir ?", "texte": "4,50 m pour une main d’adulte, 2,50 m pour un enfant ou une petite main. Les bandes de 4 m conviennent aussi à la plupart des adultes." },
+        { "titre": "Faut-il mettre des bandes sous des gants de boxe ?", "texte": "Oui, à chaque séance. Elles maintiennent le poignet, protègent les jointures et absorbent la transpiration avant qu’elle n’atteigne la mousse du gant." },
+        { "titre": "Comment savoir si mes bandes sont trop serrées ?", "texte": "Ouvre la main : si le bout des doigts blanchit, fourmille ou refroidit, la bande coupe la circulation. Repose-la en serrant moins sur le poignet." },
+        { "titre": "Comment laver des bandes de boxe ?", "texte": "En machine à 30 °C, dans un filet de lavage pour qu’elles ne s’emmêlent pas, puis séchées à l’air libre. Le sèche-linge abîme leur élastique." }
+      ]
+    }
+  ]
+}

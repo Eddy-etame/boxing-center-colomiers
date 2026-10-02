@@ -1,0 +1,178 @@
+{
+  "publie": "2026-10-02",
+  "index": {
+    "nav": "Conseils matériel",
+    "pied": "Conseils : grappling, entretien des gants",
+    "question": "Comment s’habiller pour le grappling, et comment entretenir ses gants ?",
+    "titre": "Grappling, entretien des gants : conseils | Labège",
+    "description": "Tenue de grappling, entretien des gants de boxe : les conseils matériel de Boxing Center pour les Labégeois qui s’entraînent à Ramonville.",
+    "h1": "La tenue du grappling, et des gants qui durent.",
+    "chapeau": "Depuis Labège, le club est à Ramonville-Saint-Agne. Deux conseils pour ton sac : ce qu’on porte en grappling, où rien ne doit accrocher, et comment garder des gants de boxe propres plus d’une saison.",
+    "photo": "coach-boxe-labege",
+    "sujet": "Conseils matériel · depuis",
+    "finH2": "Une séance à Ramonville vaut dix fiches produit.",
+    "finTexte": "Tu viens en tenue de sport, tu demandes à l’accueil comment cela se passe pour les gants, et tu décides après."
+  },
+  "libelles": {
+    "sommaire": "Dans ce conseil",
+    "maj": "Mis à jour le",
+    "questionsSur": "Questions",
+    "questionsH2": "Ce que demandent les Labégeois.",
+    "autresSur": "À lire ensuite",
+    "autresH2": "L’autre conseil, tant que le sac est ouvert.",
+    "lire": "Lire le conseil",
+    "tous": "Revenir aux conseils",
+    "finH2": "Le reste se règle sur place, à Ramonville.",
+    "finTexte": "Passe une première séance : le coach regarde ce que tu as apporté, et te dit ce qui manque.",
+    "finBouton": { "texte": "Trouver ma séance", "route": "ta-seance" },
+    "finContact": "Poser une question"
+  },
+  "articles": [
+    {
+      "id": "tenue-grappling",
+      "nav": "Tenue de grappling",
+      "sujet": "Conseil · Grappling",
+      "carte": "Grappling",
+      "question": "Comment s’habiller pour un cours de grappling ?",
+      "titre": "Grappling : quelle tenue pour débuter ?",
+      "description": "Rashguard, short sans poche, protège-dents : la tenue de grappling d’un débutant, ce qui reste au vestiaire, et où pratiquer depuis Labège.",
+      "h1": "Grappling : la tenue qui ne gêne ni toi ni ton partenaire.",
+      "chapeau": "En grappling, on lutte au sol sans kimono et sans frappe : il faut un haut moulant, un short sans poche ni fermeture, et rien de métallique. Le rashguard et le short de combat viennent ensuite, quand tu sais que tu continues.",
+      "resume": "Haut moulant, short sans poche, rien de métallique : la tenue du grappling, du premier cours au rashguard.",
+      "photo": "grappling-labege",
+      "sections": [
+        {
+          "sur": "Le cours",
+          "h2": "Au sol, dans l’octogone, sans un coup.",
+          "paras": [
+            "À Ramonville, le grappling travaille le contrôle, les projections et les soumissions, sans aucune frappe. Le MMA tous niveaux du même club ajoute le travail debout, dans l’octogone de sept mètres.",
+            "<a class=\"lien\" href=\"/mma/\">La page MMA</a> présente les deux cours ; le club, lui, a écrit <a class=\"lien\" href=\"https://mmatoulouse.com/conseils/equipement-mma-debutant/\" rel=\"noopener\">sa propre liste pour débuter le MMA</a>."
+          ]
+        },
+        {
+          "sur": "Le haut",
+          "h2": "Un rashguard : moulant, et qui sèche.",
+          "paras": [
+            "Un t-shirt large en coton se retourne, s’enroule autour d’un bras et pèse lourd une fois trempé. Le <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/rashguards/\" rel=\"noopener\">rashguard</a> colle à la peau, évacue la sueur et protège les coudes et les épaules des brûlures de tapis.",
+            "Manches courtes ou longues : les longues protègent mieux les avant-bras, les courtes tiennent moins chaud. Prends-le à ta taille — trop grand, il perd son intérêt."
+          ]
+        },
+        {
+          "sur": "Le bas",
+          "h2": "Un short sans poche, sans zip, sans cordon qui pend.",
+          "paras": [
+            "Tout ce qui dépasse devient un piège à doigts ou à orteils. Le <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/shorts-mma/\" rel=\"noopener\">short de combat</a> se ferme par un scratch à plat et un cordon intérieur, avec des fentes sur les côtés pour ouvrir les hanches.",
+            "Beaucoup portent un legging ou un short de compression dessous : il évite les brûlures aux genoux, et tient une coquille quand le coach en demande une."
+          ]
+        },
+        {
+          "sur": "Les protections",
+          "h2": "Un protège-dents, et c’est presque tout.",
+          "paras": [
+            "Sans frappe, ni gants ni casque. Mais une tête ou un genou peut partir pendant une lutte : le <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/protege-dents/\" rel=\"noopener\">protège-dents</a> reste une bonne idée dès les premiers combats au sol. Les genouillères sont un confort si tes genoux marquent vite."
+          ]
+        },
+        {
+          "sur": "L’hygiène",
+          "h2": "Ongles courts, tenue propre, claquettes.",
+          "paras": [
+            "Le tapis se partage peau contre peau : ongles des mains et des pieds coupés, tenue lavée après chaque séance, aucun bijou ni piercing apparent. Des claquettes pour aller du vestiaire au tapis, jamais pieds nus dans les couloirs.",
+            "Le protège-dents se trouve aussi à <a class=\"lien\" href=\"https://boutique.boxingcenter.fr/materiel\" rel=\"noopener\">la boutique Boxing Center</a> : tu commandes en ligne, tu le récupères à la salle."
+          ]
+        }
+      ],
+      "tableau": {
+        "sur": "Tapis ou vestiaire",
+        "h2": "Ce qui monte sur le tapis, et ce qui reste au vestiaire.",
+        "entetes": ["Pièce", "Sur le tapis ?", "Pourquoi"],
+        "lignes": [
+          ["Rashguard ou t-shirt moulant", "Oui", "Rien à saisir, rien qui s’enroule"],
+          ["Short sans poche ni zip", "Oui", "Aucune prise pour un doigt ou un orteil"],
+          ["Protège-dents", "Oui", "Un choc de tête arrive sans frappe"],
+          ["T-shirt large en coton", "À éviter", "Il se retourne et se déchire"],
+          ["Bijoux, montre, piercing", "Non", "Ils blessent le partenaire"],
+          ["Chaussures", "Non", "On lutte pieds nus"]
+        ],
+        "note": "Un doute sur une pièce ? Montre-la au coach avant le cours."
+      },
+      "faq": [
+        { "titre": "Comment s’habiller pour un premier cours de grappling ?", "texte": "Un t-shirt près du corps et un short sans poche ni fermeture éclair suffisent. Retire tes bijoux et coupe tes ongles ; on pratique pieds nus." },
+        { "titre": "Faut-il un kimono pour le grappling ?", "texte": "Non : le grappling se pratique sans kimono, c’est ce qui le distingue du jiu-jitsu brésilien. On ne saisit que le corps, jamais le tissu." },
+        { "titre": "Le grappling fait-il mal ?", "texte": "Il n’y a aucune frappe. Les soumissions se travaillent lentement : dès qu’un partenaire tape, l’autre relâche la prise." },
+        { "titre": "Où faire du grappling près de Labège ?", "texte": "À Boxing Center Ramonville, 33 rue des Ormes à Ramonville-Saint-Agne, dans l’octogone de sept mètres." }
+      ]
+    },
+    {
+      "id": "entretien-gants-de-boxe",
+      "nav": "Entretenir ses gants",
+      "sujet": "Conseil · Entretien des gants",
+      "carte": "Entretien",
+      "question": "Comment entretenir et désodoriser des gants de boxe ?",
+      "titre": "Entretenir ses gants de boxe : séchage, odeur, durée",
+      "description": "Sécher, désodoriser, ranger : comment entretenir des gants de boxe pour qu’ils durent, et à quel moment il faut vraiment les remplacer.",
+      "h1": "Des gants de boxe propres : le séchage, l’odeur, la durée.",
+      "chapeau": "Des gants de boxe sentent mauvais parce qu’ils restent humides : sortis du sac et ouverts à l’air après chaque séance, ils tiennent plusieurs saisons. Des bandes propres à chaque entraînement font le reste.",
+      "resume": "Ouverts à l’air après chaque séance, jamais au fond du sac : ce qui fait durer une paire de gants.",
+      "photo": "salle-de-boxe-labege",
+      "sections": [
+        {
+          "sur": "La cause",
+          "h2": "L’odeur vient de l’humidité qui reste.",
+          "paras": [
+            "Une heure de sac, et la mousse du gant a bu la transpiration de tes mains. Refermé dans un sac de sport, il reste humide jusqu’à la séance suivante : c’est ce temps-là qui fabrique l’odeur."
+          ]
+        },
+        {
+          "sur": "Après la séance",
+          "h2": "Sortis du sac, ouverts, à l’air.",
+          "paras": [
+            "En rentrant, sors les gants, ouvre-les au maximum et pose-les dans une pièce aérée — ni sur un radiateur, ni en plein soleil, qui dessèchent le cuir et craquellent le synthétique.",
+            "Essuie l’intérieur avec un chiffon sec. Pour absorber le reste, glisse du papier journal froissé ou un sachet de bicarbonate dans chaque gant jusqu’au lendemain."
+          ]
+        },
+        {
+          "sur": "Les bandes",
+          "h2": "La première protection du gant, ce sont les bandes.",
+          "paras": [
+            "<a class=\"lien\" href=\"https://www.boutique-de-boxe.com/bandes-de-boxe/\" rel=\"noopener\">Des bandes</a> propres à chaque séance absorbent la sueur avant la mousse. Aie-en deux paires si tu t’entraînes plusieurs fois par semaine. <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/sous-gants/\" rel=\"noopener\">Des sous-gants</a> lavables jouent le même rôle quand le cours démarre vite.",
+            "À Ramonville, le Boxing Camp est un circuit qui construit le souffle et le gainage : le genre de séance dont un gant sort trempé. Raison de plus pour ne pas le refermer."
+          ]
+        },
+        {
+          "sur": "Le nettoyage",
+          "h2": "Un chiffon humide, jamais la machine.",
+          "paras": [
+            "L’extérieur se nettoie au chiffon légèrement humide, avec une goutte de savon doux. L’intérieur ne se lave pas à grande eau : la mousse mettrait des jours à sécher. Un gant ne passe ni en machine, ni au sèche-linge.",
+            "Un cuir véritable apprécie une noisette de crème pour cuir deux ou trois fois par an ; un synthétique n’en a pas besoin."
+          ]
+        },
+        {
+          "sur": "La durée",
+          "h2": "À quel moment changer de gants.",
+          "paras": [
+            "Appuie avec le pouce sur les jointures : si tu sens tes doigts à travers la mousse, le gant ne protège plus — ni toi, ni ton partenaire. Coutures ouvertes, scratch qui ne tient plus, doublure déchirée : même conclusion.",
+            "Au moment de remplacer, <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/guides/choisir-gants-boxe/\" rel=\"noopener\">« Comment choisir ses gants de boxe »</a>, le guide de Boutique de Boxe, la boutique de matériel du groupe, évite de reprendre le même modèle par habitude. Une paire d’entrée de gamme s’achète aussi à <a class=\"lien\" href=\"https://boutique.boxingcenter.fr/materiel\" rel=\"noopener\">la boutique Boxing Center</a>, retirée à la salle."
+          ]
+        }
+      ],
+      "tableau": {
+        "sur": "La routine",
+        "h2": "Quatre gestes, et le moment de chacun.",
+        "entetes": ["Quand", "Geste", "Temps"],
+        "lignes": [
+          ["En rentrant", "Sortir les gants du sac, les ouvrir", "30 secondes"],
+          ["Le soir même", "Essuyer l’intérieur, glisser du papier journal", "2 minutes"],
+          ["Chaque semaine", "Chiffon humide sur l’extérieur", "5 minutes"],
+          ["Après chaque séance", "Laver les bandes", "Une machine"]
+        ],
+        "note": "Ce qui abîme un gant, ce n’est pas l’entraînement : c’est la nuit passée dans le sac."
+      },
+      "faq": [
+        { "titre": "Comment enlever l’odeur de gants de boxe ?", "texte": "En les faisant sécher : ouverts, à l’air, avec du papier journal ou du bicarbonate à l’intérieur jusqu’au lendemain. Un désodorisant masque l’odeur sans retirer l’humidité qui la cause." },
+        { "titre": "Peut-on laver des gants de boxe en machine ?", "texte": "Non. La mousse se gorge d’eau, se déforme et met des jours à sécher. L’extérieur se nettoie au chiffon humide." },
+        { "titre": "Combien de temps durent des gants de boxe ?", "texte": "Cela dépend du rythme et de l’entretien ; le bon repère est la mousse. Quand tu sens tes doigts en appuyant sur les jointures, il faut les remplacer." },
+        { "titre": "Les bandes protègent-elles aussi les gants ?", "texte": "Oui : elles absorbent la sueur avant la mousse du gant, en plus de tenir le poignet. Lavées à chaque séance, elles prolongent la vie de la paire." }
+      ]
+    }
+  ]
+}

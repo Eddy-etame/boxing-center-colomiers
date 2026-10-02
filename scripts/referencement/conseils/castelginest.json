@@ -1,0 +1,176 @@
+{
+  "publie": "2026-10-02",
+  "index": {
+    "nav": "Conseils matériel",
+    "pied": "Conseils : chaussures, sac de frappe",
+    "question": "Faut-il des chaussures de boxe, et quel sac de frappe installer chez soi ?",
+    "titre": "Chaussures de boxe, sac de frappe : conseils | Castelginest",
+    "description": "Choisir des chaussures de boxe, installer un sac de frappe chez soi : les conseils de Boxing Center pour les Castelginestois, club à Toulouse États-Unis.",
+    "h1": "Des chaussures pour le ring, un sac pour la maison.",
+    "chapeau": "Depuis Castelginest, le club est à Toulouse États-Unis. Deux conseils pour aller plus loin : les chaussures de boxe anglaise, qui ne servent que sur le ring, et le sac de frappe à la maison, pour s’entraîner entre deux cours.",
+    "photo": "encadrement-boxe-castelginest",
+    "sujet": "Conseils matériel · depuis",
+    "finH2": "Le club a le ring et les sacs : commence par là.",
+    "finTexte": "À Toulouse États-Unis, une première séance se fait en tenue de sport. Chaussures et sac de frappe attendront que tu saches ce que tu veux travailler."
+  },
+  "libelles": {
+    "sommaire": "Dans ce conseil",
+    "maj": "Mis à jour le",
+    "questionsSur": "Questions",
+    "questionsH2": "Ce qu’on nous écrit de Castelginest.",
+    "autresSur": "À lire ensuite",
+    "autresH2": "Un deuxième conseil, pour aller au bout.",
+    "lire": "Lire le conseil",
+    "tous": "Tous les conseils du site",
+    "finH2": "Ce qui s’achète après se décide au club.",
+    "finTexte": "Passe d’abord par une séance à Toulouse États-Unis : tu sauras si c’est le ring ou le sac qui te manque.",
+    "finBouton": { "texte": "Trouver ma séance", "route": "ta-seance" },
+    "finContact": "Une question ?"
+  },
+  "articles": [
+    {
+      "id": "chaussures-de-boxe-anglaise",
+      "nav": "Chaussures de boxe",
+      "sujet": "Conseil · Chaussures de boxe",
+      "carte": "Chaussures",
+      "question": "Faut-il des chaussures de boxe, et comment les choisir ?",
+      "titre": "Chaussures de boxe anglaise : utiles ? Comment choisir",
+      "description": "Semelle fine, tige montante, pointure : à quoi servent les chaussures de boxe anglaise, quand les acheter, et pourquoi des baskets suffisent pour débuter.",
+      "h1": "Chaussures de boxe anglaise : quand elles deviennent utiles.",
+      "chapeau": "Des chaussures de boxe ont une semelle fine et plate, qui accroche le ring et laisse pivoter, et une tige qui tient la cheville. Pour débuter, des baskets propres suffisent : elles deviennent utiles quand tu travailles tes déplacements sur le ring.",
+      "resume": "Semelle fine, tige montante, pointure juste : les chaussures de boxe, et le moment où elles servent.",
+      "photo": "garde-boxe-castelginest",
+      "sections": [
+        {
+          "sur": "Le besoin",
+          "h2": "Sur le ring, tout part des pieds.",
+          "paras": [
+            "À Toulouse États-Unis, la <a class=\"lien\" href=\"/boxe-anglaise/\">boxe anglaise</a> se travaille sur deux rings de compétition : précision, esquive, déplacement, vitesse de réaction. Trois de ces quatre mots se jouent dans les appuis.",
+            "Une basket de course a une semelle épaisse et crantée, faite pour avancer droit. Sur la toile d’un ring, elle freine le pivot et rehausse le centre de gravité."
+          ]
+        },
+        {
+          "sur": "La semelle",
+          "h2": "Fine, plate, et qui pivote.",
+          "paras": [
+            "La semelle d’une chaussure de boxe ne fait que quelques millimètres : tu sens le sol, et tu pivotes sur l’avant du pied sans forcer le genou. Elle est lisse ou à peine striée — ne la porte jamais dehors, elle s’y use très vite et ramène de la poussière sur le ring."
+          ]
+        },
+        {
+          "sur": "La tige",
+          "h2": "Basse, mi-haute ou haute : la cheville décide.",
+          "paras": [
+            "La tige haute tient la cheville dans les changements d’appui ; la tige basse laisse plus de liberté et pèse moins. Si tes chevilles tournent facilement, prends haut. <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/chaussures-boxe/\" rel=\"noopener\">Les chaussures de boxe</a> de Boutique de Boxe, la boutique de matériel du groupe, vont du 31 au 49 selon les modèles.",
+            "Le même rayon contient des chaussures de lutte, pensées pour le tapis. Pour la boxe anglaise, vérifie bien l’intitulé du modèle."
+          ]
+        },
+        {
+          "sur": "La pointure",
+          "h2": "Ajustée, avec les chaussettes du cours.",
+          "paras": [
+            "Une chaussure de boxe se porte près du pied : essaie-la avec tes chaussettes d’entraînement, lacée jusqu’en haut. Les orteils arrivent presque au bout, et le talon ne décolle pas quand tu montes sur la pointe."
+          ]
+        },
+        {
+          "sur": "Les autres disciplines",
+          "h2": "Pieds nus dès qu’il y a des jambes ou du sol.",
+          "paras": [
+            "La <a class=\"lien\" href=\"/boxe-pieds-poings/\">boxe pieds-poings</a>, le Muay Thai et le <a class=\"lien\" href=\"/mma/\">MMA</a> se pratiquent pieds nus, sur tatami. Si tu fais les deux, les chaussures restent dans le sac ces soirs-là.",
+            "Côté budget, <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/observatoire-des-prix/\" rel=\"noopener\">le relevé des prix de la boutique</a>, daté du 1er octobre 2026, donne un prix médian de 66,90 € pour une paire de chaussures de boxe ou de lutte."
+          ]
+        }
+      ],
+      "tableau": {
+        "sur": "Face à face",
+        "h2": "Baskets ou chaussures de boxe, point par point.",
+        "entetes": ["Critère", "Baskets de sport", "Chaussures de boxe"],
+        "lignes": [
+          ["Semelle", "Épaisse, amortie", "Fine, plate"],
+          ["Pivot", "Freiné par les crampons", "Libre sur l’avant du pied"],
+          ["Cheville", "Libre", "Tenue par la tige"],
+          ["Usage", "Sac, cardio, premiers mois", "Ring, déplacements, sparring"],
+          ["Dehors", "Oui", "Jamais"]
+        ],
+        "note": "Tant que tu débutes, garde tes baskets — propres, et réservées à la salle."
+      },
+      "faq": [
+        { "titre": "Faut-il des chaussures de boxe pour débuter ?", "texte": "Non. Des baskets propres, réservées à la salle, suffisent les premiers mois. Les chaussures de boxe deviennent utiles quand tu travailles les déplacements sur le ring." },
+        { "titre": "Quelle différence entre chaussures de boxe et chaussures de lutte ?", "texte": "La chaussure de lutte est pensée pour le tapis ; la chaussure de boxe a une semelle plate, faite pour pivoter sur la toile du ring. Les deux sont légères et montantes." },
+        { "titre": "Comment choisir la pointure de chaussures de boxe ?", "texte": "Près du pied, sans comprimer : essaie-les avec tes chaussettes d’entraînement. Le talon ne doit pas bouger quand tu te mets sur la pointe des pieds." },
+        { "titre": "Peut-on porter des chaussures de boxe dehors ?", "texte": "Non : la semelle fine s’use très vite sur le bitume, et la poussière qu’elle ramène fait glisser sur le ring." }
+      ]
+    },
+    {
+      "id": "sac-de-frappe-maison",
+      "nav": "Sac de frappe à la maison",
+      "sujet": "Conseil · Sac de frappe",
+      "carte": "Sac de frappe",
+      "question": "Quel sac de frappe installer chez soi ?",
+      "titre": "Sac de frappe à la maison : suspendu ou sur pied ?",
+      "description": "Suspendu ou sur pied, quel poids, quelle hauteur, quelle fixation : choisir un sac de frappe pour s’entraîner chez soi entre deux cours de boxe.",
+      "h1": "Un sac de frappe chez soi : suspendu ou sur pied ?",
+      "chapeau": "Un sac suspendu se choisit à peu près à la moitié de ton poids et demande un support porteur ; un sac sur pied s’installe sans percer et se déplace. Avant le sac, mesure la pièce : il faut pouvoir tourner autour.",
+      "resume": "Suspendu ou sur pied, le poids, la fixation, la place : le sac de frappe à la maison, mesuré avant d’acheter.",
+      "photo": "sac-de-frappe-castelginest",
+      "sections": [
+        {
+          "sur": "L’usage",
+          "h2": "Le sac de la maison complète le club, sans le remplacer.",
+          "paras": [
+            "Devant un sac, personne ne corrige ta garde ni tes appuis : il sert à répéter ce que tu as appris en cours, pas à apprendre. À Toulouse États-Unis, le Boxing HIIT est un circuit cardio construit sur les gestes de boxe, sans adversaire — c’est ce travail-là qu’un sac permet de refaire chez soi."
+          ]
+        },
+        {
+          "sur": "Suspendu",
+          "h2": "Le sac suspendu : le vrai, s’il y a un support.",
+          "paras": [
+            "Il encaisse les coups lourds et balance comme au club. Le repère : un sac qui pèse environ la moitié de ton poids, soit 30 à 40 kg pour la plupart des adultes. Trop léger, il vole ; trop lourd, il ne bouge plus et les poignets encaissent.",
+            "La fixation est le vrai sujet : une poutre porteuse, une dalle en béton avec des chevilles adaptées, ou une potence murale — jamais un plafond en plaques de plâtre. <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/sacs-de-frappe/\" rel=\"noopener\">Les sacs de frappe</a> de Boutique de Boxe, la boutique de matériel du groupe, donnent le poids, la longueur et la fixation de chaque modèle."
+          ]
+        },
+        {
+          "sur": "Sur pied",
+          "h2": "Le sac sur pied : sans percer, et déplaçable.",
+          "paras": [
+            "Sa base se remplit d’eau ou de sable et sa hauteur se règle : c’est le choix d’un appartement, ou d’une location où l’on ne perce pas. Rempli de sable, il est plus stable.",
+            "Il recule sous les gros coups et résonne sur un plancher : pose-le sur un tapis épais. <a class=\"lien\" href=\"https://www.boutique-de-boxe.com/sacs-de-frappe-sur-pied/\" rel=\"noopener\">Les sacs de frappe sur pied</a> ont leur propre rayon."
+          ]
+        },
+        {
+          "sur": "La place",
+          "h2": "De l’espace autour, et de la hauteur.",
+          "paras": [
+            "Un sac se travaille en tournant : compte environ deux mètres libres autour, et de la hauteur sous plafond pour la chaîne d’un sac suspendu. En pieds-poings, prends un sac long, pour pouvoir viser les jambes."
+          ]
+        },
+        {
+          "sur": "Les mains",
+          "h2": "Au sac aussi : des bandes et des gants.",
+          "paras": [
+            "Le sac ne pardonne pas un poignet mal aligné. Bandes posées, gants de 10 ou 12 oz : les mêmes qu’au club. Garde une paire pour le sac et une autre pour l’opposition — la mousse se tasse vite contre un sac.",
+            "Bandes et gants se retirent aussi au club, par <a class=\"lien\" href=\"https://boutique.boxingcenter.fr/materiel\" rel=\"noopener\">la boutique Boxing Center</a>."
+          ]
+        }
+      ],
+      "tableau": {
+        "sur": "Le choix",
+        "h2": "Suspendu ou sur pied, critère par critère.",
+        "entetes": ["Critère", "Sac suspendu", "Sac sur pied"],
+        "lignes": [
+          ["Installation", "Perçage dans un support porteur", "Aucune, base à remplir"],
+          ["Sensation", "Proche du club", "Recule sous les coups lourds"],
+          ["Bruit", "Vibrations dans la structure", "Chocs au sol"],
+          ["Déménagement", "Tout est à refaire", "Il suit"],
+          ["Coups de pied bas", "Oui, avec un sac long", "Selon le modèle"]
+        ],
+        "note": "En copropriété ou en location, vérifie ce que tu as le droit de fixer avant d’acheter."
+      },
+      "faq": [
+        { "titre": "Quel poids de sac de frappe choisir ?", "texte": "Environ la moitié de ton poids pour un sac suspendu : 30 à 40 kg pour la plupart des adultes. Plus léger pour le cardio et la vitesse, plus lourd pour la puissance." },
+        { "titre": "Peut-on installer un sac de frappe en appartement ?", "texte": "Oui, avec un sac sur pied, posé sur un tapis épais pour limiter le bruit. Un sac suspendu demande un support porteur et l’accord du propriétaire." },
+        { "titre": "Faut-il des gants pour frapper un sac ?", "texte": "Oui, avec des bandes dessous. Sans protection, les jointures et le poignet se blessent en quelques séances." },
+        { "titre": "Combien coûte un sac de frappe ?", "texte": "Le prix médian d’un sac de frappe est de 227,90 € sur 72 modèles, selon l’Observatoire des prix de Boutique de Boxe au 1er octobre 2026." }
+      ]
+    }
+  ]
+}

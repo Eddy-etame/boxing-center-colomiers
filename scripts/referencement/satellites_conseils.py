@@ -104,6 +104,9 @@ def installer(site):
             fautes.append('%s : description de %d caractères' % (ident, len(p['description'])))
         if "slug: '%s'" % p['photo'] not in medias:
             fautes.append('%s : photo inconnue du manifeste — %s' % (ident, p['photo']))
+        # la vignette se compose depuis ce fichier : sans lui, le build s'arrête au milieu
+        if not os.path.exists(os.path.join(racine, 'public', 'photos', p['photo'] + '-1440.jpg')):
+            fautes.append('%s : public/photos/%s-1440.jpg absent' % (ident, p['photo']))
     photos = [p['photo'] for _, p in pages]
     if len(set(photos)) != len(photos):
         fautes.append('deux pages partagent la même photo de vignette')
@@ -283,11 +286,13 @@ export function dateFr(iso: string): string {
     # ── src/components/PiedDePage.astro ────────────────────────────────────
     p = os.path.join(racine, 'src', 'components', 'PiedDePage.astro')
     s = lire(p).replace('\r\n', '\n')
-    if 'href="/conseils/"' not in s:
-        m = re.search(r'\n( *)<li><a class="lien" href="/premiere-seance/">[^\n]*</a></li>\n', s)
+    if 'href="/conseils/"' not in s and "route('conseils')" not in s:
+        # le lien suit l'écriture du site : chemin en clair (Colomiers) ou lu au registre (les six autres)
+        m = re.search(r'''\n( *)<li><a class="lien" href=("/premiere-seance/"|\{route\('premiere-seance'\)\.chemin\})>[^\n]*</a></li>\n''', s)
         if not m:
             raise SystemExit('✗ PiedDePage.astro : la ligne « Première séance » a changé de forme')
-        s = s.replace(m.group(0), m.group(0) + '%s<li><a class="lien" href="/conseils/">%s</a></li>\n' % (m.group(1), D['index']['pied']), 1)
+        href = '"/conseils/"' if m.group(2).startswith('"') else "{route('conseils').chemin}"
+        s = s.replace(m.group(0), m.group(0) + '%s<li><a class="lien" href=%s>%s</a></li>\n' % (m.group(1), href, D['index']['pied']), 1)
         ecrire(p, s.replace('\n', nl))
 
     print('✓ %-14s /conseils/ + %d articles : %s' % (site, len(ids), ', '.join(ids)))

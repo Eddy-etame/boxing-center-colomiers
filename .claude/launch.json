@@ -89,6 +89,42 @@
       "port": 4334
     },
     {
+      "name": "blagnac-dist",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4341", "--directory", "C:\\Users\\Mommy Jayce\\Desktop\\Boxing Center\\Deployment\\club-de-boxe-blagnac\\dist"],
+      "port": 4341
+    },
+    {
+      "name": "tournefeuille-dist",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4335", "--directory", "C:\\Users\\Mommy Jayce\\Desktop\\Boxing Center\\Deployment\\boxing-center-tournefeuille\\.vercel\\output\\static"],
+      "port": 4335
+    },
+    {
+      "name": "cugnaux-dist",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4336", "--directory", "C:\\Users\\Mommy Jayce\\Desktop\\Boxing Center\\Deployment\\boxing-center-cugnaux\\.vercel\\output\\static"],
+      "port": 4336
+    },
+    {
+      "name": "labege-dist",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4337", "--directory", "C:\\Users\\Mommy Jayce\\Desktop\\Boxing Center\\Deployment\\boxing-center-labege\\.vercel\\output\\static"],
+      "port": 4337
+    },
+    {
+      "name": "lunion-dist",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4338", "--directory", "C:\\Users\\Mommy Jayce\\Desktop\\Boxing Center\\Deployment\\boxing-center-lunion\\.vercel\\output\\static"],
+      "port": 4338
+    },
+    {
+      "name": "castelginest-dist",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "4339", "--directory", "C:\\Users\\Mommy Jayce\\Desktop\\Boxing Center\\Deployment\\boxing-center-castelginest\\.vercel\\output\\static"],
+      "port": 4339
+    },
+    {
       "name": "ramonville-avant",
       "runtimeExecutable": "python",
       "runtimeArgs": [
