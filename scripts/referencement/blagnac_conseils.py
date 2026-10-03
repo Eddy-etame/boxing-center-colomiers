@@ -193,7 +193,8 @@ COPIES = {
                     'Les gants et les bandes ne passent pas la nuit dans le sac : ouvrez les gants, étendez les bandes ou lancez une machine. C’est l’humidité enfermée qui donne leur odeur aux sacs de sport.',
                     'Rincez la bouteille et le protège-dents, changez la serviette. Un sac vidé le soir même est prêt pour la séance suivante.',
                 ],
-                'links': [{'label': 'Gants de boxe enfant : la taille par âge', 'href': '/gants-de-boxe-enfant/'}],
+                # 03/10 : un lien vers la page de tête de la boutique, qu'aucun site du réseau ne liait
+                'links': [{'label': 'Gants de boxe enfant : la taille par âge', 'href': '/gants-de-boxe-enfant/'}, {'label': 'Tout le matériel de boxe, niveau par niveau, Boutique de Boxe', 'href': B + '/materiel-boxe/'}],
             },
         ],
         'faq': [
