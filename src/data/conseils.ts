@@ -65,7 +65,7 @@ export const CONSEILS: readonly Conseil[] = [
     photo: 'materiel-boxe-colomiers-boxing-center',
     sujet: 'Conseil · Poids des gants',
     publie: '2026-10-02',
-    maj: '2026-10-02',
+    maj: '2026-10-03',
     sections: [
       {
         sur: 'L’unité',
@@ -96,7 +96,7 @@ export const CONSEILS: readonly Conseil[] = [
         h2: 'Un gant s’essaie avec les bandes aux mains.',
         paras: [
           'Enfile le gant par-dessus tes bandes et ferme le poing : les doigts touchent le fond sans se plier, le pouce se pose sans forcer, et le poignet reste droit quand tu appuies contre un mur.',
-          'Tu hésites entre deux poids ? <a class="lien" href="https://www.boutique-de-boxe.com/outils/poids-de-gants/" rel="noopener">Le calculateur en onces</a> de la boutique demande ta séance, ton gabarit et ton âge, et répond par un chiffre.',
+          'Tu hésites entre deux poids ? <a class="lien" href="https://www.boutique-de-boxe.com/outils/poids-de-gants/" rel="noopener">Le calculateur en onces</a> de la boutique demande ta séance, ton gabarit et ton âge, et répond par un chiffre. Et pour ce qui entoure les gants, la même boutique range <a class="lien" href="https://www.boutique-de-boxe.com/materiel-boxe/" rel="noopener">tout le matériel de boxe</a> par niveau, du premier cours au ring.',
         ],
       },
       {
@@ -147,7 +147,7 @@ export const CONSEILS: readonly Conseil[] = [
     photo: 'coach-boxe-colomiers-paos',
     sujet: 'Conseil · Cardio boxing',
     publie: '2026-10-02',
-    maj: '2026-10-02',
+    maj: '2026-10-03',
     sections: [
       {
         sur: 'Le cours',
@@ -170,7 +170,7 @@ export const CONSEILS: readonly Conseil[] = [
         h2: 'Légers, parce que tu frappes longtemps.',
         paras: [
           'Pour un cours où les rounds de sac s’enchaînent, 10 oz suffisent — 12 oz si tu veux une paire qui serve aussi en cours technique. Un gant plus lourd fatigue l’épaule avant la fin de la séance, et n’apporte rien quand personne n’est en face.',
-          'Les clubs fixent eux-mêmes leurs conditions de prêt : pose la question à l’accueil avant d’acheter. Si tu hésites sur le poids, <a class="lien" href="/conseils/poids-gants-de-boxe/">notre repère de 10 à 16 oz</a> fait le tri.',
+          'Les clubs fixent eux-mêmes leurs conditions de prêt : pose la question à l’accueil avant d’acheter. Si tu hésites sur le poids, <a class="lien" href="/conseils/poids-gants-de-boxe/">notre repère de 10 à 16 oz</a> fait le tri. Pour voir ce que contient un premier sac complet, la boutique a sa page <a class="lien" href="https://www.boutique-de-boxe.com/materiel-boxe-debutant/" rel="noopener">matériel de boxe débutant</a>.',
         ],
       },
       {
