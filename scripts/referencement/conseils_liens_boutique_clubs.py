@@ -30,6 +30,11 @@ AJOUTS = [
      ' Pour le sol, Boutique de Boxe a réuni rashguards, shorts et spats dans ' + lien('/equipement-jjb/', 'l’équipement de JJB et de grappling') + '.'),
     (os.path.join('Deployment', 'bc-ramonville', 'src', 'conseils-pages.json'), 'le protège-dents arrive avec le premier travail à deux.',
      ' Des premières bandes au casque, la suite est rangée par niveau dans ' + lien('/materiel-boxe/', 'le matériel de boxe') + ' de Boutique de Boxe.'),
+    # 2ᵉ tour (03/10) : les pages du cahier des charges qu'aucun site ne liait encore
+    (os.path.join('Portet', 'boxing-center-portet', 'src', 'conseils.json'), 'nt d’acheter un casque : elle dépend de la discipline et de la compétition.',
+     ' Casques, protège-tibias et coquilles d’enfant se comparent dans ' + lien('/protections-boxe/', 'les protections de boxe') + ' de Boutique de Boxe.'),
+    (os.path.join('Deployment', 'bc-ramonville', 'src', 'conseils-pages.json'), 'ort est la première pièce d’équipement d’une boxeuse, avant même les gants.',
+     ' Brassières, leggings et shorts sont réunis dans ' + lien('/textile-boxe/', 'le textile de boxe') + ' de Boutique de Boxe.'),
 ]
 
 faits = 0

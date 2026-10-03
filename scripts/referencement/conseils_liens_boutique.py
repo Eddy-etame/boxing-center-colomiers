@@ -48,6 +48,19 @@ AJOUTS = [
      ' Gants à lacets, coquille, short : le reste d’un sac de combat est sur la page ' + lien('/materiel-boxe-competition/', 'matériel de boxe de compétition') + '.'),
     ('castelginest', 'groupe, donnent le poids, la longueur et la fixation de chaque modèle.',
      ' Un sac de frappe ne se livre qu’à domicile : ' + lien('/vente-materiel-de-boxe/', 'la page vente de matériel de boxe') + ' de la boutique en donne les conditions.'),
+    # 2ᵉ tour (03/10) : les pages du cahier des charges qu'aucun site ne liait encore — une phrase par site
+    ('tournefeuille', 'mencer : posée à l’envers, elle laisse le scratch du mauvais côté à la fin.',
+     ' Bandes, sous-gants et cordes à sauter sont rangés ensemble dans ' + lien('/accessoires-boxe/', 'les accessoires de boxe') + ' de Boutique de Boxe.'),
+    ('cugnaux', 'nd d’un gant. Change-le quand il se déforme, se fend ou ne tient plus seul.',
+     ' Le casque et la coquille, qui viennent ensuite, attendent dans ' + lien('/protections-boxe/', 'le rayon des protections de boxe') + ' de la même boutique.'),
+    ('lunion', 'r l’opposition, 14 oz pour les gabarits légers, 18 oz pour les plus lourds.',
+     ' Pour comparer les paires poids par poids, ' + lien('/gants-de-boxe/', 'les gants de boxe') + ' de Boutique de Boxe se trient en onces.'),
+    ('castelginest', 'tami. Si tu fais les deux, les chaussures restent dans le sac ces soirs-là.',
+     ' Ce que chaque discipline autorise, des poings seuls aux genoux et aux coudes, est résumé sur ' + lien('/sports-de-combat/', 'la page des sports de combat') + ' de Boutique de Boxe.'),
+    ('labege', 'eaux du même club ajoute le travail debout, dans l’octogone de sept mètres.',
+     ' Pour ce cours-là, Boutique de Boxe a réuni ' + lien('/materiel-mma/', 'le matériel MMA') + ', gants ouverts et protège-tibias compris.'),
+    ('muret', 'l=\\"noopener\\">Les ceintures</a> se choisissent par taille, comme la veste.',
+     ' Judo, karaté et aïkido ont chacun leur tenue : la boutique les présente sur ' + lien('/les-arts-martiaux/', 'sa page des arts martiaux') + ', avec le nombre de lieux qui les déclarent en France.'),
 ]
 
 faits = 0
