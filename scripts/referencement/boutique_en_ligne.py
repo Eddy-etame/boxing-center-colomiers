@@ -32,6 +32,11 @@ PAGES = [
     ('/guides/', 'Guides d’achat', 'Les guides d’achat.'),
     ('/sports-de-combat/', 'Sport de combat :', 'Les sports de combat, discipline par discipline.'),
     ('/les-arts-martiaux/', 'Arts martiaux :', 'Les arts martiaux, leur origine et leurs dojos.'),
+    ('/gants-de-boxe-pas-cher/', 'Gants de boxe pas cher', 'Gants de boxe pas cher'),
+    ('/gants-de-boxe-cuir/', 'Gants de boxe en cuir', 'Gants de boxe en cuir'),
+    ('/shorts-de-boxe-thai/', 'Short de boxe thaï', 'Shorts de boxe thaï'),
+    ('/shorts-de-boxe-anglaise/', 'Short de boxe anglaise', 'Shorts de boxe anglaise'),
+    ('/kimonos-jjb/', 'Kimono de JJB', 'Kimonos de JJB'),
 ]
 
 
