@@ -37,7 +37,7 @@ export const INDEX_CONSEILS = {
   photo: 'sport-combat-colomiers-sac-frappe',
   sujet: 'Conseils matériel · depuis',
   finH2: 'Le plus simple reste d’essayer une séance.',
-  finTexte: 'Tu viens en tenue de sport à Toulouse Minimes ou à Portet-sur-Garonne, tu poses tes questions au coach, et tu achètes ensuite — en sachant quoi.',
+  finTexte: 'Tu viens en tenue de sport à Toulouse Minimes ou à Portet-sur-Garonne, tu poses tes questions au coach, et tu achètes ensuite — en sachant quoi. Les salles de la ville, toutes, sont sur la page <a class="lien" href="https://www.boutique-de-boxe.com/boutique-de-boxe-toulouse/" rel="noopener">boutique de boxe Toulouse</a> de Boutique de Boxe.',
 } as const;
 
 export const LIBELLES = {
