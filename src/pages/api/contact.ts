@@ -16,7 +16,7 @@ import type { APIRoute } from 'astro';
  */
 export const prerender = false;
 
-const INLET = 'https://inlett.vercel.app';
+const INLET = 'https://eam-inlet.vercel.app';
 const FORMULAIRE = '615a1cc9-3025-427f-992d-1b6a9ea0a080';
 
 /** Où l'on renvoie le visiteur. Le domaine final le résout en /merci/. */
